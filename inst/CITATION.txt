@@ -1,0 +1,19 @@
+citHeader("To cite this workflow:")
+
+citEntry(entry = "Manual",
+         title  = "xcmsTutorials: Exploring and analyzing LC-MS data with Spectra and xcms",
+         author = personList(
+           person(given = "Johannes", family = "Rainer"),
+           person(given = "Philippine", family = "Louail")
+         ),
+         publisher = "Zenodo",
+         year = "2024",
+         month = "may",
+         version = "v1.1.0",
+         doi = "10.5281/zenodo.11185521",
+         url = "https://doi.org/10.5281/zenodo.11185521",
+         textVersion = paste0("Johannes Rainer, & Philippine Louail. (2024). ",
+                              "xcmsTutorials version 1.1.0: Exploring and ",
+                              "analyzing LC-MS data with Spectra and xcms. ",
+                              "Zenodo. https://doi.org/10.5281/zenodo.11185521")
+         )

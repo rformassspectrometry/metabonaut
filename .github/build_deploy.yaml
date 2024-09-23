@@ -1,0 +1,58 @@
+name: pkgdown
+
+on:
+  repository_dispatch:
+    types: [trigger-workflow-2]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    container: bioconductor/bioconductor_docker:RELEASE_3_19
+    steps:
+      ## Most of these steps are the same as the ones in
+      ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
+      ## If they update their steps, we will also need to update ours.
+      - uses: actions/checkout@v2
+
+      - name: Install rcmdcheck
+        run: |
+          install.packages('rcmdcheck')
+          install.packages("BiocManager")
+          BiocManager::install("RforMassSpectrometry/MsBackendMetaboLights")
+          BiocManager::install("RforMassSpectrometry/MsIO")
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
+        shell: bash {0}
+
+      - name: Install deploy dependencies
+        run: |
+          apt-get update
+          apt-get -y install rsync
+
+      - name: Install pkgdown
+        if: github.ref == 'refs/heads/main'
+        run: |
+          install.packages('pkgdown')
+        shell: Rscript {0}
+
+      - name: Install package
+        if: github.ref == 'refs/heads/main'
+        run: R CMD INSTALL .
+
+      - name: Deploy package
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git config --global --add safe.directory /__w/metabonaut/metabonaut
+          Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
+        shell: bash {0}
+        ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
+        ## at least one locally before this will work. This creates the gh-pages
+        ## branch (erasing anything you haven't version controlled!) and
+        ## makes the git history recognizable by pkgdown.
