@@ -1787,7 +1787,7 @@ text files. Export to the community-developed open mzTab-M format is currently
 being developed and will be supported in future. Below we export the *xcms*
 result object with R's default binary format for object serialization.
 
-```{r}
+```{r eval=FALSE, include=FALSE}
 #' Save `XcmsExperiment` object
 storeResults(data, RDataParam(fileName = "data.RData"))
 
@@ -2769,14 +2769,40 @@ Below we load the LC-MS/MS data from the experiment and restrict it to data
 acquired from the CTR sample.
 
 ```{r}
-#' Read the sample descriptions from an xlsx sheet
-pd <- read_xlsx("data/phenodata-lc-msms.xlsx") |>
-    as.data.frame()
+#' Load form the MetaboLights Database
+param <- MetaboLightsParam(mtblsId = "MTBLS8735", 
+                           assayName = paste0("a_MTBLS8735_LC-MSMS_positive_",
+                           "hilic_metabolite_profiling.txt"), 
+                           filePattern = ".mzML")
 
-pd <- pd[pd$phenotype == "CTR" & pd$ms_mode == "MSMS", ]
+msms_data <- readMsObject(MsExperiment(),
+                     param, 
+                     keepOntology = FALSE, 
+                     keepProtocol = FALSE, 
+                     simplify = TRUE)
 
-msms_data <- readMsExperiment(file.path(MZML_PATH, "/", pd$mzML_file),
-                              sampleData = pd)
+#adjust sampleData
+colnames(sampleData(msms_data)) <- c("sample_name", "derived_spectra_data_file",
+                                "metabolite_asssignment_file",
+                                "source_name",
+                                "organism",
+                                "blood_sample_type",
+                                "sample_type", "age", "unit", "phenotype")
+
+# filter samples to keep MSMS data from CTR samples:
+sampleData(msms_data) <- sampleData(msms_data)[sampleData(msms_data)$phenotype == "CTR", ]
+
+sampleData(msms_data) <- sampleData(msms_data)[grepl("MSMS", sampleData(msms_data)$derived_spectra_data_file), ]
+
+# Add fragmentation data information 
+sampleData(msms_data)$fragmentation_mode <- c("CE20", "CE30", "CES")
+
+#let's look at the updated sample data
+sampleData(msms_data)[, c("derived_spectra_data_file", 
+                     "phenotype", "sample_name", "age")] |>
+    as.data.frame() |>
+    pandoc.table(style = "rmarkdown",
+                 caption = "Table 1. Samples from the data set.")
 
 #' Filter the data to the same RT range as the LC-MS run
 msms_data <- filterRt(msms_data, c(10, 240))
