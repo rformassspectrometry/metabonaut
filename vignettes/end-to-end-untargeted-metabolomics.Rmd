@@ -1740,7 +1740,6 @@ abundances:
 #' Extract results as a SummarizedExperiment
 res <- quantify(data, method = "sum", filled = FALSE)
 res
-
 ```
 
 Sample identifications from the *xcms* result's `sampleData()` are now available as
