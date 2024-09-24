@@ -35,6 +35,7 @@ jobs:
       - name: Install MsIO and MsBackendMetaboLights manually
         run: |
           install.packages("BiocManager")
+          BiocManager::install("remotes")
           BiocManager::install("RforMassSpectrometry/MsBackendMetaboLights")
           BiocManager::install("RforMassSpectrometry/MsIO")
         shell: Rscript {0}

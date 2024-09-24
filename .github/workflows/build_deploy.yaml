@@ -23,6 +23,8 @@ jobs:
           install.packages("BiocManager")
           BiocManager::install("RforMassSpectrometry/MsBackendMetaboLights")
           BiocManager::install("RforMassSpectrometry/MsIO")
+          BiocManager::install("RforMassSpectrometry/xcms")
+          BiocManager::install("RforMassSpectrometry/MsExperiment")
         shell: Rscript {0}
 
       - name: Check
