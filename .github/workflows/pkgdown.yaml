@@ -32,6 +32,13 @@ jobs:
         with:
           use-public-rspm: true
 
+      - name: Install MsIO and MsBackendMetaboLights manually
+        run: |
+          install.packages("remotes")
+          remotes::install_github("RforMassSpectrometry/MsIO")
+          remotes::install_github("RforMassSpectrometry/MsBackendMetaboLights")
+        shell: Rscript {0}
+
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
           extra-packages: any::pkgdown, local::.
