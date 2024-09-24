@@ -16,6 +16,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Install rcmdcheck
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           install.packages('rcmdcheck')
           install.packages("BiocManager")
