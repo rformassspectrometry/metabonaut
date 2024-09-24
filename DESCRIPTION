@@ -1,19 +1,18 @@
 Package: metabonaut
 Title: Exploring and Analyzing LC-MS data
 Version: 0.0.1
-Authors@R: c(
-         person(given = "Philippine", family = "Louail",
+Authors@R: 
+    c(person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",
             role = c("aut", "cre"),
             comment = c(ORCID = "0009-0007-5429-6846")),
-
-            person(given = "Johannes", family = "Rainer",
+     person(given = "Johannes", family = "Rainer",
             email = "Johannes.Rainer@eurac.edu",
-            role = c("aut", "cre"),
+            role = c("aut"),
             comment = c(ORCID = "0000-0002-6977-7147")))
 Description: This resource hosts tutorials and end-to-end workflows 
-describing how to analyse LC-MS/MS data from raw files to annotation
-using biocoductor softwares.
+             describing how to analyse LC-MS/MS data from raw files to
+             annotation using biocoductor softwares.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
@@ -43,9 +42,8 @@ Suggests:
     RColorBrewer,
     SummarizedExperiment,
     pheatmap
-URL: https://github.com/rformassspectrometry/metabonaut/
+URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectrometry.github.io/metabonaut/
 BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 VignetteBuilder: knitr
 BiocType: Workflow
-biocViews: ?
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2

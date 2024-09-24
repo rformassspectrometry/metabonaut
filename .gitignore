@@ -6,3 +6,4 @@ hidden_file_ext = c(
     ".gitattributes", ".gitmodules", ".hgtags", ".project", ".seed",
     ".settings", ".tm_properties"
 )
+docs

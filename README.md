@@ -40,14 +40,6 @@ and analyzing LC-MS data with Spectra and xcms. Zenodo, May
 
 ## Installation
 
-```r
-install.packages("BiocManager")
-BiocManager::install("RforMassSpectrometry/metabonaut",
-    dependencies = TRUE, ask = FALSE, update = TRUE)
-```
-
-
-
 
 ## Contribution
 
