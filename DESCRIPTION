@@ -12,7 +12,7 @@ Authors@R:
             comment = c(ORCID = "0000-0002-6977-7147")))
 Description: This resource hosts tutorials and end-to-end workflows 
              describing how to analyse LC-MS/MS data from raw files to
-             annotation using biocoductor softwares.
+             annotation using bioconductor softwares.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
@@ -47,3 +47,4 @@ BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 VignetteBuilder: knitr
 BiocType: Workflow
 RoxygenNote: 7.3.2
+DockerImage: rformassspectrometry/metabonaut

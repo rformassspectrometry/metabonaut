@@ -3,12 +3,16 @@ title: "A Complete End-to-End Workflow for untargeted LC-MS/MS Metabolomics Data
 author: "Philippine Louail, Anna Tagliaferri, Vinicius Verri Hernandes, Daniel M. S. Silva, Johannes Rainer"
 date: "2023-09-07"
 output:
-  BiocStyle::html_document
+  BiocStyle::html_document:
+    number_sections: true
+    toc_float: true
+    toc_depth: 2
 bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{A Complete End-to-End Workflow for untargeted LC-MS/MS Metabolomics Data Analysis in R}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  %\VignetteEncoding[utf8]{inputenc}
+  %\VignettePackage{metabonaut}
 ---
 
 ```{r style, warning=FALSE, include=FALSE, results='hide'}

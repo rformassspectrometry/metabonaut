@@ -1,30 +1,22 @@
 name: pkgdown
 
 on:
-  push:
-    branches:
-    - main
+  repository_dispatch:
+    types: [trigger-workflow-2]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    container: bioconductor/bioconductor_docker:RELEASE_3_19
+    container: rformassspectrometry/metabonaut
     steps:
       ## Most of these steps are the same as the ones in
       ## https://github.com/r-lib/actions/blob/master/examples/check-standard.yaml
       ## If they update their steps, we will also need to update ours.
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Install rcmdcheck
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           install.packages('rcmdcheck')
-          install.packages("BiocManager")
-          BiocManager::install("RforMassSpectrometry/MsBackendMetaboLights")
-          BiocManager::install("RforMassSpectrometry/MsIO")
-          BiocManager::install("RforMassSpectrometry/xcms")
-          BiocManager::install("RforMassSpectrometry/MsExperiment")
         shell: Rscript {0}
 
       - name: Check
@@ -54,7 +46,7 @@ jobs:
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
-          git config --global --add safe.directory /__w/metabonaut/metabonaut
+          git config --global --add safe.directory /__w/xcmsTutorials/xcmsTutorials
           Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
         shell: bash {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
