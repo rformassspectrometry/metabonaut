@@ -12,12 +12,11 @@ COPY --chown=rstudio:rstudio . /home/rstudio/
 
 ## Install the required packages
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
-    BiocManager::install(ask = FALSE, type = 'source'); \
-    BiocManager::install(c('RCurl', 'xcms', 'RforMassSpectrometry/MsExperiment', 'SummarizedExperiment', \
-    'RforMassSpectrometry/Spectra', 'RforMassSpectrometry/MetaboCoreUtils', 'limma', 'matrixStats', \
+    BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
+    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', \
     'pander', 'RColorBrewer', 'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', \
-    'RforMassSpectrometry/CompoundDb', 'RforMassSpectrometry/MetaboAnnotation', 'RforMassSpectrometry/MsIO', \
-    'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE, type = 'source')"
+    'CompoundDb', 'MetaboAnnotation', 'RforMassSpectrometry/MsIO', \
+    'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)"
 
 ## Install the package from the current directory, build vignettes, and ensure dependencies
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \

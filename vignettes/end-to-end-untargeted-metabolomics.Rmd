@@ -2794,7 +2794,7 @@ sampleData(msms_data) <- sampleData(msms_data)[sampleData(msms_data)$phenotype =
 
 sampleData(msms_data) <- sampleData(msms_data)[grepl("MSMS", sampleData(msms_data)$derived_spectra_data_file), ]
 
-# Add fragmentation data information 
+# Add fragmentation data information (from filenames)
 sampleData(msms_data)$fragmentation_mode <- c("CE20", "CE30", "CES")
 
 #let's look at the updated sample data
