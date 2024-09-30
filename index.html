@@ -53,15 +53,17 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="exploring-and-analyzing-lc-ms-data">Exploring and analyzing LC-MS data<a class="anchor" aria-label="anchor" href="#exploring-and-analyzing-lc-ms-data"></a>
+<div class="page-header"><h1 id="exploring-and-analyzing-untargeted-metabolomics-data">Exploring and analyzing untargeted metabolomics data<a class="anchor" aria-label="anchor" href="#exploring-and-analyzing-untargeted-metabolomics-data"></a>
 </h1></div>
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" class="external-link"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="License: CC BY-NC 4.0"></a></p>
-<p>This walks through the preprocessing of a small data set emphasizing on selection of data-dependent settings for the individual preprocessing steps.</p>
+<p>Welcome to Metabonaut ! <span class="emoji" data-emoji="astronaut">🧑‍🚀</span></p>
+<p>This initiative present a series of workflows based on a small LC-MS/MS dataset using R and Bioconductor packages. Throughout the workflows, we demonstrate how the various algorithms can be adapted to the particular data set and how various R packages can be seamlessly integrated to ensure efficient and reproducible processing.</p>
+<p>The main workflow presented is the <a href="https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html">“Complete end-to-end LC-MS/MS Metabolomic Data analysis”</a></p>
 <p>The full R code of all examples along with comprehensive descriptions is provided in the <a href="./vignettes/end-to-end-untargeted-metabolomics.Rmd">end-to-end-untargeted-metabolomics.Rmd</a> file. This file can be opened with e.g. RStudio which allows execution of the individual R commands (see section below for additionally required R packages). The R command <code>rmarkdown::render("xcms-preprocessing.Rmd")</code> would generate the html file <a href="https://github.com/rformassspectrometry/metabonaut/end-to-end-untargeted-metabolomics.html" class="external-link">xcms-preprocessing.html</a>.</p>
 <div class="section level2">
 <h2 id="important-to-note">Important to note<a class="anchor" aria-label="anchor" href="#important-to-note"></a>
 </h2>
-<p>This tutorial expect a user that has some basic knowledge of R and Rmarkdown. We would advise to go through a short tutorial for each in order to be comfortable testing the code and easily adapting it to your own data. For Rmarkdown, click <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">here</a> for R, <a href="https://learn-r.org/" class="external-link">here</a></p>
+<p>This tutorial expect a user that has some basic knowledge of R and Rmarkdown. We would advise to go through a short tutorial for each in order to be comfortable testing the code and easily adapting it to your own data. For Rmarkdown, click <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">here</a> for R, <a href="https://learn-r.org/" class="external-link">here</a> and <a href="https://swirlstats.com/students.html" class="external-link">here</a> you can find a really fun way to learn basic R programming through an interactive short course</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -85,16 +87,13 @@
 <p>For now 2 packages used in this workflow are not on bioconductor and therefore need to be downloaded from github. Run the code as follow:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"RforMassSpectrometry/MsBackendMetaboLights"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"RforMassSpectrometry/MsIO"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"rformassspectrometry/metabonaut"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="known-issues">Known issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
 </h2>
-<p>This workflow is still getting ready to be fully deployed, therefore we have some ongoing issue that we are actively resolving.</p>
-<ul>
-<li>The chunks between the Line 414 to 453 are not being rendered and should not be rendered as we are having some issue with the backend.</li>
-</ul>
+<p>This workflow is still getting ready to be fully deployed, therefore we might have some ongoing issue that we are actively resolving. If we know about them we will list them below.</p>
+<p>For now, we are not aware of any problem in the code. If you have any issue be sure to check that you have the latest devel version of all the packages. If the issue is not resolved by the updating of packages then please report it with a reproducible example on github <a href="https://github.com/rformassspectrometry/metabonaut/issues" class="external-link">here</a></p>
 <p>If you have any other issue, do not hesitate to report them to us.</p>
 </div>
 <div class="section level2">
