@@ -71,7 +71,12 @@ Run the code as follow:
 
 ```r
 install.packages("BiocManager")
-BiocManager::install("rformassspectrometry/metabonaut")
+BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment',
+    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 
+    'RColorBrewer', 'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 
+    'AnnotationHub', 'CompoundDb', 'MetaboAnnotation', 
+    'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), 
+ask = FALSE, dependencies = TRUE)"
 ```
 
 ## Known issues 
