@@ -85,9 +85,13 @@
 </ul>
 <p>For manual installation, an R version &gt;= 4.4.0 is required as well as recent versions of the packages used in the workflow.</p>
 <p>For now 2 packages used in this workflow are not on bioconductor and therefore need to be downloaded from github. Run the code as follow:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"rformassspectrometry/metabonaut"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">'RCurl'</span>, <span class="st">'xcms'</span>, <span class="st">'MsExperiment'</span>, <span class="st">'SummarizedExperiment'</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="st">'Spectra'</span>, <span class="st">'MetaboCoreUtils'</span>, <span class="st">'limma'</span>, <span class="st">'matrixStats'</span>, <span class="st">'pander'</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="st">'RColorBrewer'</span>, <span class="st">'pheatmap'</span>, <span class="st">'vioplot'</span>, <span class="st">'ggfortify'</span>, <span class="st">'gridExtra'</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="st">'AnnotationHub'</span>, <span class="st">'CompoundDb'</span>, <span class="st">'MetaboAnnotation'</span>, </span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="st">'RforMassSpectrometry/MsIO'</span>, <span class="st">'RforMassSpectrometry/MsBackendMetaboLights'</span>), </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)<span class="st">"</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="known-issues">Known issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
