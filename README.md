@@ -1,10 +1,18 @@
-# Exploring and analyzing LC-MS data
+# Exploring and analyzing untargeted metabolomics data
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
-This walks through the
-preprocessing of a small data set emphasizing on selection of data-dependent
-settings for the individual preprocessing steps.
+
+Welcome to Metabonaut ! :astronaut:
+
+This initiative present a series of workflows based on a small LC-MS/MS dataset
+using R and Bioconductor packages. Throughout the workflows, we demonstrate how 
+the various algorithms can be adapted to the particular data set and how various
+R packages can be seamlessly integrated to ensure efficient and reproducible 
+processing. 
+
+The main workflow presented is the ["Complete end-to-end LC-MS/MS Metabolomic
+Data analysis"](https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html) 
 
 The full R code of all examples along with comprehensive descriptions is
 provided in the [end-to-end-untargeted-metabolomics.Rmd](./vignettes/end-to-end-untargeted-metabolomics.Rmd)
@@ -19,7 +27,8 @@ generate the html file
 This tutorial expect a user that has some basic knowledge of R and Rmarkdown. 
 We would advise to go through a short tutorial for each in order to be 
 comfortable testing the code and easily adapting it to your own data. For Rmarkdown, 
-click [here](https://bookdown.org/yihui/rmarkdown/) for R, [here](https://learn-r.org/)
+click [here](https://bookdown.org/yihui/rmarkdown/) for R, [here](https://learn-r.org/) and [here](https://swirlstats.com/students.html) 
+you can find a really fun way to learn basic R programming through an interactive short course
 
 ## Installation
 
@@ -62,17 +71,14 @@ Run the code as follow:
 
 ```r
 install.packages("BiocManager")
-BiocManager::install("RforMassSpectrometry/MsBackendMetaboLights", dependencies = TRUE)
-BiocManager::install("RforMassSpectrometry/MsIO", dependencies = TRUE)
+BiocManager::install("rformassspectrometry/metabonaut")
 ```
 
 ## Known issues 
 
-This workflow is still getting ready to be fully deployed, therefore we have some ongoing issue that we
-are actively resolving.
+This workflow is still getting ready to be fully deployed, therefore we might have some ongoing issue that we are actively resolving. If we know about them we will list them below.
 
-- The chunks between the Line 414 to 453 are not being rendered and should not be rendered as we
-are having some issue with the backend. 
+For now, we are not aware of any problem in the code. If you have any issue be sure to check that you have the latest devel version of all the packages. If the issue is not resolved by the updating of packages then please report it with a reproducible example on github [here](https://github.com/rformassspectrometry/metabonaut/issues)
 
 If you have any other issue, do not hesitate to report them to us. 
 

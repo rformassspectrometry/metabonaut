@@ -2,3 +2,7 @@ docs
 local_data
 *.o
 *.so
+/.quarto/
+/_site/
+*.png
+*.html
