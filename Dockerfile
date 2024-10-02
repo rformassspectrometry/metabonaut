@@ -17,6 +17,7 @@ RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
     'pander', 'RColorBrewer', 'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', \
     'CompoundDb', 'MetaboAnnotation', 'RforMassSpectrometry/MsIO', \
     'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)"
+    BiocManager::install('RforMassSpectrometry/xcms', ref = 'phili')
 
 ## Install the package from the current directory, build vignettes, and ensure dependencies
 RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
