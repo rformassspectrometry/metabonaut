@@ -41,7 +41,8 @@ Suggests:
     rmarkdown,
     RColorBrewer,
     SummarizedExperiment,
-    pheatmap
+    pheatmap, 
+    quarto
 URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectrometry.github.io/metabonaut/
 BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 VignetteBuilder: knitr
