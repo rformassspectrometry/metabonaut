@@ -6,3 +6,4 @@ local_data
 /_site/
 *.png
 *.html
+*.RData
