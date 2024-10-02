@@ -11,14 +11,16 @@ WORKDIR /home/rstudio
 COPY --chown=rstudio:rstudio . /home/rstudio/
 
 ## Install the required packages
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
-    BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
-    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', \
-    'pander', 'RColorBrewer', 'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', \
-    'CompoundDb', 'MetaboAnnotation', 'RforMassSpectrometry/MsIO', \
-    'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)"
-    BiocManager::install('RforMassSpectrometry/xcms', ref = 'phili')
+RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
+    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 'RColorBrewer', \
+    'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', 'CompoundDb', \
+    'MetaboAnnotation', 'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), \
+    ask = FALSE, dependencies = TRUE)" && \
+    Rscript -e "BiocManager::install('sneumann/xcms', ref = 'phili', ask = FALSE)"
 
-## Install the package from the current directory, build vignettes, and ensure dependencies
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
-    devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE, repos = BiocManager::repositories())"
+
+## Install the current package with vignettes
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
+
+## Set the correct user for subsequent commands
+USER rstudio

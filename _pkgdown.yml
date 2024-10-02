@@ -1,8 +1,8 @@
-url: https://rformassspectrometry.github.io/metabonaut/
+url: "https://rformassspectrometry.github.io/metabonaut/"
 template:
   bootstrap: 5
   bootswatch: flatly
- light-switch: true
+  light-switch: true
 
 navbar:
   title: "Metabonaut"
@@ -17,8 +17,6 @@ navbar:
           href: articles/end-to-end-untargeted-metabolomics.html
         - text: "Seamless Alignment: Merging New data with Existing Preprocessed Datasets"
           href: articles/alignment-to-external-dataset.html
-  right:
-  - icon: fa-home
-    href: ../
-  - icon: fa-github
-    href: https://github.com/rformassspectrometry/metabonaut/
+
+structure:
+  right: [search, twitter, github, lightswitch]
