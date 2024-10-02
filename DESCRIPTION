@@ -23,7 +23,8 @@ Depends:
     Spectra (>= 1.11.10),
     MsExperiment, 
     MsIO, 
-    MsBackendMetaboLights
+    MsBackendMetaboLights,
+    quarto
 Suggests:
     readxl, 
     limma,
@@ -41,8 +42,7 @@ Suggests:
     rmarkdown,
     RColorBrewer,
     SummarizedExperiment,
-    pheatmap, 
-    quarto
+    pheatmap
 URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectrometry.github.io/metabonaut/
 BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 VignetteBuilder: knitr
