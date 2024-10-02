@@ -1,4 +1,24 @@
 url: https://rformassspectrometry.github.io/metabonaut/
 template:
   bootstrap: 5
+  bootswatch: flatly
+ light-switch: true
 
+navbar:
+  title: "Metabonaut"
+  left: 
+    - text: "Install"
+      href: articles/install_v0.html
+    - text: "Vignettes"
+      menu: 
+        - text: "Dataset investigation: What to do when you get your data"
+          href: articles/dataset-investigation.html
+        - text: "End-to-end workflow for untargeted metabolomics data analysis in R"
+          href: articles/end-to-end-untargeted-metabolomics.html
+        - text: "Seamless Alignment: Merging New data with Existing Preprocessed Datasets"
+          href: articles/alignment-to-external-dataset.html
+  right:
+  - icon: fa-home
+    href: ../
+  - icon: fa-github
+    href: https://github.com/rformassspectrometry/metabonaut/

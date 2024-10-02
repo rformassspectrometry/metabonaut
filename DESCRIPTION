@@ -47,4 +47,4 @@ BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 VignetteBuilder: knitr
 BiocType: Workflow
 RoxygenNote: 7.3.2
-DockerImage: rformassspectrometry/metabonaut
+DockerImage: rformassspectrometry/metabonaut:latest
