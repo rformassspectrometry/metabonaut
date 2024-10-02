@@ -21,6 +21,3 @@ RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'Summari
 
 ## Install the current package with vignettes
 RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
-
-## Set the correct user for subsequent commands
-USER rstudio

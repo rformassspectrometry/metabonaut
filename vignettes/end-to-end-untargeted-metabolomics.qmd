@@ -1314,8 +1314,7 @@ grid()
 ```
 
 On average, the variation in retention times of internal standards across
-samples was slightly reduced by the alignment.[Phili: actually i don't think we
-can say that at all from the plot]
+samples was *very* slightly reduced by the alignment.
 
 
 ## Correspondence
