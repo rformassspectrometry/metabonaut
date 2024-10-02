@@ -14,7 +14,7 @@ COPY --chown=rstudio:rstudio . /home/rstudio/
 RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
     'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 'RColorBrewer', \
     'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', 'CompoundDb', \
-    'MetaboAnnotation', 'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), \
+    'MetaboAnnotation', 'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights', 'quarto'), \
     ask = FALSE, dependencies = TRUE)" && \
     Rscript -e "BiocManager::install('sneumann/xcms', ref = 'phili', ask = FALSE)"
 
