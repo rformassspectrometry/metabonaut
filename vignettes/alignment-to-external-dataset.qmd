@@ -4,7 +4,13 @@ format: html
 editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
+vignette: >
+  %\VignetteIndexEntry{Seamless Alignment: Merging New Data with and Existing Preprocessed Dataset}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
+
+{{< include 01-end-to-end-untargeted-metabolomics.qmd >}}
 
 # Introduction
 

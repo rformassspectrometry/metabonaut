@@ -1,0 +1,68 @@
+# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
+# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+on:
+  repository_dispatch:
+    types: [trigger-workflow-2]
+  workflow_dispatch:
+
+name: pkgdown
+
+permissions: read-all
+
+jobs:
+  pkgdown:
+    runs-on: ubuntu-latest
+    container: rformassspectrometry/metabonaut:latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: quarto-dev/quarto-actions/setup@v2
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: pre-release
+          tinytex: true
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          needs: website
+
+      - name: Install rcmdcheck
+        run: |
+          install.packages('rcmdcheck')
+        shell: Rscript {0}
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_REMOTE_: false
+        run: |
+          Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
+        shell: bash {0}
+
+      - name: Build site
+        run: |
+          Rscript -e "pkgdown::init_site()"
+          Rscript -e "pkgdown::build_article('01-end-to-end-untargeted-metabolomics', quiet = FALSE)"
+          ls vignettes/*.Rmd | xargs -n1 basename | grep -v '01-end-to-end-untargeted-metabolomics.qmd' | cut -f 1 -d '.' | parallel -j4 "Rscript -e 'pkgdown::build_article(\"{}\")'"
+          Rscript -e "pkgdown::build_site(lazy = TRUE, quiet = FLASE, new_process = FALSE, install = FALSE)"
+        shell: bash {0}
+
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs

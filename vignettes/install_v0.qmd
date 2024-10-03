@@ -4,6 +4,10 @@ format: html
 editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
+vignette: >
+  %\VignetteIndexEntry{Install}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 For manual installation, an [R](https://www.r-project.org/) version \>= 4.4.0 is

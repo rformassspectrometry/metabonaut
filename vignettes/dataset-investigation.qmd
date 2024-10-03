@@ -4,6 +4,10 @@ format: html
 editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
+vignette: >
+  %\VignetteIndexEntry{Dataset investigation: What to do when you get your data}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ## In Construction
@@ -59,5 +63,11 @@ separation was achieved using hydrophilic interaction liquid chromatography
     clearer understanding of the dataset.
 -   Provide more in-depth visualizations to explore and understand the dataset
     quality.
--   Compare pool lc-ms and pool lc-ms/ms and show that we have better
-    separation on the second run.
+-   Compare pool lc-ms and pool lc-ms/ms and show that we have better separation
+    on the second run.
+
+```{r}
+getwd()
+list.files()
+list.dirs()
+```
