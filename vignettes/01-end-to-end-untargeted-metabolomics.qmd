@@ -1,12 +1,10 @@
 ---
 title: "Complete end-to-end LC-MS/MS Metabolomic Data analysis"
-format: 
-    html
+format: html
 tbl-cap-location: bottom
 editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
-resource_files:
 bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{Complete end-to-end LC-MS/MS Metabolomic Data analysis}
