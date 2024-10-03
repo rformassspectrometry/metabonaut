@@ -10,6 +10,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = './')
+```
+
 # Introduction
 
 In certain experiments, aligning datasets recorded at different times is
@@ -54,7 +58,7 @@ worflow](https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-u
 vignette.
 
 ```{r}
-load("objects/preprocessed_lcms1.RData")
+load("preprocessed_lcms1.RData")
 ```
 
 ## Load unprocessed LC-MS/MS data

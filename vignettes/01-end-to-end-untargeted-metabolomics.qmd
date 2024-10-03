@@ -12,6 +12,10 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir = './')
+```
+
 # Introduction
 
 The present workflow describes all steps for the analysis of an LC-MS/MS
@@ -1706,7 +1710,7 @@ Javascript as well as loaded easily back into R.
 # d <- file.path(tempdir(), "objects/lcms1")
 # saveMsObject(lcms1, AlabasterParam(path = d))
 #for now let's do R object because the previous method is not implemented yet. 
-save(lcms1, file = "objects/preprocessed_lcms1.RData")
+save(lcms1, file = "preprocessed_lcms1.RData")
 ```
 
 # Data normalization
