@@ -7,8 +7,6 @@ on:
 
 name: pkgdown
 
-permissions: read-all
-
 jobs:
   pkgdown:
     runs-on: ubuntu-latest
@@ -27,11 +25,6 @@ jobs:
         with:
           use-public-rspm: true
 
-      - uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
-
       - name: Install rcmdcheck
         run: |
           install.packages('rcmdcheck')
@@ -43,6 +36,21 @@ jobs:
         run: |
           Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
         shell: bash {0}
+
+      - name: Install deploy dependencies
+        run: |
+          apt-get update
+          apt-get -y install rsync
+
+      - name: Install pkgdown
+        if: github.ref == 'refs/heads/main'
+        run: |
+          install.packages('pkgdown')
+        shell: Rscript {0}
+
+      - name: Install package
+        if: github.ref == 'refs/heads/main'
+        run: R CMD INSTALL .
 
       - name: Build site
         run: |
