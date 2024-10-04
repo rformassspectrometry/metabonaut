@@ -18,13 +18,14 @@ Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 4.3),
+    R (>= 4.3)
+Suggests:
+    MsCoreUtils,
     xcms (>= 4.1.5),
     Spectra (>= 1.11.10),
     MsExperiment, 
     MsIO, 
-    MsBackendMetaboLights
-Suggests:
+    MsBackendMetaboLights, 
     readxl, 
     limma,
     matrixStats,

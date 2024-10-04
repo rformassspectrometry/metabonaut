@@ -11,6 +11,8 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
+library(knitr)
+library(quarto)
 knitr::opts_knit$set(root.dir = './')
 ```
 
@@ -36,7 +38,6 @@ library(MsBackendMetaboLights)
 library(xcms)
 library(MsExperiment)
 library(Spectra)
-library(knitr)
 ```
 
 Setting parallel processing to improve the efficiency of the process:

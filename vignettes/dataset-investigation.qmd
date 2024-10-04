@@ -12,6 +12,12 @@ vignette: >
 
 ## In Construction
 
+```{r setup, include=FALSE}
+library(knitr)
+library(quarto)
+knitr::opts_knit$set(root.dir = './')
+```
+
 # Introduction
 
 So, you (or your amazing lab mate) have finally finished the data acquisition,
@@ -65,3 +71,9 @@ separation was achieved using hydrophilic interaction liquid chromatography
     quality.
 -   Compare pool lc-ms and pool lc-ms/ms and show that we have better separation
     on the second run.
+
+```{r}
+getwd()
+list.files()
+list.dirs()
+```

@@ -13,6 +13,8 @@ vignette: >
 ---
 
 ```{r setup, include=FALSE}
+library(knitr)
+library(quarto)
 knitr::opts_knit$set(root.dir = './')
 ```
 
@@ -27,7 +29,7 @@ packages could be used for different steps and some examples are mentioned
 throughout the workflow.
 
 ![Steps of the end-to-end workflow and possible
-alternatives](\images\workflow.png)
+alternatives](\vignettes\images\workflow.png)
 
 # Data description
 
@@ -42,7 +44,6 @@ Our workflow is therefore based on the following dependencies:
 
 ```{r packages used, message=FALSE, warning=FALSE}
 ## General bioconductor package
-library(Biobase)
 library(BiocStyle)
 library(knitr)
 
@@ -75,7 +76,6 @@ library(AnnotationHub) # Annotation resources
 library(CompoundDb)    # Access small compound annotation data.
 library(MetaboAnnotation) # Functionality for metabolite annotation.
 ```
-
 
 # Data import
 
