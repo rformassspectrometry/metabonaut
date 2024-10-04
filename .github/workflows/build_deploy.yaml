@@ -1,29 +1,26 @@
-# Workflow derived from https://github.com/r-lib/actions/tree/v2/examples
-# Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+name: pkgdown
+
 on:
   repository_dispatch:
     types: [trigger-workflow-2]
-  workflow_dispatch:
-
-name: pkgdown
 
 jobs:
-  pkgdown:
+  build-and-deploy:
     runs-on: ubuntu-latest
     container: rformassspectrometry/metabonaut:latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Install Quarto
+        run: |
+          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
+          sudo dpkg -i quarto-1.5.57-linux-amd64.deb
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
+      - name: Verify Quarto Installation
+        run: quarto --version
 
       - name: Install rcmdcheck
         run: |
@@ -52,18 +49,19 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: R CMD INSTALL .
 
-      - name: Build site
+      - name: Deploy package
+        if: github.ref == 'refs/heads/main'
         run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git config --global --add safe.directory /__w/metabonaut/metabonaut
           Rscript -e "pkgdown::init_site()"
           Rscript -e "pkgdown::build_article('01-end-to-end-untargeted-metabolomics', quiet = FALSE)"
           ls vignettes/*.Rmd | xargs -n1 basename | grep -v '01-end-to-end-untargeted-metabolomics.qmd' | cut -f 1 -d '.' | parallel -j4 "Rscript -e 'pkgdown::build_article(\"{}\")'"
-          Rscript -e "pkgdown::build_site(lazy = TRUE, quiet = FLASE, new_process = FALSE, install = FALSE)"
-        shell: bash {0}
 
-      - name: Deploy to GitHub pages 🚀
-        if: github.event_name != 'pull_request'
-        uses: JamesIves/github-pages-deploy-action@v4.5.0
-        with:
-          clean: false
-          branch: gh-pages
-          folder: docs
+          Rscript -e "pkgdown::deploy_to_branch(lazy = TRUE, quiet = FALSE, new_process = FALSE, install = FALSE)"
+        shell: bash {0}
+        ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
+        ## at least one locally before this will work. This creates the gh-pages
+        ## branch (erasing anything you haven't version controlled!) and
+        ## makes the git history recognizable by pkgdown.

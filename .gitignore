@@ -7,3 +7,6 @@ local_data
 *.png
 *.html
 *.RData
+*.rmarkdown
+*.js
+*.css
