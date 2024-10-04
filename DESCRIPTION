@@ -40,7 +40,9 @@ Suggests:
     rmarkdown,
     RColorBrewer,
     SummarizedExperiment,
-    pheatmap
+    pheatmap, 
+    knitr,
+    quarto
 URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectrometry.github.io/metabonaut/
 BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 BiocType: Workflow
