@@ -5,7 +5,6 @@ tbl-cap-location: bottom
 editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
-bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{Complete end-to-end LC-MS/MS Metabolomic Data analysis}
   %\VignetteEngine{quarto::html}
@@ -419,7 +418,7 @@ rtime(spec2)
 #' Checking its m/z
 mz(spec2)
 
-#' Filtering for a specific  m/z range and viewing in a tabular format
+#' Filtering for a specific m/z range and viewing in a tabular format
 filt_spec <- filterMzRange(spec2,c(50,200))
 
 data.frame(intensity = unlist(intensity(filt_spec)),
@@ -456,7 +455,8 @@ bpc <- chromatogram(lcms1, aggregationFun = "max")
 plot(bpc, col = paste0(col_sample, 80), main = "BPC", lwd = 1.5)
 grid()
 legend("topright", col = col_phenotype,
-       legend = names(col_phenotype), lty = 1, lwd = 2, horiz = TRUE, bty = "n")
+       legend = names(col_phenotype), lty = 1, lwd = 2, horiz = TRUE,
+       bty = "n")
 ```
 
 After about 240 seconds no signal seems to be measured. Thus, we filter the data

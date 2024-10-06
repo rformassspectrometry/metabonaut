@@ -57,9 +57,7 @@ jobs:
           git config --global --add safe.directory /__w/metabonaut/metabonaut
           Rscript -e "pkgdown::init_site()"
           Rscript -e "pkgdown::build_article('a-end-to-end-untargeted-metabolomics', quiet = FALSE)"
-          ls vignettes/*.Rmd | xargs -n1 basename | grep -v 'a-end-to-end-untargeted-metabolomics.qmd' | cut -f 1 -d '.' | parallel -j4 "Rscript -e 'pkgdown::build_article(\"{}\")'"
-
-          Rscript -e "pkgdown::deploy_to_branch(lazy = TRUE, quiet = FALSE, new_process = FALSE, install = FALSE)"
+          Rscript -e "pkgdown::deploy_to_branch(lazy = TRUE, new_process = FALSE, install = FALSE)"
         shell: bash {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
         ## at least one locally before this will work. This creates the gh-pages
