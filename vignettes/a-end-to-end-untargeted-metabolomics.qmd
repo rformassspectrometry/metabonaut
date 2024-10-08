@@ -28,7 +28,7 @@ packages could be used for different steps and some examples are mentioned
 throughout the workflow.
 
 ![Steps of the end-to-end workflow and possible
-alternatives](\vignettes\images\workflow.png)
+alternatives](\images\workflow.png)
 
 # Data description
 
