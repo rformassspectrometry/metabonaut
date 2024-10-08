@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-
+        ## why would I need to re download quarto, it's already in the container
       - name: Install Quarto
         run: |
           wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
@@ -45,6 +45,7 @@ jobs:
           install.packages('pkgdown')
         shell: Rscript {0}
 
+        ## Same, why would I need to do that if we already do it when building container
       - name: Install package
         if: github.ref == 'refs/heads/main'
         run: R CMD INSTALL .
@@ -55,7 +56,7 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git config --global --add safe.directory /__w/metabonaut/metabonaut
-          Rscript -e quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabolomics.qmd', quiet = FALSE)
+          Rscript -e "quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabolomics.qmd', quiet = FALSE)"
           Rscript -e "pkgdown::deploy_to_branch(lazy = TRUE, install = FALSE)"
         shell: bash {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
