@@ -13,11 +13,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        ## I do not know if this step below is necessary, will test it later
-      - name: Install Quarto
-        run: |
-          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
-          sudo dpkg -i quarto-1.5.57-linux-amd64.deb
 
       - name: Verify Quarto Installation
         run: quarto --version
@@ -45,7 +40,6 @@ jobs:
           install.packages('pkgdown')
         shell: Rscript {0}
 
-        ## Why would I need to do the step below if we already do it when building container
       - name: Install package
         if: github.ref == 'refs/heads/main'
         run: R CMD INSTALL .
@@ -56,10 +50,6 @@ jobs:
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
           git config --global --add safe.directory /__w/metabonaut/metabonaut
-          Rscript -e "pkgdown::build_article('alignment-to-external-dataset', quiet = FALSE)"
-          Rscript -e "pkgdown::build_article('dataset-investigation', quiet = FALSE)"
-          Rscript -e "pkgdown::build_article('install_v0', quiet = FALSE)"
-          Rscript -e "pkgdown::build_article('a-end-to-end-untargeted-metabolomics', quiet = FALSE)"
           Rscript -e "pkgdown::deploy_to_branch(new_process = FALSE)"
         shell: bash {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
