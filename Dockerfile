@@ -24,3 +24,10 @@ RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'Summari
 
 ## Install the current package with vignettes
 RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
+
+USER rstudio
+
+## build article for end-to-end:test
+RUN Rscript -e "quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabolomics.qmd', quiet = FALSE)"
+
+USER root
