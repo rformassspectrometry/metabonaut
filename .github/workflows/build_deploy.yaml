@@ -47,7 +47,9 @@ jobs:
         run: R CMD INSTALL .
 
       - name: Build site
-        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        run: |
+          pkgdown::build_article("install_v0", quiet = FALSE)
+          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
       - name: Deploy to GitHub pages 🚀
