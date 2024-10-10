@@ -25,11 +25,11 @@ RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'Summari
 ## Install the current package with vignettes
 RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = FALSE)"
 
-## USER rstudio
+USER rstudio
 
 ## build article for end-to-end:test
-##RUN Rscript -e "quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabolomics.qmd', quiet = FALSE)"
+RUN Rscript -e "quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabolomics.qmd', quiet = FALSE)"
 
-##USER root
+USER root
 
-##RUN find vignettes/ -name "*.html" -type f -delete && find vignettes/ -name "*_files" -type d -exec rm -r {} +
+RUN find vignettes/ -name "*.html" -type f -delete && find vignettes/ -name "*_files" -type d -exec rm -r {} +
