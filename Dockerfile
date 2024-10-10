@@ -33,4 +33,3 @@ RUN Rscript -e "quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabol
 USER root
 
 RUN find vignettes/ -name "*.html" -type f -delete && find vignettes/ -name "*_files" -type d -exec rm -r {} +
- 
