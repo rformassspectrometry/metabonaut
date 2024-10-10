@@ -1,30 +1,31 @@
 Package: metabonaut
-Title: Exploring and Analyzing LC-MS data
+Title: Exploring and Analyzing LC-MS Data
 Version: 0.0.1
 Authors@R: 
     c(person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",
             role = c("aut", "cre"),
-            comment = c(ORCID = "0009-0007-5429-6846")),
+            comment = "ORCID: 0009-0007-5429-6846"),
      person(given = "Johannes", family = "Rainer",
             email = "Johannes.Rainer@eurac.edu",
-            role = c("aut"),
-            comment = c(ORCID = "0000-0002-6977-7147")))
+            role = "aut",
+            comment = "ORCID: 0000-0002-6977-7147"))
 Description: This resource hosts tutorials and end-to-end workflows 
-             describing how to analyse LC-MS/MS data from raw files to
-             annotation using bioconductor softwares.
+             describing how to analyze LC-MS/MS data, from raw files 
+             to annotation, using Bioconductor packages.
 License: Artistic-2.0
 Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 4.3),
+    R (>= 4.3)
+Suggests:
+    MsCoreUtils,
     xcms (>= 4.1.5),
     Spectra (>= 1.11.10),
     MsExperiment, 
     MsIO, 
-    MsBackendMetaboLights
-Suggests:
+    MsBackendMetaboLights, 
     readxl, 
     limma,
     matrixStats,
@@ -37,14 +38,16 @@ Suggests:
     vioplot, 
     MetaboCoreUtils,
     BiocStyle,
-    knitr,
     rmarkdown,
     RColorBrewer,
     SummarizedExperiment,
-    pheatmap
+    pheatmap, 
+    knitr,
+    quarto
 URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectrometry.github.io/metabonaut/
 BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
-VignetteBuilder: knitr
 BiocType: Workflow
 RoxygenNote: 7.3.2
-DockerImage: rformassspectrometry/metabonaut:latest
+VignetteBuilder: quarto, knitr
+SystemRequirements: Quarto command line tool
+    (<https://github.com/quarto-dev/quarto-cli>).

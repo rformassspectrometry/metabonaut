@@ -10,15 +10,26 @@ WORKDIR /home/rstudio
 
 COPY --chown=rstudio:rstudio . /home/rstudio/
 
-## Install the required packages
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
-    BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
-    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', \
-    'pander', 'RColorBrewer', 'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', \
-    'CompoundDb', 'MetaboAnnotation', 'RforMassSpectrometry/MsIO', \
-    'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)"
-    BiocManager::install('RforMassSpectrometry/MsBackendMetaboLights', ref = "phili")
+## Install quarto on docker image
+RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
+RUN gdebi --non-interactive quarto-linux-amd64.deb
 
-## Install the package from the current directory, build vignettes, and ensure dependencies
-RUN Rscript -e "options(repos = c(CRAN = 'https://cran.r-project.org')); \
-    devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE, repos = BiocManager::repositories())"
+## Install the required packages
+RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
+    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 'RColorBrewer', \
+    'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', 'CompoundDb', \
+    'MetaboAnnotation', 'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights', 'quarto'), \
+    ask = FALSE, dependencies = TRUE)" && \
+    Rscript -e "BiocManager::install('sneumann/xcms', ref = 'phili', ask = FALSE)"
+
+## Install the current package with vignettes
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
+
+USER rstudio
+
+## build article for end-to-end:test
+RUN Rscript -e "quarto::quarto_render('vignettes/a-end-to-end-untargeted-metabolomics.qmd', quiet = FALSE)"
+
+USER root
+
+RUN find vignettes/ -name "*.html" -type f -delete && find vignettes/ -name "*_files" -type d -exec rm -r {} +

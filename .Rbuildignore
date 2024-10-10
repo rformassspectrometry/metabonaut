@@ -13,3 +13,6 @@
 ^Dockerfile$
 _pkgdown.yml
 man/figures
+^_pkgdown\.yml$
+^docs$
+^.RData$   

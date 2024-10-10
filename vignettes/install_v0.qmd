@@ -4,6 +4,10 @@ format: html
 editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
+vignette: >
+  %\VignetteIndexEntry{Install}
+  %\VignetteEngine{quarto::html}
+  %\VignetteEncoding{UTF-8}
 ---
 
 For manual installation, an [R](https://www.r-project.org/) version \>= 4.4.0 is
@@ -19,14 +23,13 @@ tutorials:
 
 Run the code as follow:
 
-```{r}
+```{r eval=FALSE}
 install.packages("BiocManager")
 BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment',
     'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 
     'RColorBrewer', 'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 
     'AnnotationHub', 'CompoundDb', 'MetaboAnnotation', 
-    'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), 
-ask = FALSE, dependencies = TRUE)"
+    'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'))
 ```
 
 # Docker image
@@ -48,14 +51,10 @@ code and examples from the vignettes can be evaluated within this environment
     command line with
 
 ```         
-  docker run \
-      -e PASSWORD=bioc \
-      -p 8787:8787 \
-      rformassspectrometry/metabonaut:latest
+docker run -e PASSWORD=bioc -p 8787:8787 rformassspectrometry metabonaut:latest
 ```
 
 -   Enter [`http://localhost:8787`](http://localhost:8787) in a web browser and
     log in with username `rstudio` and password `bioc`.
 -   In the RStudio server version: open any of the R-markdown (*.Rmd*) files in
     the *vignettes* folder and evaluate the R code blocks in that document.
-

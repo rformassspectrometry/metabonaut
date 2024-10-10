@@ -4,6 +4,8 @@ local_data
 *.so
 /.quarto/
 /_site/
-*.png
 *.html
 *.RData
+*.rmarkdown
+*.js
+*.css
