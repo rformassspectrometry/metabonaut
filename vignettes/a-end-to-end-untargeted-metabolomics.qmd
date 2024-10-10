@@ -115,16 +115,14 @@ the code below we use a *fork-based* parallel processing on unix system, and a
 *socket-based* parallel processing on the Windows operating system.
 
 ```{r par-process, eval = FALSE}
-register(SerialParam())
 #' Set up parallel processing using 2 cores
-## if (.Platform$OS.type == "unix") {
-##     register(MulticoreParam(2))
-## } else {
-##     register(SnowParam(2))
-## }
+if (.Platform$OS.type == "unix") {
+    register(MulticoreParam(2))
+} else {
+    register(SnowParam(2))
+}
 
 ```
-
 
 # Data organisation
 
@@ -1713,7 +1711,7 @@ Javascript as well as loaded easily back into R.
 # d <- file.path(tempdir(), "objects/lcms1")
 # saveMsObject(lcms1, AlabasterParam(path = d))
 #for now let's do R object because the previous method is not implemented yet.
-save(lcms1, file = "preprocessed_lcms1.RData")
+#save(lcms1, file = "preprocessed_lcms1.RData")
 ```
 
 # Data normalization

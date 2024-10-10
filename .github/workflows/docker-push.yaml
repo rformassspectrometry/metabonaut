@@ -6,8 +6,6 @@ on:
   push:
     branches:
     - main
-    - phili
-    - jomain
 
 jobs:
   build-docker-and-push:

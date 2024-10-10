@@ -1,8 +1,13 @@
 name: pkgdown
 
 on:
-  repository_dispatch:
-    types: [trigger-workflow-2]
+  push:
+    branches:
+    - phili
+
+# on:
+#   repository_dispatch:
+#     types: [trigger-workflow-2]
 
 jobs:
   build-and-deploy:
