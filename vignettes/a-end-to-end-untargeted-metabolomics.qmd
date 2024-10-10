@@ -94,15 +94,15 @@ For other type of data loading, check out this xcms
 A more specific vignette will be created for data import soon.
 
 ```{r import, message=FALSE, warning=FALSE}
-param <- MetaboLightsParam(mtblsId = "MTBLS8735", 
-                           assayName = paste0("a_MTBLS8735_LC-MS_positive_", 
-                                              "hilic_metabolite_profiling.txt"), 
+param <- MetaboLightsParam(mtblsId = "MTBLS8735",
+                           assayName = paste0("a_MTBLS8735_LC-MS_positive_",
+                                              "hilic_metabolite_profiling.txt"),
                            filePattern = ".mzML")
 
 lcms1 <- readMsObject(MsExperiment(),
-                      param, 
-                      keepOntology = FALSE, 
-                      keepProtocol = FALSE, 
+                      param,
+                      keepOntology = FALSE,
+                      keepProtocol = FALSE,
                       simplify = TRUE)
 ```
 
@@ -114,14 +114,17 @@ configured through the `r Biocpkg("BiocParallel")` Bioconductor package. With
 the code below we use a *fork-based* parallel processing on unix system, and a
 *socket-based* parallel processing on the Windows operating system.
 
-```{r par-process}
+```{r par-process, eval = FALSE}
+register(SerialParam())
 #' Set up parallel processing using 2 cores
-if (.Platform$OS.type == "unix") {
-    register(MulticoreParam(2))
-    } else{
-    register(SnowParam(2))
-        }
+## if (.Platform$OS.type == "unix") {
+##     register(MulticoreParam(2))
+## } else {
+##     register(SnowParam(2))
+## }
+
 ```
+
 
 # Data organisation
 
@@ -147,11 +150,11 @@ using base R functionalities.
 
 ```{r phenodata}
 #| tbl-cap: "Table 1. Samples from the data set."
-sampleData(lcms1)[, c("Derived_Spectral_Data_File", 
-                      "Characteristics[Sample type]", 
-                      "Factor Value[Phenotype]", 
-                      "Sample Name", 
-                      "Factor Value[Age]")] |> 
+sampleData(lcms1)[, c("Derived_Spectral_Data_File",
+                      "Characteristics[Sample type]",
+                      "Factor Value[Phenotype]",
+                      "Sample Name",
+                      "Factor Value[Age]")] |>
     kable(format = "pipe")
 ```
 
@@ -173,8 +176,8 @@ sampleData(lcms1)$sample_name[sampleData(lcms1)$sample_name == "POOL" ] <- c("PO
 sampleData(lcms1)$injection_index <- seq_len(nrow(sampleData(lcms1)))
 
 #let's look at the updated sample data
-sampleData(lcms1)[, c("derived_spectra_data_file", 
-                     "phenotype", "sample_name", "age", 
+sampleData(lcms1)[, c("derived_spectra_data_file",
+                     "phenotype", "sample_name", "age",
                      "injection_index")] |>
     kable(format = "pipe")
 ```
@@ -408,7 +411,7 @@ about this specific spectrum, a wide range of functions can be employed:
 
 ```{r}
 #| tbl-cap: "Table 3. Intensity and m/z  values of the 125th spectrum of one CTR sample."
-#| tbl-style: "border: 1px solid black; width: 50%; border-collapse: collapse;" 
+#| tbl-style: "border: 1px solid black; width: 50%; border-collapse: collapse;"
 #' Checking its intensity
 intensity(spec2)
 
@@ -933,7 +936,7 @@ signal from merged, or from the originally identified chromatographic peaks.
 #' Apply on whole dataset
 lcms1 <- refineChromPeaks(lcms1, param = param, chunkSize = 5)
 chromPeakData(lcms1)$merged |>
-                      table() 
+                      table()
 ```
 
 Before proceeding with the next preprocessing step it is generally suggested to
@@ -1442,12 +1445,12 @@ along the retention time axis.
 ```{r}
 #| tbl-cap: "Table 5. Distribution of features along the retention time axis."
 # Bin features per RT slices
-vc <- featureDefinitions(lcms1)$rtmed 
-breaks <- seq(0, max(vc, na.rm = TRUE) + 1, length.out = 15) |> 
+vc <- featureDefinitions(lcms1)$rtmed
+breaks <- seq(0, max(vc, na.rm = TRUE) + 1, length.out = 15) |>
     round(0)
 cuts <- cut(vc, breaks = breaks, include.lowest = TRUE)
 
-table(cuts) |> 
+table(cuts) |>
     kable(format = "pipe")
 ```
 
@@ -1709,7 +1712,7 @@ Javascript as well as loaded easily back into R.
 #' Save the preprocessing results
 # d <- file.path(tempdir(), "objects/lcms1")
 # saveMsObject(lcms1, AlabasterParam(path = d))
-#for now let's do R object because the previous method is not implemented yet. 
+#for now let's do R object because the previous method is not implemented yet.
 save(lcms1, file = "preprocessed_lcms1.RData")
 ```
 
@@ -2675,15 +2678,15 @@ acquired from the CTR sample.
 
 ```{r, message=FALSE, warning=FALSE}
 #' Load form the MetaboLights Database
-param <- MetaboLightsParam(mtblsId = "MTBLS8735", 
+param <- MetaboLightsParam(mtblsId = "MTBLS8735",
                            assayName = paste0("a_MTBLS8735_LC-MSMS_positive_",
-                           "hilic_metabolite_profiling.txt"), 
+                           "hilic_metabolite_profiling.txt"),
                            filePattern = ".mzML")
 
 lcms2 <- readMsObject(MsExperiment(),
-                     param, 
-                     keepOntology = FALSE, 
-                     keepProtocol = FALSE, 
+                     param,
+                     keepOntology = FALSE,
+                     keepProtocol = FALSE,
                      simplify = TRUE)
 ```
 
@@ -2706,7 +2709,7 @@ sampleData(lcms2) <- sampleData(lcms2)[grepl("MSMS", sampleData(lcms2)$derived_s
 sampleData(lcms2)$fragmentation_mode <- c("CE20", "CE30", "CES")
 
 #let's look at the updated sample data
-sampleData(lcms2)[, c("derived_spectra_data_file", 
+sampleData(lcms2)[, c("derived_spectra_data_file",
                      "phenotype", "sample_name", "age")] |>
     kable(format = "pipe")
 
