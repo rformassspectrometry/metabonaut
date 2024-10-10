@@ -9,46 +9,36 @@ on:
 #   repository_dispatch:
 #     types: [trigger-workflow-2]
 
+permissions: read-all
+
 jobs:
-  build-and-deploy:
+  pkgdown:
     runs-on: ubuntu-latest
-    container: rformassspectrometry/metabonaut:latest
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
-      - name: Verify Quarto Installation
-        run: quarto --version
+      - uses: r-lib/actions/setup-pandoc@v2
 
-      - name: Install rcmdcheck
-        run: |
-          install.packages('rcmdcheck')
-        shell: Rscript {0}
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
 
-#      - name: Check
-#        env:
-#          _R_CHECK_CRAN_INCOMING_REMOTE_: false
-#        run: |
-#          Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
-#        shell: bash {0}
-
-      - name: Install deploy dependencies
-        run: |
-          apt-get update
-          apt-get -y install rsync
-
-      - name: Install pkgdown
-        if: github.ref == 'refs/heads/main'
-        run: |
-          install.packages('pkgdown')
-        shell: Rscript {0}
-
-      - name: Install package
-        if: github.ref == 'refs/heads/main'
-        run: R CMD INSTALL .
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::pkgdown, local::.
+          needs: website
+      
+      - uses: r-lib/actions/setup-tinytex@v2
 
       - name: Build site
-        run: |
-          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
       - name: Deploy to GitHub pages 🚀
@@ -58,7 +48,3 @@ jobs:
           clean: false
           branch: gh-pages
           folder: docs
-        ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
-        ## at least one locally before this will work. This creates the gh-pages
-        ## branch (erasing anything you haven't version controlled!) and
-        ## makes the git history recognizable by pkgdown.
