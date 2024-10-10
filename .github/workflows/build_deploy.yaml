@@ -13,9 +13,6 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     container: rformassspectrometry/metabonaut:latest
-    env:
-      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-
     steps:
       - uses: actions/checkout@v4
 
