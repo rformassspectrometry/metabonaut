@@ -2,9 +2,9 @@
 title: "Complete end-to-end LC-MS/MS Metabolomic Data analysis"
 format: html
 tbl-cap-location: bottom
-editor: visual
 minimal: true
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
+bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{Complete end-to-end LC-MS/MS Metabolomic Data analysis}
   %\VignetteEngine{quarto::html}
