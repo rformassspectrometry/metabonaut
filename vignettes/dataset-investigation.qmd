@@ -13,7 +13,7 @@ vignette: >
 ```{r}
 library(knitr)
 library(quarto)
-%knitr::opts_knit$set(root.dir = './')
+#knitr::opts_knit$set(root.dir = './')
 ```
 
 # Introduction
