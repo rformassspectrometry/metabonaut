@@ -75,7 +75,7 @@ jobs:
 
       - name: Build site
         run: |
-          unixtools::set.tempdir("/__w/_temp/Rtmp")
+          unixtools::set.tempdir("/__w/Rtmp")
           pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE,preview = FALSE)
         shell: Rscript {0}
 
