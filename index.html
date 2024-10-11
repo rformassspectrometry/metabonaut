@@ -5,14 +5,14 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Exploring and Analyzing LC-MS data • metabonaut</title>
+<title>Exploring and Analyzing LC-MS Data • metabonaut</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Exploring and Analyzing LC-MS data">
-<meta name="description" content="This resource hosts tutorials and end-to-end workflows describing how to analyse LC-MS/MS data from raw files to annotation using bioconductor softwares.">
-<meta property="og:description" content="This resource hosts tutorials and end-to-end workflows describing how to analyse LC-MS/MS data from raw files to annotation using bioconductor softwares.">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Exploring and Analyzing LC-MS Data">
+<meta name="description" content="This resource hosts tutorials and end-to-end workflows describing how to analyze LC-MS/MS data, from raw files to annotation, using Bioconductor packages.">
+<meta property="og:description" content="This resource hosts tutorials and end-to-end workflows describing how to analyze LC-MS/MS data, from raw files to annotation, using Bioconductor packages.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -35,7 +35,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/end-to-end-untargeted-metabolomics.html">A Complete End-to-End Workflow for untargeted LC-MS/MS Metabolomics Data Analysis in R</a></li>
+<li><a class="dropdown-item" href="articles/quarto.html">quarto vignettes</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -53,62 +53,39 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="exploring-and-analyzing-untargeted-metabolomics-data">Exploring and analyzing untargeted metabolomics data<a class="anchor" aria-label="anchor" href="#exploring-and-analyzing-untargeted-metabolomics-data"></a>
+<div class="page-header"><h1 id="lets-explore-and-learn-to-analyze-untargeted-metabolomics-data">Let’s explore and learn to analyze untargeted metabolomics data<a class="anchor" aria-label="anchor" href="#lets-explore-and-learn-to-analyze-untargeted-metabolomics-data"></a>
 </h1></div>
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" class="external-link"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="License: CC BY-NC 4.0"></a></p>
-<p>Welcome to Metabonaut ! <span class="emoji" data-emoji="astronaut">🧑‍🚀</span></p>
-<p>This initiative present a series of workflows based on a small LC-MS/MS dataset using R and Bioconductor packages. Throughout the workflows, we demonstrate how the various algorithms can be adapted to the particular data set and how various R packages can be seamlessly integrated to ensure efficient and reproducible processing.</p>
-<p>The main workflow presented is the <a href="https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html">“Complete end-to-end LC-MS/MS Metabolomic Data analysis”</a></p>
-<p>The full R code of all examples along with comprehensive descriptions is provided in the <a href="./vignettes/end-to-end-untargeted-metabolomics.Rmd">end-to-end-untargeted-metabolomics.Rmd</a> file. This file can be opened with e.g. RStudio which allows execution of the individual R commands (see section below for additionally required R packages). The R command <code>rmarkdown::render("xcms-preprocessing.Rmd")</code> would generate the html file <a href="https://github.com/rformassspectrometry/metabonaut/end-to-end-untargeted-metabolomics.html" class="external-link">xcms-preprocessing.html</a>.</p>
+<div class="float">
+<img src="reference/figures/sitcker_draft.png" alt="metabonaut"><div class="figcaption">metabonaut</div>
+</div>
+<p>Welcome to <strong>Metabonaut</strong>! <span class="emoji" data-emoji="astronaut">🧑‍🚀</span></p>
+<p>This initiative presents a series of workflows based on a small LC-MS/MS dataset, utilizing R and Bioconductor packages. Throughout these workflows, we demonstrate how to adapt various algorithms to specific datasets and how to seamlessly integrate R packages to ensure efficient, reproducible processing.</p>
+<p>The primary workflow is the <a href="https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html">“Complete End-to-End LC-MS/MS Metabolomic Data Analysis”</a>.</p>
+<p>The full R code for all examples, along with detailed descriptions, is available in the <a href="https://rformassspectrometry.github.io/metabonaut/vignettes/end-to-end-untargeted-metabolomics.Rmd">end-to-end-untargeted-metabolomics.Rmd</a> file. This file can be opened in RStudio, allowing you to execute each individual R command (see the section below for additional required R packages).</p>
+<p>Other vignettes on this website are interlinked, and you can find a detailed description of the dataset used throughout <a href="https://rformassspectrometry.github.io/metabonaut/articles/dataset-investigation.html">here</a>.</p>
+<p>We strive for reproducibility. These workflows are designed to remain stable over time, allowing you to run all the vignettes together as one comprehensive “super-vignette.”</p>
 <div class="section level2">
-<h2 id="important-to-note">Important to note<a class="anchor" aria-label="anchor" href="#important-to-note"></a>
+<h2 id="important-notes">Important Notes<a class="anchor" aria-label="anchor" href="#important-notes"></a>
 </h2>
-<p>This tutorial expect a user that has some basic knowledge of R and Rmarkdown. We would advise to go through a short tutorial for each in order to be comfortable testing the code and easily adapting it to your own data. For Rmarkdown, click <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">here</a> for R, <a href="https://learn-r.org/" class="external-link">here</a> and <a href="https://swirlstats.com/students.html" class="external-link">here</a> you can find a really fun way to learn basic R programming through an interactive short course</p>
+<p>The tutorials provided assume that users have basic knowledge of R and RMarkdown. If you’re unfamiliar with either, we recommend completing a short tutorial to help you test the code and adapt it to your data. For RMarkdown, click <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">here</a>. For R, check out <a href="https://learn-r.org/" class="external-link">this</a> or try an interactive course <a href="https://swirlstats.com/students.html" class="external-link">here</a> for a fun introduction to basic R programming.</p>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="known-issues">Known Issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
 </h2>
-<p>The workshop files along with an R runtime environment including all required packages and the RStudio (Posit) editor are all bundled in a <em>docker</em> container. After installation, this docker container can be run on the computer and the code and examples from the workshop can be evaluated within this environment (without the need to install any additional packages or files).</p>
-<p>This version of the workshop uses packages from <strong>Bioconductor devel</strong> and hence bases on Bioconductor’s docker container with the development version of the packages. A more stable version will come soon. The required steps for installation are:</p>
-<ul>
-<li>If you don’t already have, install <a href="https://www.docker.com/" class="external-link">docker</a>. Find installation information <a href="https://docs.docker.com/desktop/" class="external-link">here</a>.</li>
-<li>Get the <a href="https://hub.docker.com/r/rformassspectrometry/metabonaut" class="external-link">docker image</a> of this tutorial e.g. from the command line with <code>docker pull   rformassspectrometry/metabonaut:latest</code>.</li>
-<li>Start the docker container, either through the Docker Desktop, or on the command line with</li>
-</ul>
-<pre><code>  docker run \
-      -e PASSWORD=bioc \
-      -p 8787:8787 \
-      rformassspectrometry/metabonaut:latest</code></pre>
-<ul>
-<li>Enter <code>http://localhost:8787</code> in a web browser and log in with username <code>rstudio</code> and password <code>bioc</code>.</li>
-<li>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks in that document.</li>
-</ul>
-<p>For manual installation, an R version &gt;= 4.4.0 is required as well as recent versions of the packages used in the workflow.</p>
-<p>For now 2 packages used in this workflow are not on bioconductor and therefore need to be downloaded from github. Run the code as follow:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"BiocManager"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>BiocManager<span class="sc">::</span><span class="fu">install</span>(<span class="fu">c</span>(<span class="st">'RCurl'</span>, <span class="st">'xcms'</span>, <span class="st">'MsExperiment'</span>, <span class="st">'SummarizedExperiment'</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="st">'Spectra'</span>, <span class="st">'MetaboCoreUtils'</span>, <span class="st">'limma'</span>, <span class="st">'matrixStats'</span>, <span class="st">'pander'</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>    <span class="st">'RColorBrewer'</span>, <span class="st">'pheatmap'</span>, <span class="st">'vioplot'</span>, <span class="st">'ggfortify'</span>, <span class="st">'gridExtra'</span>, </span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="st">'AnnotationHub'</span>, <span class="st">'CompoundDb'</span>, <span class="st">'MetaboAnnotation'</span>, </span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="st">'RforMassSpectrometry/MsIO'</span>, <span class="st">'RforMassSpectrometry/MsBackendMetaboLights'</span>), </span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="at">ask =</span> <span class="cn">FALSE</span>, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)<span class="st">"</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="known-issues">Known issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
-</h2>
-<p>This workflow is still getting ready to be fully deployed, therefore we might have some ongoing issue that we are actively resolving. If we know about them we will list them below.</p>
-<p>For now, we are not aware of any problem in the code. If you have any issue be sure to check that you have the latest devel version of all the packages. If the issue is not resolved by the updating of packages then please report it with a reproducible example on github <a href="https://github.com/rformassspectrometry/metabonaut/issues" class="external-link">here</a></p>
-<p>If you have any other issue, do not hesitate to report them to us.</p>
+<p>This is just the beginning of our Metabonaut journey, and the website is still being refined. We’re actively addressing any ongoing issues. If we’re aware of a problem, we’ll list it below.</p>
+<p>Currently, there are no known issues with the code. If you encounter any, please ensure you have the latest versions of all required packages (as detailed above). If the issue persists, please report it with a reproducible example on GitHub <a href="https://github.com/rformassspectrometry/metabonaut/issues" class="external-link">here</a>.</p>
+<p>If you encounter any other issues, don’t hesitate to let us know!</p>
 </div>
 <div class="section level2">
 <h2 id="contribution">Contribution<a class="anchor" aria-label="anchor" href="#contribution"></a>
 </h2>
-<p>For contributions, see the <a href="https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#contributions" class="external-link">RforMassSpectrometry contributions guideline</a>.</p>
+<p>For contributions, please see the <a href="https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#contributions" class="external-link">RforMassSpectrometry contributions guideline</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>
 </h2>
-<p>See the <a href="https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#code-of-conduct" class="external-link">RforMassSpectrometry Code of Conduct</a>.</p>
+<p>Please review the <a href="https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#code-of-conduct" class="external-link">RforMassSpectrometry Code of Conduct</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
@@ -137,8 +114,9 @@
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Philippine Louail <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0009-0007-5429-6846" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Johannes Rainer <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-6977-7147" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Philippine Louail <br><small class="roles"> Author, maintainer </small>  </li>
+<li>Johannes Rainer <br><small class="roles"> Author </small>  </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
