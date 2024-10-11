@@ -31,7 +31,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           mkdir /__w/_temp/Library
-          mkdir /__w/_temp/Rtmp
+          mkdir /__w/Rtmp
           echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
 
       - name: Checkout package
@@ -69,7 +69,7 @@ jobs:
       - name: Build articles
         run: |
           install.packages("unixtools", repos = "http://www.rforge.net/")
-          unixtools::set.tempdir("/__w/_temp/Rtmp")
+          unixtools::set.tempdir("/__w/Rtmp")
           pkgdown::build_articles(quiet = FALSE)
         shell: Rscript {0}
 
