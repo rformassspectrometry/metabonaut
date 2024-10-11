@@ -55,6 +55,10 @@ jobs:
         if: runner.os != 'Linux'
         uses: r-lib/actions/setup-tinytex@v2
 
+      - name: Build articles
+        run: pkgdown::build_articles(quiet = FALSE)
+        shell: Rscript {0}
+
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
