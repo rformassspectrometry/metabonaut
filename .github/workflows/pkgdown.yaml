@@ -36,6 +36,16 @@ jobs:
       - name: Checkout package
         uses: actions/checkout@v4
 
+      - name: Repository metadata
+        uses: varunsridharan/action-repository-meta@main
+        with:
+          REPOSITORY: ${{github.repository}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - continue-on-error: true
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
       - name: Setup pandoc from r-lib
         if: runner.os != 'Linux'
         uses: r-lib/actions/setup-pandoc@v2
