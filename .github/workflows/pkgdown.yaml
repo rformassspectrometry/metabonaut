@@ -38,6 +38,8 @@ jobs:
           extra-packages: any::pkgdown, local::.
           needs: website
 
+      - uses: r-lib/actions/setup-tinytex@v2
+
       - name: Build articles
         run: pkgdown:::build_quarto_articles(quiet = FALSE)
         shell: Rscript {0}

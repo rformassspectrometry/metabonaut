@@ -43,6 +43,5 @@ URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectr
 BugReports: https://github.com/rformassspectrometry/metabonaut/issues/new
 BiocType: Workflow
 RoxygenNote: 7.3.2
-VignetteBuilder: quarto, knitr
-SystemRequirements: Quarto command line tool
-    (<https://github.com/quarto-dev/quarto-cli>).
+VignetteBuilder: quarto
+SystemRequirements: pandoc

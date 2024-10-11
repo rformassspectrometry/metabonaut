@@ -6,6 +6,10 @@ vignette: >
   %\VignetteIndexEntry{Dataset investigation: What to do when you get your data}
   %\VignetteEngine{quarto::html}
   %\VignetteEncoding{UTF-8}
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
 ---
 
 ## In Construction
