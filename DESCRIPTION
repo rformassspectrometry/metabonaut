@@ -1,7 +1,7 @@
 Package: metabonaut
 Title: Exploring and Analyzing LC-MS Data
 Version: 0.0.1
-Authors@R: 
+Authors@R:
     c(person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",
             role = c("aut", "cre"),
@@ -10,8 +10,8 @@ Authors@R:
             email = "Johannes.Rainer@eurac.edu",
             role = "aut",
             comment = "ORCID: 0000-0002-6977-7147"))
-Description: This resource hosts tutorials and end-to-end workflows 
-             describing how to analyze LC-MS/MS data, from raw files 
+Description: This resource hosts tutorials and end-to-end workflows
+             describing how to analyze LC-MS/MS data, from raw files
              to annotation, using Bioconductor packages.
 License: Artistic-2.0
 Encoding: UTF-8
@@ -21,12 +21,7 @@ Depends:
     R (>= 4.3)
 Suggests:
     MsCoreUtils,
-    xcms (>= 4.1.5),
-    Spectra (>= 1.11.10),
-    MsExperiment, 
-    MsIO, 
-    MsBackendMetaboLights, 
-    readxl, 
+    readxl,
     limma,
     matrixStats,
     pander,
@@ -35,13 +30,13 @@ Suggests:
     AnnotationHub,
     CompoundDb,
     MetaboAnnotation,
-    vioplot, 
+    vioplot,
     MetaboCoreUtils,
     BiocStyle,
     rmarkdown,
     RColorBrewer,
     SummarizedExperiment,
-    pheatmap, 
+    pheatmap,
     knitr,
     quarto
 URL: https://github.com/rformassspectrometry/metabonaut/, https://rformassspectrometry.github.io/metabonaut/
