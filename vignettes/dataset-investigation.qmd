@@ -1,9 +1,7 @@
 ---
 title: "Dataset investigation: What to do when you get your data"
 format: html
-editor: visual
 minimal: true
-date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
 vignette: >
   %\VignetteIndexEntry{Dataset investigation: What to do when you get your data}
   %\VignetteEngine{quarto::html}
@@ -12,10 +10,10 @@ vignette: >
 
 ## In Construction
 
-```{r setup, include=FALSE}
+```{r}
 library(knitr)
 library(quarto)
-knitr::opts_knit$set(root.dir = './')
+%knitr::opts_knit$set(root.dir = './')
 ```
 
 # Introduction
