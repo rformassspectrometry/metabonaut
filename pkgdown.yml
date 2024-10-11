@@ -2,8 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  quarto: quarto.html
-last_built: 2024-10-11T11:32Z
+  install_v0: install_v0.html
+last_built: 2024-10-11T12:11Z
 urls:
   reference: https://rformassspectrometry.github.io/metabonaut/reference
   article: https://rformassspectrometry.github.io/metabonaut/articles
