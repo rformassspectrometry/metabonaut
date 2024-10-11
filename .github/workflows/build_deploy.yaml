@@ -3,7 +3,7 @@ name: pkgdown
 on:
   push:
     branches:
-    - jomain
+    - main
 
 # on:
 #   repository_dispatch:
