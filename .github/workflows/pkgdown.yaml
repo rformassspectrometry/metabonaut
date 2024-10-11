@@ -25,6 +25,14 @@ jobs:
     permissions:
       contents: write
     steps:
+      ## Set the R library to the directory matching the
+      ## R packages cache step further below when running on Docker (Linux).
+      - name: Set R Library home on Linux
+        if: runner.os == 'Linux'
+        run: |
+          mkdir /__w/_temp/Library
+          echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
+
       - name: Checkout package
         uses: actions/checkout@v4
 
