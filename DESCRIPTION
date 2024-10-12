@@ -21,6 +21,11 @@ Depends:
     R (>= 4.3)
 Suggests:
     MsCoreUtils,
+    xcms (>= 4.1.5),
+    Spectra (>= 1.11.10),
+    MsExperiment,
+    MsIO,
+    MsBackendMetaboLights,
     readxl,
     limma,
     matrixStats,
