@@ -1,13 +1,13 @@
 name: pkgdown
 
-on:
-  push:
-    branches:
-    - jomain
-
 # on:
-#   repository_dispatch:
-#     types: [trigger-workflow-2]
+#   push:
+#     branches:
+#     - jomain
+
+on:
+  repository_dispatch:
+    types: [trigger-workflow-2]
 
 jobs:
   build-and-deploy:
@@ -59,24 +59,15 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: R CMD INSTALL .
 
-      # - name: Build site
-      #   env:
-      #     QUARTO_PRINT_STACK: true
-      #     QUARTO_LOG_LEVEL: DEBUG
-      #   run: |
-      #     install.packages("unixtools", repos = "http://www.rforge.net/")
-      #     unixtools::set.tempdir("/__w/Rtmp")
-      #     pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
-      #   shell: Rscript {0}
-
       - name: Build site
+        env:
+          QUARTO_PRINT_STACK: true
+          QUARTO_LOG_LEVEL: DEBUG
         run: |
-          export QUARTO_PRINT_STACK=true
-          export QUARTO_LOG_LEVEL=DEBUG
-          Rscript -e "install.packages('unixtools', repos = 'http://www.rforge.net/')"
-          Rscript -e "unixtools::set.tempdir('/__w/Rtmp')"
-          Rscript -e "pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)"
-        shell: bash {0}
+          install.packages("unixtools", repos = "http://www.rforge.net/")
+          unixtools::set.tempdir("/__w/Rtmp")
+          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        shell: Rscript {0}
 
       - name: Deploy to GitHub pages 🚀
         if: github.event_name != 'pull_request'

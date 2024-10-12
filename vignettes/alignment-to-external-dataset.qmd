@@ -60,8 +60,24 @@ object is shown in the [End-to-end
 worflow](https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html)
 vignette.
 
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+#' Silently loading the MetaboLights data - in case this vignette is rendered
+#' before the main workflow.
+param <- MetaboLightsParam(
+    mtblsId = "MTBLS8735",
+    assayName = paste0("a_MTBLS8735_LC-MS_positive_",
+                       "hilic_metabolite_profiling.txt"),
+    filePattern = ".mzML")
+
+tmp <- readMsObject(MsExperiment(),
+                    param,
+                    keepOntology = FALSE,
+                    keepProtocol = FALSE,
+                    simplify = TRUE)
+```
+
 ```{r}
-load("preprocessed_lcms1.RData")
+load("/tmp/preprocessed_lcms1.RData")
 ```
 
 ## Load unprocessed LC-MS/MS data
