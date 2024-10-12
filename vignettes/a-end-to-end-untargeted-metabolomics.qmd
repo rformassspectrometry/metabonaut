@@ -41,7 +41,7 @@ and general tips on what should be done when you first get your data.
 
 Our workflow is therefore based on the following dependencies:
 
-```{r packages used, message=FALSE, warning=FALSE}
+```{r packages-used, message=FALSE, warning=FALSE}
 ## General bioconductor package
 library(BiocStyle)
 library(knitr)
@@ -465,7 +465,7 @@ legend("topright", col = col_phenotype,
 After about 240 seconds no signal seems to be measured. Thus, we filter the data
 removing that part as well as the first 10 seconds measured in the LC run.
 
-```{r filter rt}
+```{r filter-rt}
 #| fig-cap: "Figure 6. BPC after filtering retention time."
 #' Filter the data based on retention time
 lcms1 <- filterRt(lcms1, c(10, 240))
@@ -569,7 +569,7 @@ present ions in the sample matrix can serve as suitable alternatives. Ideally,
 these compounds should be distributed across the entire retention time range of
 the experiment.
 
-```{r EIC extract for internal standard}
+```{r EIC-extract-for-internal-standard}
 #| tbl-cap: "Table 4. Internal standard list with respective m/z and expected retention time [s]."
 #| tbl-style: "font-size: 0.8em"
 #| tbl-colwidths: [20, 20, 20]
@@ -685,7 +685,7 @@ encountered in HILIC separations.
 Below we apply the CentWave algorithm with its default settings on the extracted
 ion chromatogram for cystine and methionine ions and evaluate its results.
 
-```{r Default centwave param test}
+```{r Default-centwave-param-test}
 #' Use default Centwave parameter
 param <- CentWaveParam()
 
@@ -738,7 +738,7 @@ mass peak per spectrum, representing the cystine ion. The *m/z* of these peaks
 is then extracted, their absolute difference calculated and finally expressed in
 ppm.
 
-```{r ppm parameter1 }
+```{r ppm-parameter1}
 #' Restrict the data to signal from cystine in the first sample
 cst <- lcms1[1L] |>
   spectra() |>
@@ -827,7 +827,7 @@ expected. Note:
     thus allows to fine-tune the memory demand as well as performance of the
     chromatographic peak detection step.
 
-```{r run find chrompeak on entire dataset}
+```{r run-find-chrompeak-on-entire-dataset}
 #' Using the same settings, but with default snthresh
 param <- CentWaveParam(peakwidth = c(1, 8), ppm = 15, integrate = 2)
 lcms1 <- findChromPeaks(lcms1, param = param, chunkSize = 5)
@@ -843,7 +843,7 @@ fData(eic_is) <- fData(eics_is_noprocess)
 Below we plot the EICs of the two selected internal standards to evaluate the
 chromatographic peak detection results.
 
-```{r plot new eics, echo=FALSE}
+```{r plot-new-eics, echo=FALSE}
 #| fig-cap: "Figure 12. Chromatographic peak detection on EICs after processing."
 #' Test if we find peaks for Cystine and Methionine again
 eic_cystine <- eic_is["cystine_13C_15N", ]
@@ -915,7 +915,7 @@ for this algorithm are defined below:
 
 We test these settings below on the EICs with the split peaks.
 
-```{r test merging}
+```{r test-merging}
 #| fig-cap: "Figure 14. Examples of CentWave peak detection artifacts after merging."
 #' set up the parameter
 param <- MergeNeighboringPeaksParam(expandRt = 2.5, expandMz = 0.0015,
@@ -1167,7 +1167,7 @@ lcms1_raw <- dropAdjustedRtime(lcms1)
 lcms1 <- applyAdjustedRtime(lcms1)
 ```
 
-```{r bpc before and after1}
+```{r bpc-before-and-after1}
 #| fig-cap: "Figure 18. BPC before and after alignment."
 #' Plot the BPC before and after alignment
 par(mfrow = c(2, 1), mar = c(2, 1, 1, 0.5))
@@ -1210,7 +1210,7 @@ eic_met <- eic_is["methionine_13C_15N"]
 We can now evaluate the alignment effect in our test ions. We will plot the EICs
 before and after alignment for both the isotope labeled cystine and methionine.
 
-```{r specific ion before and after1}
+```{r specific-ion-before-and-after1}
 #| fig-cap: "Figure 19. EICs of cystine and methionine before and after alignment."
 par(mfrow = c(2, 2), mar = c(4, 4.5, 2, 1))
 
@@ -1574,7 +1574,7 @@ For this, we extract:
 Then, we calculate the row averages of both of these matrices and plot them
 against each other.
 
-```{r Detected vs filled signal1}
+```{r Detected-vs-filled-signal1}
 #' Get only detected signal in QC samples
 vals_detect <- featureValues(lcms1, filled = FALSE)[, QC_samples]
 
@@ -1627,7 +1627,7 @@ these. The `processHistory()` function returns a list of the various applied
 processing steps in chronological order. Below, we extract the information for
 the first step of the performed preprocessing.
 
-```{r Process history}
+```{r Process-history}
 #' Check first step of the process history
 processHistory(lcms1)[[1]]
 ```
@@ -1713,7 +1713,7 @@ Javascript as well as loaded easily back into R.
 # d <- file.path(tempdir(), "objects/lcms1")
 # saveMsObject(lcms1, AlabasterParam(path = d))
 #for now let's do R object because the previous method is not implemented yet.
-save(lcms1, file = "preprocessed_lcms1.RData")
+#save(lcms1, file = "preprocessed_lcms1.RData")
 ```
 
 # Data normalization
@@ -1819,7 +1819,7 @@ Before plotting the PCA, we apply a log2 transform, center and scale the data.
 The log2 transformation is applied to stabilize the variance while centering to
 remove dependency on absolute abundances.
 
-```{r unsupervised checks1}
+```{r unsupervised-checks1}
 #| fig-cap: "Figure 28. PCA of the data."
 #' Log2 transform and scale data
 vals <- assay(res, "raw_filled_imputed") |>
@@ -1902,7 +1902,7 @@ group RLA values using the `rowRla()` function from the
 `r Biocpkg("MsCoreUtils")` package defining with parameter `f` the sample
 groups.
 
-```{r rla-plot raw and filled1}
+```{r rla-plot-raw-and-filled1}
 #| fig-cap: "Figure 30. RLA plot for the raw data and filled data."
 par(mfrow = c(1, 1), mar = c(3.5, 4.5, 2.5, 1))
 boxplot(MsCoreUtils::rowRla(assay(res, "raw_filled"),
@@ -2074,7 +2074,7 @@ correct for biological variance and only technical.
 We compare the RLA plots before and after between-sample normalization to
 evaluate its impact on the data.
 
-```{r rla-plot after norm2}
+```{r rla-plot-after-norm2}
 #| fig-cap: "Figure 33. RLA plot before and after normalization."
 par(mfrow = c(2, 1), mar = c(3.5, 4.5, 2.5, 1))
 
@@ -2873,7 +2873,7 @@ restrict to positive polarity data (since our experiment was acquired in
 positive polarity) and perform the same processing to the fragment spectra from
 the MassBank database.
 
-```{r prep spectra object}
+```{r prep-spectra-object}
 ms2_ref <- Spectra(mb) |>
     filterPolarity(1L) |>
     filterIntensity(intensity = low_int) |>
