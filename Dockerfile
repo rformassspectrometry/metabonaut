@@ -25,6 +25,10 @@ RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'Summari
 ## Install the current package with vignettes
 RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
 
+## Create a directory we can use to share data.
+RUN mkdir -p /shared/data; \
+    chmod 777 /shared/data;
+
 USER rstudio
 
 ## build article for end-to-end:test

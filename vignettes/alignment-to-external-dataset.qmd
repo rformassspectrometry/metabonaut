@@ -77,7 +77,7 @@ tmp <- readMsObject(MsExperiment(),
 ```
 
 ```{r}
-load("/tmp/preprocessed_lcms1.RData")
+load("/shared/data/preprocessed_lcms1.RData")
 ```
 
 ## Load unprocessed LC-MS/MS data
