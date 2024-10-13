@@ -14,6 +14,10 @@ COPY --chown=rstudio:rstudio . /home/rstudio/
 RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
+## Create a directory we can use to share data.
+RUN mkdir -p /shared/data; \
+    chmod 777 /shared/data;
+
 ## Install the required packages
 RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
     'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 'RColorBrewer', \
@@ -24,10 +28,6 @@ RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'Summari
 
 ## Install the current package with vignettes
 RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
-
-## Create a directory we can use to share data.
-RUN mkdir -p /shared/data; \
-    chmod 777 /shared/data;
 
 USER rstudio
 
