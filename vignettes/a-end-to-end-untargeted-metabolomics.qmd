@@ -1710,10 +1710,10 @@ Javascript as well as loaded easily back into R.
 
 ```{r}
 #' Save the preprocessing results
-# d <- file.path(tempdir(), "objects/lcms1")
+#' d <- file.path(tempdir(), "objects/lcms1")
 # saveMsObject(lcms1, AlabasterParam(path = d))
-#for now let's do R object because the previous method is not implemented yet.
-save(lcms1, file = "/shared/data/preprocessed_lcms1.RData")
+#' for now let's do R object because the previous method is not implemented yet.
+save(lcms1, file = "preprocessed_lcms1.RData")
 ```
 
 # Data normalization
