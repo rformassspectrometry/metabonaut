@@ -55,9 +55,9 @@ jobs:
           install.packages('pkgdown')
         shell: Rscript {0}
 
-      - name: Install package
-        if: github.ref == 'refs/heads/main'
-        run: R CMD INSTALL .
+      # - name: Install package
+      #   if: github.ref == 'refs/heads/main'
+      #   run: R CMD INSTALL .
 
       - name: Build site
         env:

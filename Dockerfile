@@ -26,7 +26,7 @@ RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'Summari
     Rscript -e "BiocManager::install('sneumann/xcms', ref = 'phili', ask = FALSE)"
 
 ## Install the current package with vignettes
-RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = FALSE)"
 
 USER rstudio
 
@@ -38,5 +38,7 @@ USER root
 ## Copy the RData to the shared folder
 RUN cp /home/rstudio/vignettes/preprocessed_lcms1.RData /shared/data/
 RUN chmod -R 777 /shared
+
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
 
 RUN find vignettes/ -name "*.html" -type f -delete && find vignettes/ -name "*_files" -type d -exec rm -r {} +
