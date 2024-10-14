@@ -1,5 +1,10 @@
 name: pkgdown
 
+# on:
+#   push:
+#     branches:
+#     - jomain
+
 on:
   push:
     branches:
@@ -22,19 +27,54 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      ## Set the R library to the directory matching the
+      ## R packages cache step further below when running on Docker (Linux).
+      - name: Set R Library home on Linux
+        if: runner.os == 'Linux'
+        run: |
+          mkdir /__w/_temp/Library
+          mkdir /__w/Rtmp
+          echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
+
+      - name: Checkout package
+        uses: actions/checkout@v4
 
       - uses: r-lib/actions/setup-pandoc@v2
 
-      - uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-      
-      - uses: r-lib/actions/setup-tinytex@v2
+      - name: Install rcmdcheck
+        run: |
+          install.packages('rcmdcheck')
+        shell: Rscript {0}
 
-      - name: Build site
+      # - name: Check
+      #   env:
+      #     _R_CHECK_CRAN_INCOMING_REMOTE_: false
+      #   run: |
+      #     Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
+      #   shell: bash {0}
+
+      - name: Install deploy dependencies
+        run: |
+          apt-get update
+          apt-get -y install rsync
+
+      - name: Install pkgdown
+        if: github.ref == 'refs/heads/main'
         run: |
           install.packages('pkgdown')
+        shell: Rscript {0}
+
+      # - name: Install package
+      #   if: github.ref == 'refs/heads/main'
+      #   run: R CMD INSTALL .
+
+      - name: Build site
+        env:
+          QUARTO_PRINT_STACK: true
+          QUARTO_LOG_LEVEL: DEBUG
+        run: |
+          install.packages("unixtools", repos = "http://www.rforge.net/")
+          unixtools::set.tempdir("/__w/Rtmp")
           pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
 
