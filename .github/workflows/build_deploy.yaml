@@ -1,20 +1,13 @@
 name: pkgdown
 
-# on:
-#   push:
-#     branches:
-#     - jomain
-
 on:
   push:
     branches:
-    - phili
+    - jomain
 
 # on:
 #   repository_dispatch:
 #     types: [trigger-workflow-2]
-
-permissions: read-all
 
 jobs:
   pkgdown:
@@ -59,7 +52,6 @@ jobs:
           apt-get -y install rsync
 
       - name: Install pkgdown
-        if: github.ref == 'refs/heads/main'
         run: |
           install.packages('pkgdown')
         shell: Rscript {0}
