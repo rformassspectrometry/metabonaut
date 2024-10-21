@@ -1,11 +1,22 @@
 Package: metabonaut
 Title: Exploring and Analyzing LC-MS Data
-Version: 0.0.1
+Version: 0.0.2
 Authors@R:
     c(person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",
             role = c("aut", "cre"),
             comment = "ORCID: 0009-0007-5429-6846"),
+     person(given = "Anna", family = "Tagliaferri",
+            email = "Anna.Tagliaferri@student.unibz.it",
+            role = "ctb", 
+            comment = "ORCID: 0009-0001-4044-4285"),
+     person(given = "Vinicius", family = "Verri Hernandes",
+            email = "vinicius.verri.hernandes@univie.ac.at",
+            role = "ctb",
+            comment = "ORCID: 0000-0002-3057-6460"),
+     person(given = "Daniel", family = "Marques de Sá e Silva",
+            role = "ctb",
+            comment = "ORCID: 0000-0002-9674-042X"),
      person(given = "Johannes", family = "Rainer",
             email = "Johannes.Rainer@eurac.edu",
             role = "aut",
@@ -18,7 +29,8 @@ Encoding: UTF-8
 LazyData: false
 Roxygen: list(markdown = TRUE)
 Depends:
-    R (>= 4.3)
+    R (>= 4.3),
+    BiocParallel (>= 1.8.0)
 Suggests:
     MsCoreUtils,
     xcms (>= 4.1.5),

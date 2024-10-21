@@ -14,6 +14,7 @@ vignette: >
 ```{r setup, include=FALSE}
 library(knitr)
 library(quarto)
+library(BiocStyle)
 knitr::opts_knit$set(root.dir = './')
 ```
 
@@ -42,10 +43,6 @@ and general tips on what should be done when you first get your data.
 Our workflow is therefore based on the following dependencies:
 
 ```{r packages-used, message=FALSE, warning=FALSE}
-## General bioconductor package
-library(BiocStyle)
-library(knitr)
-
 ## Data Import and handling
 library(readxl)
 library(MsExperiment)
@@ -114,17 +111,15 @@ configured through the `r Biocpkg("BiocParallel")` Bioconductor package. With
 the code below we use a *fork-based* parallel processing on unix system, and a
 *socket-based* parallel processing on the Windows operating system.
 
-```{r par-process, eval = FALSE}
-register(SerialParam())
+```{r par-process, message=FALSE, warning=FALSE}
 #' Set up parallel processing using 2 cores
-## if (.Platform$OS.type == "unix") {
-##     register(MulticoreParam(2))
-## } else {
-##     register(SnowParam(2))
-## }
+if (.Platform$OS.type == "unix") {
+    register(MulticoreParam(2))
+} else {
+    register(SnowParam(2))
+}
 
 ```
-
 
 # Data organisation
 

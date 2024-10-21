@@ -1,13 +1,9 @@
 name: pkgdown
 
-on:
-  push:
-    branches:
-    - jomain
 
-# on:
-#   repository_dispatch:
-#     types: [trigger-workflow-2]
+on:
+  repository_dispatch:
+    types: [trigger-workflow-2]
 
 jobs:
   build-and-deploy:
@@ -32,10 +28,10 @@ jobs:
       - name: Verify Quarto Installation
         run: quarto --version
 
-      - name: Install rcmdcheck
-        run: |
-          install.packages('rcmdcheck')
-        shell: Rscript {0}
+      #- name: Install rcmdcheck
+      #  run: |
+      #    install.packages('rcmdcheck')
+      #  shell: Rscript {0}
 
       # - name: Check
       #   env:
@@ -53,10 +49,6 @@ jobs:
         run: |
           install.packages('pkgdown')
         shell: Rscript {0}
-
-      # - name: Install package
-      #   if: github.ref == 'refs/heads/main'
-      #   run: R CMD INSTALL .
 
       - name: Build site
         env:

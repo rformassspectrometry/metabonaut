@@ -38,18 +38,18 @@ library(MsBackendMetaboLights)
 library(xcms)
 library(MsExperiment)
 library(Spectra)
+library(vioplot)
 ```
 
 Setting parallel processing to improve the efficiency of the process:
 
 ```{r, message=FALSE, warning=FALSE}
-register(SerialParam())
 #' Set up parallel processing using 2 cores
-## if (.Platform$OS.type == "unix") {
-##     register(MulticoreParam(2))
-## } else {
-##     register(SnowParam(2))
-## }
+if (.Platform$OS.type == "unix") {
+    register(MulticoreParam(2))
+} else {
+    register(SnowParam(2))
+}
 
 ```
 
@@ -242,7 +242,7 @@ ref_vs_obs <- matchedRtimes(param)
 Now we can adjust the retention time of the LC-MS/MS dataset using the
 `adjustRtime()` function.
 
-```{r}
+```{r warning=FALSE}
 #' input into `adjustRtime()`
 lcms2 <- adjustRtime(lcms2, param = param)
 lcms2 <- applyAdjustedRtime(lcms2)
@@ -329,6 +329,8 @@ To quantitatively assess the quality of the alignment, we compute the distance
 between the chromatographic peaks in our LC-MS data and the anchor peaks (Lamas)
 both before and after the alignment.
 
+library(vioplot)
+
 ```{r}
 # Extract data for sample 3 directly
 ref_obs_sample_1 <- ref_vs_obs[["1"]]
@@ -347,8 +349,7 @@ distances <- data.frame(
 # Set factor levels for Alignment to ensure correct order
 distances$Alignment <- factor(distances$Alignment, levels = c("Before", "After"))
 
-# Plot the violin plot
-library(vioplot)
+# Plot distances between anchor peaks between the two runs before and after alignment.
 vioplot(Distance ~ Alignment, data = distances, xlab = "",
         rectCol = "#c4114580",
         lineCol = "white",
@@ -367,15 +368,15 @@ peaks in the file. Additionally, it is feasible to directly `plot()` the `param`
 object for the file of interest, showcasing the distribution of these
 chromatographic peaks along with the fitted model line.
 
-```{r}
-#' access summary of matches and model information
+```{r warning=FALSE}
+#' Access summary of matches and model information
 summary <- summarizeLamaMatch(param)
 summary
 
-#' coverage for each file
+#' Coverage for each file
 summary$Matched_peaks / summary$Total_peaks * 100
 
-#' access the information on the model of for the first file
+#' Access the information on the model of for the first file
 summary$Model_summary[[1]]
 
 #' Plot obs vs. lcms1 with fitting line
