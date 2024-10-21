@@ -18,15 +18,10 @@ RUN gdebi --non-interactive quarto-linux-amd64.deb
 RUN mkdir -p /shared/data
 
 ## Install the required packages
-RUN Rscript -e "BiocManager::install(c('RCurl', 'xcms', 'MsExperiment', 'SummarizedExperiment', \
-    'Spectra', 'MetaboCoreUtils', 'limma', 'matrixStats', 'pander', 'RColorBrewer', \
-    'pheatmap', 'vioplot', 'ggfortify', 'gridExtra', 'AnnotationHub', 'CompoundDb', \
-    'MetaboAnnotation', 'RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights', 'quarto'), \
-    ask = FALSE, dependencies = TRUE)" && \
-    Rscript -e "BiocManager::install('sneumann/xcms', ref = 'phili', ask = FALSE)"
+RUN Rscript -e "BiocManager::install(c('RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)"
 
 ## Install the current package with vignettes
-RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = FALSE)"
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = FALSE, repos = BiocManager::repositories())"
 
 USER rstudio
 

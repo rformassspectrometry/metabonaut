@@ -1,24 +1,17 @@
 name: pkgdown
 
-on:
-  push:
-    branches:
-    - jomain
 
-# on:
-#   repository_dispatch:
-#     types: [trigger-workflow-2]
+on:
+  repository_dispatch:
+    types: [trigger-workflow-2]
 
 jobs:
-  pkgdown:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    # Only restrict concurrency for non-PR jobs
-    concurrency:
-      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+    container: rformassspectrometry/metabonaut:latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-    permissions:
-      contents: write
+
     steps:
       ## Set the R library to the directory matching the
       ## R packages cache step further below when running on Docker (Linux).
@@ -32,12 +25,13 @@ jobs:
       - name: Checkout package
         uses: actions/checkout@v4
 
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Verify Quarto Installation
+        run: quarto --version
 
-      - name: Install rcmdcheck
-        run: |
-          install.packages('rcmdcheck')
-        shell: Rscript {0}
+      #- name: Install rcmdcheck
+      #  run: |
+      #    install.packages('rcmdcheck')
+      #  shell: Rscript {0}
 
       # - name: Check
       #   env:
@@ -56,10 +50,6 @@ jobs:
           install.packages('pkgdown')
         shell: Rscript {0}
 
-      # - name: Install package
-      #   if: github.ref == 'refs/heads/main'
-      #   run: R CMD INSTALL .
-
       - name: Build site
         env:
           QUARTO_PRINT_STACK: true
@@ -77,3 +67,7 @@ jobs:
           clean: false
           branch: gh-pages
           folder: docs
+        ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
+        ## at least one locally before this will work. This creates the gh-pages
+        ## branch (erasing anything you haven't version controlled!) and
+        ## makes the git history recognizable by pkgdown.

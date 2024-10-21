@@ -1,14 +1,16 @@
 url: https://rformassspectrometry.github.io/metabonaut/
 template:
   bootstrap: 5
-  bootswatch: flatly
-  light-switch: yes
+  bslib:
+    bootswatch: lux
+    pkgdown-nav-height: 100px
 navbar:
+  bg: dark
   title: Metabonaut
   left:
   - text: Installation instruction
     href: articles/install_v0.html
-  - text: Vignettes
+  - text: Workflows
     menu:
     - text: 'Dataset investigation: What to do when you get your data'
       href: articles/dataset-investigation.html
@@ -22,5 +24,4 @@ structure:
   right:
   - search
   - github
-  - lightswitch
 
