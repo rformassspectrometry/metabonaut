@@ -34,6 +34,6 @@ USER root
 RUN cp /home/rstudio/vignettes/preprocessed_lcms1.RData /shared/data/
 RUN chmod -R 777 /shared
 
-RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE)"
+RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE, repos = BiocManager::repositories())"
 
 RUN find vignettes/ -name "*.html" -type f -delete && find vignettes/ -name "*_files" -type d -exec rm -r {} +

@@ -24,14 +24,9 @@ presented in these workflows.
 To install on your computer all the packages necessary for the workflows run the
 code as follow:
 
-BiocManager::install("rformassspectrometry/metabonaut",
-
-dependencies = TRUE, ask = FALSE, update = TRUE)
-
 ```{r eval=FALSE}
 install.packages("BiocManager")
 
-## Packa
 BiocManager::install(c('RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)
 
 BiocManager::install("rformassspectrometry/metabonaut",
