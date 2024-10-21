@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Exploring and Analyzing LC-MS Data • metabonaut</title>
-<script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
@@ -18,11 +18,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="index.html">metabonaut</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="articles/install_v0.html">Installation instruction</a></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-workflows" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Workflows</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-workflows">
 <li><a class="dropdown-item" href="articles/dataset-investigation.html">Dataset investigation: What to do when you get your data</a></li>
     <li><a class="dropdown-item" href="articles/a-end-to-end-untargeted-metabolomics.html">End-to-end workflow for untargeted metabolomics data analysis in R</a></li>
     <li><a class="dropdown-item" href="articles/alignment-to-external-dataset.html">Seamless Alignment: Merging New data with Existing Preprocessed Datasets</a></li>
@@ -47,14 +47,6 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/rformassspectrometry/metabonaut/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
-<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul>
-</li>
       </ul>
 </div>
 
@@ -62,23 +54,25 @@
   </div>
 </nav><div class="container template-home">
 <div class="row">
-  <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="lets-explore-and-learn-to-analyze-untargeted-metabolomics-data">Let’s explore and learn to analyze untargeted metabolomics data<a class="anchor" aria-label="anchor" href="#lets-explore-and-learn-to-analyze-untargeted-metabolomics-data"></a>
-</h1></div>
+  <main id="main" class="col-md-9"><div class="section level2">
+<h2 id="lets-explore-and-learn-to-analyze-untargeted-metabolomics-data">Let’s explore and learn to analyze untargeted metabolomics data<a class="anchor" aria-label="anchor" href="#lets-explore-and-learn-to-analyze-untargeted-metabolomics-data"></a>
+</h2>
 <p><a href="https://creativecommons.org/licenses/by-nc/4.0/" class="external-link"><img src="https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg" alt="License: CC BY-NC 4.0"></a></p>
 <div class="float">
-<img src="reference/figures/sitcker_draft.png" alt="metabonaut"><div class="figcaption">metabonaut</div>
+<img src="reference/figures/sitcker_small.png" alt="metabonaut"><div class="figcaption">metabonaut</div>
 </div>
 <p>Welcome to <strong>Metabonaut</strong>! <span class="emoji" data-emoji="astronaut">🧑‍🚀</span></p>
 <p>This initiative presents a series of workflows based on a small LC-MS/MS dataset, utilizing R and Bioconductor packages. Throughout these workflows, we demonstrate how to adapt various algorithms to specific datasets and how to seamlessly integrate R packages to ensure efficient, reproducible processing.</p>
 <p>The primary workflow is the <a href="https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html">“Complete End-to-End LC-MS/MS Metabolomic Data Analysis”</a>.</p>
-<p>The full R code for all examples, along with detailed descriptions, is available in the <a href="https://rformassspectrometry.github.io/metabonaut/vignettes/end-to-end-untargeted-metabolomics.Rmd">end-to-end-untargeted-metabolomics.Rmd</a> file. This file can be opened in RStudio, allowing you to execute each individual R command (see the section below for additional required R packages).</p>
+<p>The full R code for all examples, along with detailed descriptions, is available in the <a href="https://rformassspectrometry.github.io/metabonaut/vignettes/a-end-to-end-untargeted-metabolomics.qmd">end-to-end-untargeted-metabolomics.qmd</a> file. This file can be opened in RStudio, allowing you to execute each individual R command.</p>
 <p>Other vignettes on this website are interlinked, and you can find a detailed description of the dataset used throughout <a href="https://rformassspectrometry.github.io/metabonaut/articles/dataset-investigation.html">here</a>.</p>
-<p>We strive for reproducibility. These workflows are designed to remain stable over time, allowing you to run all the vignettes together as one comprehensive “super-vignette.”</p>
+<p>We strive for reproducibility. These workflows are designed to remain stable over time, allowing you to run all the vignettes together as one comprehensive “super-vignette”. Any <strong>major</strong> change will be document here and for smaller updates check the <a href="https://rformassspectrometry.github.io/metabonaut/news/index.html">News</a></p>
+</div>
 <div class="section level2">
-<h2 id="important-notes">Important Notes<a class="anchor" aria-label="anchor" href="#important-notes"></a>
+<h2 id="for-r-beginners">For R beginners<a class="anchor" aria-label="anchor" href="#for-r-beginners"></a>
 </h2>
-<p>The tutorials provided assume that users have basic knowledge of R and RMarkdown. If you’re unfamiliar with either, we recommend completing a short tutorial to help you test the code and adapt it to your data. For RMarkdown, click <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">here</a>. For R, check out <a href="https://learn-r.org/" class="external-link">this</a> or try an interactive course <a href="https://swirlstats.com/students.html" class="external-link">here</a> for a fun introduction to basic R programming.</p>
+<p>The tutorials provided assume that users have basic knowledge of R and RMarkdown. If you’re unfamiliar with either, we recommend completing a short tutorial to help you test the code and adapt it to your data. The vignettes are written in Quarto format, to learn more about this go <a href="https://quarto.org/docs/guide/" class="external-link">here</a>, this is a farily new format, and some functionallity are shared with the <a href="https://bookdown.org/yihui/rmarkdown/" class="external-link">RMarkdown</a> format, therefore learning about it can be usefull to you too.</p>
+<p>For basic R course and documentation, I would recommand to check out <a href="https://learn-r.org/" class="external-link">this website</a> or try an interactive course <a href="https://swirlstats.com/students.html" class="external-link">here</a> for a fun introduction to basic R programming. This <a href="https://github.com/wurli/r-best-practice" class="external-link">cheatsheet</a> could also be of help.</p>
 </div>
 <div class="section level2">
 <h2 id="known-issues">Known Issues<a class="anchor" aria-label="anchor" href="#known-issues"></a>
@@ -97,7 +91,7 @@
 </h2>
 <p>Please review the <a href="https://rformassspectrometry.github.io/RforMassSpectrometry/articles/RforMassSpectrometry.html#code-of-conduct" class="external-link">RforMassSpectrometry Code of Conduct</a>.</p>
 </div>
-</div>
+
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">

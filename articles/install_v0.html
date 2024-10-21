@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Install • metabonaut</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
@@ -18,11 +18,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">metabonaut</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@
       <ul class="navbar-nav me-auto">
 <li class="active nav-item"><a class="nav-link" href="../articles/install_v0.html">Installation instruction</a></li>
 <li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-workflows" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Workflows</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-workflows">
 <li><a class="dropdown-item" href="../articles/dataset-investigation.html">Dataset investigation: What to do when you get your data</a></li>
     <li><a class="dropdown-item" href="../articles/a-end-to-end-untargeted-metabolomics.html">End-to-end workflow for untargeted metabolomics data analysis in R</a></li>
     <li><a class="dropdown-item" href="../articles/alignment-to-external-dataset.html">Seamless Alignment: Merging New data with Existing Preprocessed Datasets</a></li>
@@ -47,14 +47,6 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/rformassspectrometry/metabonaut/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
-<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul>
-</li>
       </ul>
 </div>
 
@@ -67,9 +59,9 @@
       <h1>Install</h1>
 
 
-      <p class="date">2024-10-14</p>
+      <p class="date">2024-10-21</p>
 
-      <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/jomain/vignettes/install_v0.qmd" class="external-link"><code>vignettes/install_v0.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/main/vignettes/install_v0.qmd" class="external-link"><code>vignettes/install_v0.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
     </div>
 
@@ -79,19 +71,21 @@
 
 
     <p>For manual installation, an <a href="https://www.r-project.org/" class="external-link">R</a> version &gt;= 4.4.0 is required.</p>
-<section class="section level2"><h2 id="install-packages-required-for-metabonaut-tutorials">Install packages required for metabonaut tutorials<a class="anchor" aria-label="anchor" href="#install-packages-required-for-metabonaut-tutorials"></a>
+<p><u>Notes</u>: only a development version of <code>metabonaut</code> is available as of now but a stable version will come soon. Therefore, if you are having difficulty to run some part of the code we strongly recommend to use the Docker image, as it will have all the package necessary to run all the analysis presented in these workflows.</p>
+<section class="section level2"><h2 id="running-workflows-locally">Running workflows locally<a class="anchor" aria-label="anchor" href="#running-workflows-locally"></a>
 </h2>
-<p>Notes: only a development version of metabonaut is available as of now but a stable version will come soon.</p>
-<p>The following packages need to be installed for proper functioning of the tutorials:</p>
-<p>Run the code as follow:</p>
+<p>To install on your computer all the packages necessary for the workflows run the code as follow:</p>
+<p>BiocManager::install(“rformassspectrometry/metabonaut”,</p>
+<p>dependencies = TRUE, ask = FALSE, update = TRUE)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'RCurl'</span>, <span class="st">'xcms'</span>, <span class="st">'MsExperiment'</span>, <span class="st">'SummarizedExperiment'</span>,</span>
-<span>    <span class="st">'Spectra'</span>, <span class="st">'MetaboCoreUtils'</span>, <span class="st">'limma'</span>, <span class="st">'matrixStats'</span>, <span class="st">'pander'</span>, </span>
-<span>    <span class="st">'RColorBrewer'</span>, <span class="st">'pheatmap'</span>, <span class="st">'vioplot'</span>, <span class="st">'ggfortify'</span>, <span class="st">'gridExtra'</span>, </span>
-<span>    <span class="st">'AnnotationHub'</span>, <span class="st">'CompoundDb'</span>, <span class="st">'MetaboAnnotation'</span>, </span>
-<span>    <span class="st">'RforMassSpectrometry/MsIO'</span>, <span class="st">'RforMassSpectrometry/MsBackendMetaboLights'</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span></span>
+<span><span class="co">## Packa</span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'RforMassSpectrometry/MsIO'</span>, <span class="st">'RforMassSpectrometry/MsBackendMetaboLights'</span><span class="op">)</span>, ask <span class="op">=</span> <span class="cn">FALSE</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"rformassspectrometry/metabonaut"</span>,</span>
+<span>                     dependencies <span class="op">=</span> <span class="cn">TRUE</span>, ask <span class="op">=</span> <span class="cn">FALSE</span>, update <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="docker-image">Docker image<a class="anchor" aria-label="anchor" href="#docker-image"></a>
 </h2>
@@ -99,13 +93,16 @@
 <p>After installation, this docker container can be run on the computer and the code and examples from the vignettes can be evaluated within this environment (without the need to install any additional packages or files).</p>
 <ul>
 <li>If you don’t already have, install <a href="https://www.docker.com/" class="external-link">docker</a>. Find installation information <a href="https://docs.docker.com/desktop/" class="external-link">here</a>.</li>
-<li>Get the <a href="https://hub.docker.com/r/rformassspectrometry/metabonaut" class="external-link">docker image</a> of this tutorial e.g. from the command line with <code>docker pull rformassspectrometry/metabonaut:latest</code>.</li>
+<li>Get the <a href="https://hub.docker.com/r/rformassspectrometry/metabonaut" class="external-link">docker image</a> of this tutorial e.g. from the command line with:</li>
+</ul>
+<pre><code>    docker pull rformassspectrometry/metabonaut:latest</code></pre>
+<ul>
 <li>Start the docker container, either through the Docker Desktop, or on the command line with</li>
 </ul>
-<pre><code>docker run -e PASSWORD=bioc -p 8787:8787 rformassspectrometry metabonaut:latest</code></pre>
+<pre><code>docker run -e PASSWORD=bioc -p 8787:8787 rformassspectrometry/metabonaut:latest</code></pre>
 <ul>
 <li>Enter <a href="http://localhost:8787" class="external-link"><code>http://localhost:8787</code></a> in a web browser and log in with username <code>rstudio</code> and password <code>bioc</code>.</li>
-<li>In the RStudio server version: open any of the R-markdown (<em>.Rmd</em>) files in the <em>vignettes</em> folder and evaluate the R code blocks in that document.</li>
+<li>In the RStudio server version: open any of the Quarto files in the <em>vignettes</em> folder and evaluate the R code blocks in that document.</li>
 </ul></section><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

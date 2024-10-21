@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Seamless Alignment: Merging New Data with and Existing Preprocessed Dataset • metabonaut</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
@@ -18,11 +18,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">metabonaut</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../articles/install_v0.html">Installation instruction</a></li>
 <li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-workflows" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Workflows</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-workflows">
 <li><a class="dropdown-item" href="../articles/dataset-investigation.html">Dataset investigation: What to do when you get your data</a></li>
     <li><a class="dropdown-item" href="../articles/a-end-to-end-untargeted-metabolomics.html">End-to-end workflow for untargeted metabolomics data analysis in R</a></li>
     <li><a class="dropdown-item" href="../articles/alignment-to-external-dataset.html">Seamless Alignment: Merging New data with Existing Preprocessed Datasets</a></li>
@@ -47,14 +47,6 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/rformassspectrometry/metabonaut/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
-<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul>
-</li>
       </ul>
 </div>
 
@@ -67,9 +59,9 @@
       <h1>Seamless Alignment: Merging New Data with and Existing Preprocessed Dataset</h1>
 
 
-      <p class="date">2024-10-14</p>
+      <p class="date">2024-10-21</p>
 
-      <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/jomain/vignettes/alignment-to-external-dataset.qmd" class="external-link"><code>vignettes/alignment-to-external-dataset.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/main/vignettes/alignment-to-external-dataset.qmd" class="external-link"><code>vignettes/alignment-to-external-dataset.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
     </div>
 
@@ -89,18 +81,18 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MsBackendMetaboLights" class="external-link">MsBackendMetaboLights</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sneumann/xcms" class="external-link">xcms</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MsExperiment" class="external-link">MsExperiment</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/Spectra" class="external-link">Spectra</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/TomKellyGenetics/vioplot" class="external-link">vioplot</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <p>Setting parallel processing to improve the efficiency of the process:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#' Set up parallel processing using 2 cores</span></span>
-<span><span class="co">## if (.Platform$OS.type == "unix") {</span></span>
-<span><span class="co">##     register(MulticoreParam(2))</span></span>
-<span><span class="co">## } else {</span></span>
-<span><span class="co">##     register(SnowParam(2))</span></span>
-<span><span class="co">## }</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#' Set up parallel processing using 2 cores</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">==</span> <span class="st">"unix"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/MulticoreParam-class.html" class="external-link">MulticoreParam</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SnowParam-class.html" class="external-link">SnowParam</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 <section class="level2"><h3 id="load-preprocessed-lc-ms-object">Load preprocessed LC-MS object<a class="anchor" aria-label="anchor" href="#load-preprocessed-lc-ms-object"></a>
 </h3>
@@ -140,7 +132,7 @@
 <span><span class="co">#let's look at the updated sample data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/MsExperiment/man/MsExperiment.html" class="external-link">sampleData</a></span><span class="op">(</span><span class="va">lcms2</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"derived_spectra_data_file"</span>,</span>
 <span>                     <span class="st">"phenotype"</span>, <span class="st">"sample_name"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table caption-top">
 <caption>Table 10. Samples from the LC-MS/MS data set.</caption>
@@ -358,48 +350,14 @@ FT0007 54.01010 235.9032</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' input into `adjustRtime()`</span></span>
-<span><span class="va">lcms2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/adjustRtime.html" class="external-link">adjustRtime</a></span><span class="op">(</span><span class="va">lcms2</span>, param <span class="op">=</span> <span class="va">param</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in .adjust_rt_model(y, method = param@method, rt_map = x[, c("ref", :
-Adjusted retention times are not sorted, linear interpolation will be performed
-for the unsorted data points</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in force_sorted(adj): Found decreasing values at the end of the vector.
-Interpolation is not possible in this region. Instead, replacing these values
-with a sequence that starts from the last increasing value and increments by
-2.22044604925031e-16. See help for more details</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in .adjust_rt_model(y, method = param@method, rt_map = x[, c("ref", :
-Adjusted retention times are not sorted, linear interpolation will be performed
-for the unsorted data points</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in force_sorted(adj): Found decreasing values at the end of the vector.
-Interpolation is not possible in this region. Instead, replacing these values
-with a sequence that starts from the last increasing value and increments by
-2.22044604925031e-16. See help for more details</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in .adjust_rt_model(y, method = param@method, rt_map = x[, c("ref", :
-Adjusted retention times are not sorted, linear interpolation will be performed
-for the unsorted data points</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in force_sorted(adj): Found decreasing values at the end of the vector.
-Interpolation is not possible in this region. Instead, replacing these values
-with a sequence that starts from the last increasing value and increments by
-2.22044604925031e-16. See help for more details</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lcms2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/applyAdjustedRtime.html" class="external-link">applyAdjustedRtime</a></span><span class="op">(</span><span class="va">lcms2</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">lcms2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/adjustRtime.html" class="external-link">adjustRtime</a></span><span class="op">(</span><span class="va">lcms2</span>, param <span class="op">=</span> <span class="va">param</span><span class="op">)</span></span>
+<span><span class="va">lcms2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/applyAdjustedRtime.html" class="external-link">applyAdjustedRtime</a></span><span class="op">(</span><span class="va">lcms2</span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="evaluation">Evaluation<a class="anchor" aria-label="anchor" href="#evaluation"></a>
 </h3>
 <p>We extract the base peak chromatogram (BPC) of our aligned object:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' evaluate the results with BPC</span></span>
 <span><span class="va">bpc2_adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">chromatogram</a></span><span class="op">(</span><span class="va">lcms2</span>, aggregationFun <span class="op">=</span> <span class="st">"max"</span>,</span>
 <span>                              msLevel <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -408,7 +366,7 @@ with a sequence that starts from the last increasing value and increments by
 </h4>
 <p>To evaluate the performance of our alignment process, we generate plots comparing the alignment of the reference dataset (in black) with our LC-MS data before (in red) and after (in blue) the adjustment.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' BPC of sample A</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,  mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bpc1</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"#00000080"</span>, main <span class="op">=</span> <span class="st">"Before Alignment"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>,</span>
@@ -434,7 +392,7 @@ with a sequence that starts from the last increasing value and increments by
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' BPC of sample B</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span><span class="op">)</span>,  mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.5</span><span class="op">)</span>, mgp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">0.5</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bpc1</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"#00000080"</span>, main <span class="op">=</span> <span class="st">"Before Alignment"</span>, lwd <span class="op">=</span> <span class="fl">1.5</span>,</span>
@@ -460,7 +418,7 @@ with a sequence that starts from the last increasing value and increments by
 <p>Although the overall matching is imperfect due to initial sample issues, certain regions show significant improvement. The alignment of the signal’s start is particularly well done. Specifically, the regions right before and after 150 seconds show substantial improvement.</p>
 <p>Below is a visualization of the distribution of chromatographic peaks matched to anchor peaks (Lamas) for Sample A. The red vertical lines represent the positions of these matched peaks.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' BPC of the first sample with matches to lamas overlay</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bpc1</span><span class="op">[</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">]</span>, col <span class="op">=</span> <span class="st">"#00000080"</span>, main <span class="op">=</span> <span class="st">"Distribution CP matched to Lamas"</span>,</span>
@@ -480,8 +438,9 @@ with a sequence that starts from the last increasing value and increments by
 </section><section class="level3"><h4 id="quantitative-evaluation-of-alignment">Quantitative Evaluation of Alignment<a class="anchor" aria-label="anchor" href="#quantitative-evaluation-of-alignment"></a>
 </h4>
 <p>To quantitatively assess the quality of the alignment, we compute the distance between the chromatographic peaks in our LC-MS data and the anchor peaks (Lamas) both before and after the alignment.</p>
+<p>library(vioplot)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract data for sample 3 directly</span></span>
 <span><span class="va">ref_obs_sample_1</span> <span class="op">&lt;-</span> <span class="va">ref_vs_obs</span><span class="op">[[</span><span class="st">"1"</span><span class="op">]</span><span class="op">]</span></span>
 <span></span>
@@ -499,33 +458,8 @@ with a sequence that starts from the last increasing value and increments by
 <span><span class="co"># Set factor levels for Alignment to ensure correct order</span></span>
 <span><span class="va">distances</span><span class="op">$</span><span class="va">Alignment</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">distances</span><span class="op">$</span><span class="va">Alignment</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Before"</span>, <span class="st">"After"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Plot the violin plot</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/TomKellyGenetics/vioplot" class="external-link">vioplot</a></span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: sm</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Package 'sm', version 2.2-6.0: type help(sm) for summary information</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: zoo</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'zoo'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:xcms':
-
-    index, index&lt;-</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    as.Date, as.Date.numeric</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/vioplot/man/vioplot.html" class="external-link">vioplot</a></span><span class="op">(</span><span class="va">Distance</span> <span class="op">~</span> <span class="va">Alignment</span>, data <span class="op">=</span> <span class="va">distances</span>, xlab <span class="op">=</span> <span class="st">""</span>,</span>
+<span><span class="co"># Plot distances between anchor peaks between the two runs before and after alignment.</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/vioplot/man/vioplot.html" class="external-link">vioplot</a></span><span class="op">(</span><span class="va">Distance</span> <span class="op">~</span> <span class="va">Alignment</span>, data <span class="op">=</span> <span class="va">distances</span>, xlab <span class="op">=</span> <span class="st">""</span>,</span>
 <span>        rectCol <span class="op">=</span> <span class="st">"#c4114580"</span>,</span>
 <span>        lineCol <span class="op">=</span> <span class="st">"white"</span>,</span>
 <span>        col<span class="op">=</span><span class="st">"#17138fe8"</span>,</span>
@@ -541,33 +475,24 @@ Attaching package: 'zoo'</code></pre>
 </div>
 <p>Furthermore, a more detailed examination of the matching and the model used for fitting each file is possible. Numerical information can be obtained using the <code><a href="https://rdrr.io/pkg/xcms/man/LamaParama.html" class="external-link">summarizeLamaMatch()</a></code> function. From this, the percentage of chromatographic peaks utilized for alignment can be computed relative to the total number of peaks in the file. Additionally, it is feasible to directly <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> the <code>param</code> object for the file of interest, showcasing the distribution of these chromatographic peaks along with the fitted model line.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' access summary of matches and model information</span></span>
-<span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/LamaParama.html" class="external-link">summarizeLamaMatch</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in rbind(deparse.level, ...): number of columns of result, 3, is not a
-multiple of vector length 2 of arg 1
-Warning in rbind(deparse.level, ...): number of columns of result, 3, is not a
-multiple of vector length 2 of arg 1
-Warning in rbind(deparse.level, ...): number of columns of result, 3, is not a
-multiple of vector length 2 of arg 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">summary</span></span></code></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' Access summary of matches and model information</span></span>
+<span><span class="va">summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/LamaParama.html" class="external-link">summarizeLamaMatch</a></span><span class="op">(</span><span class="va">param</span><span class="op">)</span></span>
+<span><span class="va">summary</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Total_peaks Matched_peaks Total_lamas Model_summary
 1        6832          1825        5374  1666, c(....
 2        6860          1785        5374  1617, c(....
 3        7588          2082        5374  1869, c(....</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' coverage for each file</span></span>
+<div class="sourceCode cell-code" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' Coverage for each file</span></span>
 <span><span class="va">summary</span><span class="op">$</span><span class="va">Matched_peaks</span> <span class="op">/</span> <span class="va">summary</span><span class="op">$</span><span class="va">Total_peaks</span> <span class="op">*</span> <span class="fl">100</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 26.71253 26.02041 27.43806</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#' access the information on the model of for the first file</span></span>
+<div class="sourceCode cell-code" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' Access the information on the model of for the first file</span></span>
 <span><span class="va">summary</span><span class="op">$</span><span class="va">Model_summary</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
@@ -588,16 +513,11 @@ Control settings:
  parametric:  FALSE
 drop.square:  FALSE </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="downlit sourceCode r">
+<div class="sourceCode cell-code" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Plot obs vs. lcms1 with fitting line</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">param</span>, index <span class="op">=</span> <span class="fl">1L</span>, main <span class="op">=</span> <span class="st">"ChromPeaks versus Lamas for sample A"</span>,</span>
-<span>     colPoint <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span></code></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in rbind(deparse.level, ...): number of columns of result, 3, is not a
-multiple of vector length 2 of arg 1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, lty <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></span>
+<span>     colPoint <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, lty <span class="op">=</span> <span class="fl">3</span>, col <span class="op">=</span> <span class="st">"grey"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/grid.html" class="external-link">grid</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>

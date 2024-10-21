@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Complete end-to-end LC-MS/MS Metabolomic Data analysis • metabonaut</title>
-<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
@@ -18,11 +18,11 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top bg-dark" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">metabonaut</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,8 +33,8 @@
       <ul class="navbar-nav me-auto">
 <li class="nav-item"><a class="nav-link" href="../articles/install_v0.html">Installation instruction</a></li>
 <li class="active nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-workflows" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Workflows</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-workflows">
 <li><a class="dropdown-item" href="../articles/dataset-investigation.html">Dataset investigation: What to do when you get your data</a></li>
     <li><a class="dropdown-item" href="../articles/a-end-to-end-untargeted-metabolomics.html">End-to-end workflow for untargeted metabolomics data analysis in R</a></li>
     <li><a class="dropdown-item" href="../articles/alignment-to-external-dataset.html">Seamless Alignment: Merging New data with Existing Preprocessed Datasets</a></li>
@@ -47,14 +47,6 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/rformassspectrometry/metabonaut/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
-<li class="nav-item dropdown">
-  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
-  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
-<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
-    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
-  </ul>
-</li>
       </ul>
 </div>
 
@@ -67,9 +59,9 @@
       <h1>Complete end-to-end LC-MS/MS Metabolomic Data analysis</h1>
 
 
-      <p class="date">2024-10-14</p>
+      <p class="date">2024-10-21</p>
 
-      <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/jomain/vignettes/a-end-to-end-untargeted-metabolomics.qmd" class="external-link"><code>vignettes/a-end-to-end-untargeted-metabolomics.qmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/main/vignettes/a-end-to-end-untargeted-metabolomics.qmd" class="external-link"><code>vignettes/a-end-to-end-untargeted-metabolomics.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
     </div>
 
@@ -93,11 +85,7 @@
 <p>Our workflow is therefore based on the following dependencies:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## General bioconductor package</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Bioconductor/BiocStyle" class="external-link">BiocStyle</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://yihui.org/knitr/" class="external-link">knitr</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co">## Data Import and handling</span></span>
+<code class="sourceCode R"><span><span class="co">## Data Import and handling</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org" class="external-link">readxl</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MsExperiment" class="external-link">MsExperiment</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RforMassSpectrometry/MsIO" class="external-link">MsIO</a></span><span class="op">)</span></span>
@@ -146,13 +134,12 @@
 <p>We next configure the parallel processing setup. Most functions from the <em>xcms</em> package allow per-sample parallel processing, which can improve the performance of the analysis, especially for large data sets. <em>xcms</em> and all packages from the <em>RforMassSpectrometry</em> package ecosystem use the parallel processing setup configured through the <em><a href="https://bioconductor.org/packages/3.20/BiocParallel" class="external-link">BiocParallel</a></em> Bioconductor package. With the code below we use a <em>fork-based</em> parallel processing on unix system, and a <em>socket-based</em> parallel processing on the Windows operating system.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#' Set up parallel processing using 2 cores</span></span>
-<span><span class="co">## if (.Platform$OS.type == "unix") {</span></span>
-<span><span class="co">##     register(MulticoreParam(2))</span></span>
-<span><span class="co">## } else {</span></span>
-<span><span class="co">##     register(SnowParam(2))</span></span>
-<span><span class="co">## }</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#' Set up parallel processing using 2 cores</span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="va">.Platform</span><span class="op">$</span><span class="va">OS.type</span> <span class="op">==</span> <span class="st">"unix"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/MulticoreParam-class.html" class="external-link">MulticoreParam</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/register.html" class="external-link">register</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocParallel/man/SnowParam-class.html" class="external-link">SnowParam</a></span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 </div>
 </section><section class="section level2"><h2 id="data-organisation">Data organisation<a class="anchor" aria-label="anchor" href="#data-organisation"></a>
 </h2>
@@ -177,7 +164,7 @@
 <span>                      <span class="st">"Factor Value[Phenotype]"</span>,</span>
 <span>                      <span class="st">"Sample Name"</span>,</span>
 <span>                      <span class="st">"Factor Value[Age]"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table">
 <caption>Table 1. Samples from the data set.</caption>
@@ -291,7 +278,7 @@
 <span><span class="fu"><a href="https://rdrr.io/pkg/MsExperiment/man/MsExperiment.html" class="external-link">sampleData</a></span><span class="op">(</span><span class="va">lcms1</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"derived_spectra_data_file"</span>,</span>
 <span>                     <span class="st">"phenotype"</span>, <span class="st">"sample_name"</span>, <span class="st">"age"</span>,</span>
 <span>                     <span class="st">"injection_index"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table style="width:100%;" class="table">
 <caption>Table 2. Simplified sample data.</caption>
@@ -574,7 +561,7 @@ MS_B_POS.mzML
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>intensity <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">intensity</a></span><span class="op">(</span><span class="va">filt_spec</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>           mz <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">mz</a></span><span class="op">(</span><span class="va">filt_spec</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"markdown"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"markdown"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table">
 <caption>Table 3. Intensity and m/z values of the 125th spectrum of one CTR sample.</caption>
@@ -737,7 +724,7 @@ MS_B_POS.mzML
 <span></span>
 <span><span class="co">#' Summary of IS information</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/Biobase/man/featureData.html" class="external-link">fData</a></span><span class="op">(</span><span class="va">eic_is</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"mz"</span>, <span class="st">"rt"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table style="width:80%;" class="table">
 <caption>Table 4. Internal standard list with respective m/z and expected retention time [s].</caption>
@@ -1188,7 +1175,7 @@ FALSE  TRUE
 <code class="sourceCode R"><span><span class="co">#' Count the number of peaks per sample and summarize them in a table.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>sample_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/MsExperiment/man/MsExperiment.html" class="external-link">sampleData</a></span><span class="op">(</span><span class="va">lcms1</span><span class="op">)</span><span class="op">$</span><span class="va">sample_name</span>,</span>
 <span>           peak_count <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XCMSnExp-class.html" class="external-link">chromPeaks</a></span><span class="op">(</span><span class="va">lcms1</span><span class="op">)</span><span class="op">[</span>, <span class="st">"sample"</span><span class="op">]</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table">
 <caption>Table 5. Samples and number of identified chromatographic peaks.</caption>
@@ -1634,7 +1621,7 @@ Aligning sample number 9 against subset ... OK</code></pre>
 <span><span class="va">cuts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut</a></span><span class="op">(</span><span class="va">vc</span>, breaks <span class="op">=</span> <span class="va">breaks</span>, include.lowest <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cuts</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table">
 <caption>Table 5. Distribution of features along the retention time axis.</caption>
@@ -1894,7 +1881,7 @@ F-statistic:  7877 on 1 and 2846 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Object of class "XProcessHistory"
  type: Peak detection
- date: Mon Oct 14 09:48:36 2024
+ date: Mon Oct 21 15:53:03 2024
  info:
  fileIndex: 1,2,3,4,5,6,7,8,9,10
  Parameter class: CentWaveParam
@@ -2276,7 +2263,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span>    Study_norm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html" class="external-link">quantile</a></span><span class="op">(</span><span class="va">sample_res</span><span class="op">[</span>, <span class="st">"Study_norm"</span><span class="op">]</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">res_df</span>, format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">res_df</span>, format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <caption>Table 6. Distribution of CV values across samples for the raw and normalized data.</caption>
 <thead><tr class="header">
@@ -2378,7 +2365,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span>                              mad <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/filterFeatures.html" class="external-link">filterFeatures</a></span><span class="op">(</span><span class="va">res</span>, filter <span class="op">=</span> <span class="va">filter_dratio</span>, assay <span class="op">=</span> <span class="st">"norm_imputed"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2976 features were removed</code></pre>
+<pre><code>2981 features were removed</code></pre>
 </div>
 </div>
 <p>The Dratio filter is a powerful tool to identify features that exhibit high variability in the data, relating the variance observed in QC samples with that in study samples. By setting a threshold of 0.4, we remove features that have a high degree of variability between the QC and study samples. In this example, any feature in which the deviation at the QC is higher than 40% (<code>threshold = 0.4</code>)of the deviation on the study samples is removed. This filtering step ensures that only features are retained that have considerably lower technical than biological variance.</p>
@@ -2389,16 +2376,16 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <code class="sourceCode R"><span><span class="co">#' Number of features after analysis</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4284</code></pre>
+<pre><code>[1] 4279</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Percentage left: end/beginning</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res_unfilt</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 47.24305</code></pre>
+<pre><code>[1] 47.18791</code></pre>
 </div>
 </div>
-<p>The dataset has been reduced from 9068 to 4284 features. We did remove a considerable amount of features but this is expected as we want to focus on the most reliable features for our analysis. For the rest of our analysis we need to separate the QC samples from the study samples. We will store the QC samples in a separate object for later use.</p>
+<p>The dataset has been reduced from 9068 to 4279 features. We did remove a considerable amount of features but this is expected as we want to focus on the most reliable features for our analysis. For the rest of our analysis we need to separate the QC samples from the study samples. We will store the QC samples in a separate object for later use.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_qc</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span>, <span class="va">res</span><span class="op">$</span><span class="va">phenotype</span> <span class="op">==</span> <span class="st">"QC"</span><span class="op">]</span></span>
@@ -2537,7 +2524,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span>                      <span class="st">"avg.CTR"</span>, <span class="st">"avg.CVD"</span>, <span class="st">"qc_cv"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> <span class="va">tab</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/order.html" class="external-link">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">abs</a></span><span class="op">(</span><span class="va">tab</span><span class="op">$</span><span class="va">coef.CVD</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">tab</span>, format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">tab</span>, format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table style="width:100%;" class="table">
 <caption>Table 7. Features with significant differences in abundances.</caption>
@@ -2566,10 +2553,10 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: left;">FT0732</td>
 <td style="text-align: right;">182.0749</td>
 <td style="text-align: right;">34.83789</td>
-<td style="text-align: right;">-8.768138</td>
-<td style="text-align: right;">0.0064865</td>
+<td style="text-align: right;">-8.558218</td>
+<td style="text-align: right;">0.0055407</td>
 <td style="text-align: right;">12.226462</td>
-<td style="text-align: right;">3.603428</td>
+<td style="text-align: right;">3.782311</td>
 <td style="text-align: right;">0.2102895</td>
 </tr>
 <tr class="even">
@@ -2577,7 +2564,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: right;">195.0877</td>
 <td style="text-align: right;">32.65668</td>
 <td style="text-align: right;">-6.334251</td>
-<td style="text-align: right;">0.0371021</td>
+<td style="text-align: right;">0.0308651</td>
 <td style="text-align: right;">16.902516</td>
 <td style="text-align: right;">10.449738</td>
 <td style="text-align: right;">0.0296079</td>
@@ -2586,40 +2573,40 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: left;">FT0565</td>
 <td style="text-align: right;">161.0400</td>
 <td style="text-align: right;">162.13668</td>
-<td style="text-align: right;">-5.520270</td>
-<td style="text-align: right;">0.0257475</td>
+<td style="text-align: right;">-5.495938</td>
+<td style="text-align: right;">0.0265415</td>
 <td style="text-align: right;">10.284250</td>
-<td style="text-align: right;">4.544160</td>
+<td style="text-align: right;">4.571728</td>
 <td style="text-align: right;">0.0359696</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">FT0371</td>
-<td style="text-align: right;">138.0547</td>
-<td style="text-align: right;">148.39599</td>
-<td style="text-align: right;">-5.299220</td>
-<td style="text-align: right;">0.0167208</td>
-<td style="text-align: right;">9.912038</td>
-<td style="text-align: right;">4.267943</td>
-<td style="text-align: right;">0.5555981</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">FT1171</td>
 <td style="text-align: right;">229.1299</td>
 <td style="text-align: right;">181.08828</td>
-<td style="text-align: right;">-5.213366</td>
-<td style="text-align: right;">0.0131501</td>
+<td style="text-align: right;">-5.440532</td>
+<td style="text-align: right;">0.0172406</td>
 <td style="text-align: right;">10.718371</td>
-<td style="text-align: right;">5.656769</td>
+<td style="text-align: right;">5.474917</td>
 <td style="text-align: right;">0.0707526</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FT0371</td>
+<td style="text-align: right;">138.0547</td>
+<td style="text-align: right;">148.39599</td>
+<td style="text-align: right;">-5.236420</td>
+<td style="text-align: right;">0.0172406</td>
+<td style="text-align: right;">9.912038</td>
+<td style="text-align: right;">4.350530</td>
+<td style="text-align: right;">0.5555981</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">FT5606</td>
 <td style="text-align: right;">560.3603</td>
 <td style="text-align: right;">33.54917</td>
-<td style="text-align: right;">-3.545642</td>
-<td style="text-align: right;">0.0417497</td>
+<td style="text-align: right;">-3.621250</td>
+<td style="text-align: right;">0.0308651</td>
 <td style="text-align: right;">8.883094</td>
-<td style="text-align: right;">5.125548</td>
+<td style="text-align: right;">5.076666</td>
 <td style="text-align: right;">1.2154388</td>
 </tr>
 </tbody>
@@ -2668,7 +2655,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html" class="external-link">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="st">"MassBank"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>AnnotationHub with 6 records
-# snapshotDate(): 2024-10-08
+# snapshotDate(): 2024-10-14
 # $dataprovider: MassBank
 # $species: NA
 # $rdataclass: CompDb
@@ -2798,7 +2785,7 @@ FT5606            NA              NA</code></pre>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/do.call.html" class="external-link">do.call</a></span><span class="op">(</span>what <span class="op">=</span> <span class="va">rbind</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#' Display the results</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">mtch_res</span>, format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">kable</span><span class="op">(</span><span class="va">mtch_res</span>, format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table">
 <caption>Table 9. MS1 annotation results.</caption>
@@ -3080,7 +3067,7 @@ FT5606            NA              NA</code></pre>
 <span><span class="co">#let's look at the updated sample data</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/MsExperiment/man/MsExperiment.html" class="external-link">sampleData</a></span><span class="op">(</span><span class="va">lcms2</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"derived_spectra_data_file"</span>,</span>
 <span>                     <span class="st">"phenotype"</span>, <span class="st">"sample_name"</span>, <span class="st">"age"</span><span class="op">)</span><span class="op">]</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu">kable</span><span class="op">(</span>format <span class="op">=</span> <span class="st">"pipe"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <table class="table">
 <caption>Table 10. Samples from the LC-MS/MS data set.</caption>
@@ -3445,7 +3432,7 @@ attached base packages:
 [8] base
 
 other attached packages:
- [1] MetaboAnnotation_1.9.1       CompoundDb_1.9.5
+ [1] MetaboAnnotation_1.9.2       CompoundDb_1.9.5
  [3] AnnotationFilter_1.29.0      AnnotationHub_3.13.3
  [5] BiocFileCache_2.13.2         dbplyr_2.5.0
  [7] gridExtra_2.3                ggfortify_0.4.17
@@ -3453,13 +3440,13 @@ other attached packages:
 [11] zoo_1.8-12                   sm_2.2-6.0
 [13] pheatmap_1.0.12              RColorBrewer_1.1-3
 [15] pander_0.6.5                 limma_3.61.12
-[17] MetaboCoreUtils_1.13.0       Spectra_1.15.11
-[19] xcms_4.3.4                   BiocParallel_1.39.0
-[21] SummarizedExperiment_1.35.4  Biobase_2.65.1
-[23] GenomicRanges_1.57.2         GenomeInfoDb_1.41.2
-[25] IRanges_2.39.2               S4Vectors_0.43.2
-[27] BiocGenerics_0.51.3          MatrixGenerics_1.17.0
-[29] matrixStats_1.4.1            MsBackendMetaboLights_0.99.0
+[17] MetaboCoreUtils_1.13.0       xcms_4.3.3
+[19] SummarizedExperiment_1.35.4  Biobase_2.65.1
+[21] GenomicRanges_1.57.2         GenomeInfoDb_1.41.2
+[23] IRanges_2.39.2               MatrixGenerics_1.17.0
+[25] matrixStats_1.4.1            MsBackendMetaboLights_0.99.1
+[27] Spectra_1.15.12              BiocParallel_1.39.0
+[29] S4Vectors_0.43.2             BiocGenerics_0.51.3
 [31] MsIO_0.0.6                   MsExperiment_1.7.0
 [33] ProtGenerics_1.37.1          readxl_1.4.3
 [35] BiocStyle_2.33.1             quarto_1.4.4
@@ -3472,7 +3459,7 @@ loaded via a namespace (and not attached):
   [7] XML_3.99-0.17               lifecycle_1.0.4
   [9] doParallel_1.0.17           processx_3.8.4
  [11] lattice_0.22-6              MASS_7.3-61
- [13] alabaster.base_1.5.9        MultiAssayExperiment_1.31.5
+ [13] alabaster.base_1.5.10       MultiAssayExperiment_1.31.5
  [15] magrittr_2.0.3              rmarkdown_2.28
  [17] yaml_2.3.10                 MsCoreUtils_1.17.2
  [19] DBI_1.2.3                   abind_1.4-8
@@ -3487,7 +3474,7 @@ loaded via a namespace (and not attached):
  [37] iterators_1.0.14            foreach_1.5.2
  [39] tools_4.4.1                 progress_1.2.3
  [41] Rcpp_1.0.13                 glue_1.8.0
- [43] SparseArray_1.5.44          xfun_0.48
+ [43] SparseArray_1.5.45          xfun_0.48
  [45] dplyr_1.1.4                 withr_3.0.1
  [47] BiocManager_1.30.25         fastmap_1.2.0
  [49] rhdf5filters_1.17.0         fansi_1.0.6
@@ -3497,13 +3484,13 @@ loaded via a namespace (and not attached):
  [57] utf8_1.2.4                  tidyr_1.3.1
  [59] generics_0.1.3              prettyunits_1.2.0
  [61] PSMatch_1.9.0               httr_1.4.7
- [63] htmlwidgets_1.6.4           S4Arrays_1.5.10
+ [63] htmlwidgets_1.6.4           S4Arrays_1.5.11
  [65] pkgconfig_2.0.3             gtable_0.3.5
  [67] blob_1.2.4                  impute_1.79.0
  [69] MassSpecWavelet_1.71.0      XVector_0.45.0
  [71] htmltools_0.5.8.1           MALDIquant_1.22.3
  [73] clue_0.3-65                 scales_1.3.0
- [75] png_0.1-8                   rstudioapi_0.16.0
+ [75] png_0.1-8                   rstudioapi_0.17.0
  [77] reshape2_1.4.4              rjson_0.2.23
  [79] curl_5.2.3                  cachem_1.1.0
  [81] rhdf5_2.49.0                stringr_1.5.1
@@ -3521,10 +3508,10 @@ loaded via a namespace (and not attached):
 [105] plyr_1.8.9                  fs_1.6.4
 [107] stringi_1.8.4               munsell_0.5.1
 [109] Biostrings_2.73.2           lazyeval_0.2.2
-[111] Matrix_1.7-0                hms_1.1.3
+[111] Matrix_1.7-1                hms_1.1.3
 [113] bit64_4.5.2                 Rhdf5lib_1.27.0
 [115] KEGGREST_1.45.1             statmod_1.5.0
-[117] mzR_2.39.1                  igraph_2.0.3
+[117] mzR_2.39.2                  igraph_2.1.1
 [119] memoise_2.0.1               affyio_1.75.1
 [121] bit_4.5.0                  </code></pre>
 </div>
