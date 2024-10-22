@@ -2,10 +2,9 @@ url: https://rformassspectrometry.github.io/metabonaut/
 template:
   bootstrap: 5
   bslib:
-    bootswatch: lux
-    pkgdown-nav-height: 100px
+    bootswatch: flatly
 navbar:
-  bg: dark
+  bg: primary
   title: Metabonaut
   left:
   - text: Installation instruction

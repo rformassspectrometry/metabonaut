@@ -4,6 +4,7 @@ format: html
 tbl-cap-location: bottom
 editor: visual
 minimal: true
+bibliography: references.bib
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
 vignette: >
   %\VignetteIndexEntry{Complete end-to-end LC-MS/MS Metabolomic Data analysis}
@@ -3140,3 +3141,4 @@ plot(eic_is) # show alignment effect
 #possible extra info:
 # -
 ```
+
