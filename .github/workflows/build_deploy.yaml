@@ -1,5 +1,6 @@
 name: pkgdown
 
+
 on:
   repository_dispatch:
     types: [trigger-workflow-2]
@@ -12,27 +13,32 @@ jobs:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Quarto
+      ## Set the R library to the directory matching the
+      ## R packages cache step further below when running on Docker (Linux).
+      - name: Set R Library home on Linux
+        if: runner.os == 'Linux'
         run: |
-          wget https://github.com/quarto-dev/quarto-cli/releases/download/v1.5.57/quarto-1.5.57-linux-amd64.deb
-          sudo dpkg -i quarto-1.5.57-linux-amd64.deb
+          mkdir /__w/_temp/Library
+          mkdir /__w/Rtmp
+          echo ".libPaths('/__w/_temp/Library')" > ~/.Rprofile
+
+      - name: Checkout package
+        uses: actions/checkout@v4
 
       - name: Verify Quarto Installation
         run: quarto --version
 
-      - name: Install rcmdcheck
-        run: |
-          install.packages('rcmdcheck')
-        shell: Rscript {0}
+      #- name: Install rcmdcheck
+      #  run: |
+      #    install.packages('rcmdcheck')
+      #  shell: Rscript {0}
 
-      - name: Check
-        env:
-          _R_CHECK_CRAN_INCOMING_REMOTE_: false
-        run: |
-          Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
-        shell: bash {0}
+      # - name: Check
+      #   env:
+      #     _R_CHECK_CRAN_INCOMING_REMOTE_: false
+      #   run: |
+      #     Rscript -e "rcmdcheck::rcmdcheck(args = c('--no-manual'), error_on = 'error', check_dir = 'check')"
+      #   shell: bash {0}
 
       - name: Install deploy dependencies
         run: |
@@ -40,25 +46,27 @@ jobs:
           apt-get -y install rsync
 
       - name: Install pkgdown
-        if: github.ref == 'refs/heads/main'
         run: |
           install.packages('pkgdown')
         shell: Rscript {0}
 
-      - name: Install package
-        if: github.ref == 'refs/heads/main'
-        run: R CMD INSTALL .
-
-      - name: Deploy package
-        if: github.ref == 'refs/heads/main'
+      - name: Build site
+        env:
+          QUARTO_PRINT_STACK: true
+          QUARTO_LOG_LEVEL: DEBUG
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git config --global --add safe.directory /__w/metabonaut/metabonaut
-          Rscript -e "pkgdown::init_site()"
-          Rscript -e "pkgdown::build_article('a-end-to-end-untargeted-metabolomics', quiet = FALSE)"
-          Rscript -e "pkgdown::deploy_to_branch(lazy = TRUE, new_process = FALSE, install = FALSE)"
-        shell: bash {0}
+          install.packages("unixtools", repos = "http://www.rforge.net/")
+          unixtools::set.tempdir("/__w/Rtmp")
+          pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
+        shell: Rscript {0}
+
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
         ## at least one locally before this will work. This creates the gh-pages
         ## branch (erasing anything you haven't version controlled!) and

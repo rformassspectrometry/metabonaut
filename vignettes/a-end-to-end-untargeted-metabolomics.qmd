@@ -4,6 +4,7 @@ format: html
 tbl-cap-location: bottom
 editor: visual
 minimal: true
+bibliography: references.bib
 date: 'Compiled: `r format(Sys.Date(), "%B %d, %Y")`'
 vignette: >
   %\VignetteIndexEntry{Complete end-to-end LC-MS/MS Metabolomic Data analysis}
@@ -14,6 +15,7 @@ vignette: >
 ```{r setup, include=FALSE}
 library(knitr)
 library(quarto)
+library(BiocStyle)
 knitr::opts_knit$set(root.dir = './')
 ```
 
@@ -28,7 +30,7 @@ packages could be used for different steps and some examples are mentioned
 throughout the workflow.
 
 ![Steps of the end-to-end workflow and possible
-alternatives](\vignettes\images\workflow.png)
+alternatives](images/workflow.png)
 
 # Data description
 
@@ -41,11 +43,7 @@ and general tips on what should be done when you first get your data.
 
 Our workflow is therefore based on the following dependencies:
 
-```{r packages used, message=FALSE, warning=FALSE}
-## General bioconductor package
-library(BiocStyle)
-library(knitr)
-
+```{r packages-used, message=FALSE, warning=FALSE}
 ## Data Import and handling
 library(readxl)
 library(MsExperiment)
@@ -94,15 +92,15 @@ For other type of data loading, check out this xcms
 A more specific vignette will be created for data import soon.
 
 ```{r import, message=FALSE, warning=FALSE}
-param <- MetaboLightsParam(mtblsId = "MTBLS8735", 
-                           assayName = paste0("a_MTBLS8735_LC-MS_positive_", 
-                                              "hilic_metabolite_profiling.txt"), 
+param <- MetaboLightsParam(mtblsId = "MTBLS8735",
+                           assayName = paste0("a_MTBLS8735_LC-MS_positive_",
+                                              "hilic_metabolite_profiling.txt"),
                            filePattern = ".mzML")
 
 lcms1 <- readMsObject(MsExperiment(),
-                      param, 
-                      keepOntology = FALSE, 
-                      keepProtocol = FALSE, 
+                      param,
+                      keepOntology = FALSE,
+                      keepProtocol = FALSE,
                       simplify = TRUE)
 ```
 
@@ -114,13 +112,14 @@ configured through the `r Biocpkg("BiocParallel")` Bioconductor package. With
 the code below we use a *fork-based* parallel processing on unix system, and a
 *socket-based* parallel processing on the Windows operating system.
 
-```{r par-process}
+```{r par-process, message=FALSE, warning=FALSE}
 #' Set up parallel processing using 2 cores
 if (.Platform$OS.type == "unix") {
     register(MulticoreParam(2))
-    } else{
+} else {
     register(SnowParam(2))
-        }
+}
+
 ```
 
 # Data organisation
@@ -147,11 +146,11 @@ using base R functionalities.
 
 ```{r phenodata}
 #| tbl-cap: "Table 1. Samples from the data set."
-sampleData(lcms1)[, c("Derived_Spectral_Data_File", 
-                      "Characteristics[Sample type]", 
-                      "Factor Value[Phenotype]", 
-                      "Sample Name", 
-                      "Factor Value[Age]")] |> 
+sampleData(lcms1)[, c("Derived_Spectral_Data_File",
+                      "Characteristics[Sample type]",
+                      "Factor Value[Phenotype]",
+                      "Sample Name",
+                      "Factor Value[Age]")] |>
     kable(format = "pipe")
 ```
 
@@ -173,8 +172,8 @@ sampleData(lcms1)$sample_name[sampleData(lcms1)$sample_name == "POOL" ] <- c("PO
 sampleData(lcms1)$injection_index <- seq_len(nrow(sampleData(lcms1)))
 
 #let's look at the updated sample data
-sampleData(lcms1)[, c("derived_spectra_data_file", 
-                     "phenotype", "sample_name", "age", 
+sampleData(lcms1)[, c("derived_spectra_data_file",
+                     "phenotype", "sample_name", "age",
                      "injection_index")] |>
     kable(format = "pipe")
 ```
@@ -408,7 +407,7 @@ about this specific spectrum, a wide range of functions can be employed:
 
 ```{r}
 #| tbl-cap: "Table 3. Intensity and m/z  values of the 125th spectrum of one CTR sample."
-#| tbl-style: "border: 1px solid black; width: 50%; border-collapse: collapse;" 
+#| tbl-style: "border: 1px solid black; width: 50%; border-collapse: collapse;"
 #' Checking its intensity
 intensity(spec2)
 
@@ -462,7 +461,7 @@ legend("topright", col = col_phenotype,
 After about 240 seconds no signal seems to be measured. Thus, we filter the data
 removing that part as well as the first 10 seconds measured in the LC run.
 
-```{r filter rt}
+```{r filter-rt}
 #| fig-cap: "Figure 6. BPC after filtering retention time."
 #' Filter the data based on retention time
 lcms1 <- filterRt(lcms1, c(10, 240))
@@ -566,7 +565,7 @@ present ions in the sample matrix can serve as suitable alternatives. Ideally,
 these compounds should be distributed across the entire retention time range of
 the experiment.
 
-```{r EIC extract for internal standard}
+```{r EIC-extract-for-internal-standard}
 #| tbl-cap: "Table 4. Internal standard list with respective m/z and expected retention time [s]."
 #| tbl-style: "font-size: 0.8em"
 #| tbl-colwidths: [20, 20, 20]
@@ -682,7 +681,7 @@ encountered in HILIC separations.
 Below we apply the CentWave algorithm with its default settings on the extracted
 ion chromatogram for cystine and methionine ions and evaluate its results.
 
-```{r Default centwave param test}
+```{r Default-centwave-param-test}
 #' Use default Centwave parameter
 param <- CentWaveParam()
 
@@ -735,7 +734,7 @@ mass peak per spectrum, representing the cystine ion. The *m/z* of these peaks
 is then extracted, their absolute difference calculated and finally expressed in
 ppm.
 
-```{r ppm parameter1 }
+```{r ppm-parameter1}
 #' Restrict the data to signal from cystine in the first sample
 cst <- lcms1[1L] |>
   spectra() |>
@@ -824,7 +823,7 @@ expected. Note:
     thus allows to fine-tune the memory demand as well as performance of the
     chromatographic peak detection step.
 
-```{r run find chrompeak on entire dataset}
+```{r run-find-chrompeak-on-entire-dataset}
 #' Using the same settings, but with default snthresh
 param <- CentWaveParam(peakwidth = c(1, 8), ppm = 15, integrate = 2)
 lcms1 <- findChromPeaks(lcms1, param = param, chunkSize = 5)
@@ -840,7 +839,7 @@ fData(eic_is) <- fData(eics_is_noprocess)
 Below we plot the EICs of the two selected internal standards to evaluate the
 chromatographic peak detection results.
 
-```{r plot new eics, echo=FALSE}
+```{r plot-new-eics, echo=FALSE}
 #| fig-cap: "Figure 12. Chromatographic peak detection on EICs after processing."
 #' Test if we find peaks for Cystine and Methionine again
 eic_cystine <- eic_is["cystine_13C_15N", ]
@@ -912,7 +911,7 @@ for this algorithm are defined below:
 
 We test these settings below on the EICs with the split peaks.
 
-```{r test merging}
+```{r test-merging}
 #| fig-cap: "Figure 14. Examples of CentWave peak detection artifacts after merging."
 #' set up the parameter
 param <- MergeNeighboringPeaksParam(expandRt = 2.5, expandMz = 0.0015,
@@ -933,7 +932,7 @@ signal from merged, or from the originally identified chromatographic peaks.
 #' Apply on whole dataset
 lcms1 <- refineChromPeaks(lcms1, param = param, chunkSize = 5)
 chromPeakData(lcms1)$merged |>
-                      table() 
+                      table()
 ```
 
 Before proceeding with the next preprocessing step it is generally suggested to
@@ -1164,7 +1163,7 @@ lcms1_raw <- dropAdjustedRtime(lcms1)
 lcms1 <- applyAdjustedRtime(lcms1)
 ```
 
-```{r bpc before and after1}
+```{r bpc-before-and-after1}
 #| fig-cap: "Figure 18. BPC before and after alignment."
 #' Plot the BPC before and after alignment
 par(mfrow = c(2, 1), mar = c(2, 1, 1, 0.5))
@@ -1207,7 +1206,7 @@ eic_met <- eic_is["methionine_13C_15N"]
 We can now evaluate the alignment effect in our test ions. We will plot the EICs
 before and after alignment for both the isotope labeled cystine and methionine.
 
-```{r specific ion before and after1}
+```{r specific-ion-before-and-after1}
 #| fig-cap: "Figure 19. EICs of cystine and methionine before and after alignment."
 par(mfrow = c(2, 2), mar = c(4, 4.5, 2, 1))
 
@@ -1442,12 +1441,12 @@ along the retention time axis.
 ```{r}
 #| tbl-cap: "Table 5. Distribution of features along the retention time axis."
 # Bin features per RT slices
-vc <- featureDefinitions(lcms1)$rtmed 
-breaks <- seq(0, max(vc, na.rm = TRUE) + 1, length.out = 15) |> 
+vc <- featureDefinitions(lcms1)$rtmed
+breaks <- seq(0, max(vc, na.rm = TRUE) + 1, length.out = 15) |>
     round(0)
 cuts <- cut(vc, breaks = breaks, include.lowest = TRUE)
 
-table(cuts) |> 
+table(cuts) |>
     kable(format = "pipe")
 ```
 
@@ -1571,7 +1570,7 @@ For this, we extract:
 Then, we calculate the row averages of both of these matrices and plot them
 against each other.
 
-```{r Detected vs filled signal1}
+```{r Detected-vs-filled-signal1}
 #' Get only detected signal in QC samples
 vals_detect <- featureValues(lcms1, filled = FALSE)[, QC_samples]
 
@@ -1624,7 +1623,7 @@ these. The `processHistory()` function returns a list of the various applied
 processing steps in chronological order. Below, we extract the information for
 the first step of the performed preprocessing.
 
-```{r Process history}
+```{r Process-history}
 #' Check first step of the process history
 processHistory(lcms1)[[1]]
 ```
@@ -1707,9 +1706,9 @@ Javascript as well as loaded easily back into R.
 
 ```{r}
 #' Save the preprocessing results
-# d <- file.path(tempdir(), "objects/lcms1")
+#' d <- file.path(tempdir(), "objects/lcms1")
 # saveMsObject(lcms1, AlabasterParam(path = d))
-#for now let's do R object because the previous method is not implemented yet. 
+#' for now let's do R object because the previous method is not implemented yet.
 save(lcms1, file = "preprocessed_lcms1.RData")
 ```
 
@@ -1816,7 +1815,7 @@ Before plotting the PCA, we apply a log2 transform, center and scale the data.
 The log2 transformation is applied to stabilize the variance while centering to
 remove dependency on absolute abundances.
 
-```{r unsupervised checks1}
+```{r unsupervised-checks1}
 #| fig-cap: "Figure 28. PCA of the data."
 #' Log2 transform and scale data
 vals <- assay(res, "raw_filled_imputed") |>
@@ -1899,7 +1898,7 @@ group RLA values using the `rowRla()` function from the
 `r Biocpkg("MsCoreUtils")` package defining with parameter `f` the sample
 groups.
 
-```{r rla-plot raw and filled1}
+```{r rla-plot-raw-and-filled1}
 #| fig-cap: "Figure 30. RLA plot for the raw data and filled data."
 par(mfrow = c(1, 1), mar = c(3.5, 4.5, 2.5, 1))
 boxplot(MsCoreUtils::rowRla(assay(res, "raw_filled"),
@@ -2071,7 +2070,7 @@ correct for biological variance and only technical.
 We compare the RLA plots before and after between-sample normalization to
 evaluate its impact on the data.
 
-```{r rla-plot after norm2}
+```{r rla-plot-after-norm2}
 #| fig-cap: "Figure 33. RLA plot before and after normalization."
 par(mfrow = c(2, 1), mar = c(3.5, 4.5, 2.5, 1))
 
@@ -2675,15 +2674,15 @@ acquired from the CTR sample.
 
 ```{r, message=FALSE, warning=FALSE}
 #' Load form the MetaboLights Database
-param <- MetaboLightsParam(mtblsId = "MTBLS8735", 
+param <- MetaboLightsParam(mtblsId = "MTBLS8735",
                            assayName = paste0("a_MTBLS8735_LC-MSMS_positive_",
-                           "hilic_metabolite_profiling.txt"), 
+                           "hilic_metabolite_profiling.txt"),
                            filePattern = ".mzML")
 
 lcms2 <- readMsObject(MsExperiment(),
-                     param, 
-                     keepOntology = FALSE, 
-                     keepProtocol = FALSE, 
+                     param,
+                     keepOntology = FALSE,
+                     keepProtocol = FALSE,
                      simplify = TRUE)
 ```
 
@@ -2706,7 +2705,7 @@ sampleData(lcms2) <- sampleData(lcms2)[grepl("MSMS", sampleData(lcms2)$derived_s
 sampleData(lcms2)$fragmentation_mode <- c("CE20", "CE30", "CES")
 
 #let's look at the updated sample data
-sampleData(lcms2)[, c("derived_spectra_data_file", 
+sampleData(lcms2)[, c("derived_spectra_data_file",
                      "phenotype", "sample_name", "age")] |>
     kable(format = "pipe")
 
@@ -2870,7 +2869,7 @@ restrict to positive polarity data (since our experiment was acquired in
 positive polarity) and perform the same processing to the fragment spectra from
 the MassBank database.
 
-```{r prep spectra object}
+```{r prep-spectra-object}
 ms2_ref <- Spectra(mb) |>
     filterPolarity(1L) |>
     filterIntensity(intensity = low_int) |>
@@ -3142,3 +3141,4 @@ plot(eic_is) # show alignment effect
 #possible extra info:
 # -
 ```
+

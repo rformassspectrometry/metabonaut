@@ -1,6 +1,10 @@
-# Exploring and Analyzing Untargeted Metabolomics Data
+
+
+## Let's explore and learn to analyze untargeted metabolomics data
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+
+![metabonaut](man/figures/sitcker_small.png)
 
 Welcome to **Metabonaut**! :astronaut:
 
@@ -14,9 +18,9 @@ The primary workflow is the
 
 The full R code for all examples, along with detailed descriptions, is available 
 in the 
-[end-to-end-untargeted-metabolomics.Rmd](https://rformassspectrometry.github.io/metabonaut/vignettes/end-to-end-untargeted-metabolomics.Rmd) 
+[end-to-end-untargeted-metabolomics.qmd](https://rformassspectrometry.github.io/metabonaut/vignettes/a-end-to-end-untargeted-metabolomics.qmd) 
 file. This file can be opened in RStudio, allowing you to execute each individual 
-R command (see the section below for additional required R packages).
+R command.
 
 Other vignettes on this website are interlinked, and you can find a detailed 
 description of the dataset used throughout 
@@ -24,17 +28,22 @@ description of the dataset used throughout
 
 We strive for reproducibility. These workflows are designed to remain stable 
 over time, allowing you to run all the vignettes together as one comprehensive 
-"super-vignette."
+"super-vignette". Any **major** change will be document here and for smaller updates 
+check the [News](https://rformassspectrometry.github.io/metabonaut/news/index.html)
 
-## Important Notes
+## For R beginners
 
 The tutorials provided assume that users have basic knowledge of R and RMarkdown. 
 If you're unfamiliar with either, we recommend completing a short tutorial to help 
-you test the code and adapt it to your data. For RMarkdown, click 
-[here](https://bookdown.org/yihui/rmarkdown/). For R, check out 
-[this](https://learn-r.org/) or try an interactive course 
+you test the code and adapt it to your data. 
+The vignettes are written in Quarto format, to learn more about this go [here](https://quarto.org/docs/guide/), 
+this is a farily new format, and some functionallity are shared with the [RMarkdown](https://bookdown.org/yihui/rmarkdown/) format, therefore 
+learning about it can be usefull to you too. 
+
+For basic R course and documentation, I would recommand to check out 
+[this website](https://learn-r.org/) or try an interactive course 
 [here](https://swirlstats.com/students.html) for a fun introduction to basic R 
-programming.
+programming. This [cheatsheet](https://github.com/wurli/r-best-practice) could also be of help. 
 
 ## Known Issues
 
