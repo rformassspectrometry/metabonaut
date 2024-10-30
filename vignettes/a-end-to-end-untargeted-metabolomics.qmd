@@ -192,7 +192,7 @@ abbreviations essential for proper interpretation of this metadata information:
 -   *injection_index*: An index representing the order (position) in which an
     individual sample was measured (injected) within the LC-MS measurement run
     of the experiment.
-    
+
 We will define colors for each of the sample groups based on their sample group
 using the *RColorBrewer* package:
 
@@ -247,7 +247,11 @@ compounds/ions known to be present in the samples. By providing a reliable
 reference, internal standards help achieve consistent and accurate analytical
 results.
 
-As LC signal is the most variable because of the  unstable nature of the LC, we will only show the BPC and their similarity. More in depth inspection and discussion of spectra and chromatrograhic data cna be found in the [data exploration vignette](https://rformassspectrometry.github.io/metabonaut/articles/data-investigation.html).
+As LC signal is the most variable because of the unstable nature of the LC, we
+will only show the BPC and their similarity. More in depth inspection and
+discussion of spectra and chromatrograhic data cna be found in the [data
+exploration
+vignette](https://rformassspectrometry.github.io/metabonaut/articles/data-investigation.html).
 
 ## Chromatographic Data Visualization: BPC and TIC
 
