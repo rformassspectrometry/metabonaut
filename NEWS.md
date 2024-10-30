@@ -1,14 +1,22 @@
-# metabonaut 0.0.4 
+# metabonaut 0.0
+
+## Changes in 0.0.5
+
+- Require *MsIO* version 0.0.8 to allow reading of stored
+  `MsBackendMetaboLights` objects.
+- Small updates and changes to the Seamless Alignment vignette:
+  - simplify import of previously stored result object
+  - avoid using the variable name `param` for every parameter object
 
 ## Changes in 0.0.4
-- Required *alabaster.se*. 
-- In the end-to-end vignette: 
-  - Removal of Spectra data in depth visualisation to 
-    move to the Data investigation vignette 
+- Required *alabaster.se*.
+- In the end-to-end vignette:
+  - Removal of Spectra data in depth visualisation to
+    move to the Data investigation vignette
   - Removal of internal standard matching to features
-    in the Normalization part. 
-- Save an load *lcms1* and *res* object from the end-to-end workflow 
-  to be used in the Seamless Alignment vignette. Using *MsIO* and 
+    in the Normalization part.
+- Save an load *lcms1* and *res* object from the end-to-end workflow
+  to be used in the Seamless Alignment vignette. Using *MsIO* and
   *alabaster.se*
 
 
