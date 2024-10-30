@@ -23,7 +23,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">metabonaut</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,7 +59,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Complete end-to-end LC-MS/MS Metabolomic Data analysis</h1>
 
 
-      <p class="date">2024-10-22</p>
+      <p class="date">2024-10-30</p>
 
       <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/main/vignettes/a-end-to-end-untargeted-metabolomics.qmd" class="external-link"><code>vignettes/a-end-to-end-untargeted-metabolomics.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -1881,7 +1881,7 @@ F-statistic:  7877 on 1 and 2846 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Object of class "XProcessHistory"
  type: Peak detection
- date: Tue Oct 22 16:33:02 2024
+ date: Wed Oct 30 09:55:20 2024
  info:
  fileIndex: 1,2,3,4,5,6,7,8,9,10
  Parameter class: CentWaveParam
@@ -2365,7 +2365,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span>                              mad <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/filterFeatures.html" class="external-link">filterFeatures</a></span><span class="op">(</span><span class="va">res</span>, filter <span class="op">=</span> <span class="va">filter_dratio</span>, assay <span class="op">=</span> <span class="st">"norm_imputed"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>2978 features were removed</code></pre>
+<pre><code>2979 features were removed</code></pre>
 </div>
 </div>
 <p>The Dratio filter is a powerful tool to identify features that exhibit high variability in the data, relating the variance observed in QC samples with that in study samples. By setting a threshold of 0.4, we remove features that have a high degree of variability between the QC and study samples. In this example, any feature in which the deviation at the QC is higher than 40% (<code>threshold = 0.4</code>)of the deviation on the study samples is removed. This filtering step ensures that only features are retained that have considerably lower technical than biological variance.</p>
@@ -2376,16 +2376,16 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <code class="sourceCode R"><span><span class="co">#' Number of features after analysis</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4282</code></pre>
+<pre><code>[1] 4281</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb133"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Percentage left: end/beginning</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res_unfilt</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 47.221</code></pre>
+<pre><code>[1] 47.20997</code></pre>
 </div>
 </div>
-<p>The dataset has been reduced from 9068 to 4282 features. We did remove a considerable amount of features but this is expected as we want to focus on the most reliable features for our analysis. For the rest of our analysis we need to separate the QC samples from the study samples. We will store the QC samples in a separate object for later use.</p>
+<p>The dataset has been reduced from 9068 to 4281 features. We did remove a considerable amount of features but this is expected as we want to focus on the most reliable features for our analysis. For the rest of our analysis we need to separate the QC samples from the study samples. We will store the QC samples in a separate object for later use.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb135"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_qc</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span>, <span class="va">res</span><span class="op">$</span><span class="va">phenotype</span> <span class="op">==</span> <span class="st">"QC"</span><span class="op">]</span></span>
@@ -2553,10 +2553,10 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: left;">FT0732</td>
 <td style="text-align: right;">182.0749</td>
 <td style="text-align: right;">34.83789</td>
-<td style="text-align: right;">-8.643957</td>
-<td style="text-align: right;">0.0056656</td>
+<td style="text-align: right;">-8.469682</td>
+<td style="text-align: right;">0.0060261</td>
 <td style="text-align: right;">12.226462</td>
-<td style="text-align: right;">3.708137</td>
+<td style="text-align: right;">3.857552</td>
 <td style="text-align: right;">0.2102895</td>
 </tr>
 <tr class="even">
@@ -2564,7 +2564,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: right;">195.0877</td>
 <td style="text-align: right;">32.65668</td>
 <td style="text-align: right;">-6.334251</td>
-<td style="text-align: right;">0.0307536</td>
+<td style="text-align: right;">0.0306995</td>
 <td style="text-align: right;">16.902516</td>
 <td style="text-align: right;">10.449738</td>
 <td style="text-align: right;">0.0296079</td>
@@ -2573,40 +2573,40 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: left;">FT0565</td>
 <td style="text-align: right;">161.0400</td>
 <td style="text-align: right;">162.13668</td>
-<td style="text-align: right;">-5.502459</td>
-<td style="text-align: right;">0.0261779</td>
+<td style="text-align: right;">-5.745501</td>
+<td style="text-align: right;">0.0256047</td>
 <td style="text-align: right;">10.284250</td>
-<td style="text-align: right;">4.575973</td>
+<td style="text-align: right;">4.298540</td>
 <td style="text-align: right;">0.0359696</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">FT1171</td>
 <td style="text-align: right;">229.1299</td>
 <td style="text-align: right;">181.08828</td>
-<td style="text-align: right;">-5.451969</td>
-<td style="text-align: right;">0.0217665</td>
+<td style="text-align: right;">-5.372540</td>
+<td style="text-align: right;">0.0136509</td>
 <td style="text-align: right;">10.718371</td>
-<td style="text-align: right;">5.465761</td>
+<td style="text-align: right;">5.529346</td>
 <td style="text-align: right;">0.0707526</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">FT0371</td>
 <td style="text-align: right;">138.0547</td>
 <td style="text-align: right;">148.39599</td>
-<td style="text-align: right;">-5.339596</td>
-<td style="text-align: right;">0.0217665</td>
+<td style="text-align: right;">-5.236305</td>
+<td style="text-align: right;">0.0136509</td>
 <td style="text-align: right;">9.912038</td>
-<td style="text-align: right;">4.214845</td>
+<td style="text-align: right;">4.350682</td>
 <td style="text-align: right;">0.5555981</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">FT5606</td>
 <td style="text-align: right;">560.3603</td>
 <td style="text-align: right;">33.54917</td>
-<td style="text-align: right;">-3.836998</td>
-<td style="text-align: right;">0.0307536</td>
+<td style="text-align: right;">-3.508903</td>
+<td style="text-align: right;">0.0288655</td>
 <td style="text-align: right;">8.883094</td>
-<td style="text-align: right;">4.818665</td>
+<td style="text-align: right;">5.186514</td>
 <td style="text-align: right;">1.2154388</td>
 </tr>
 </tbody>
@@ -2655,7 +2655,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span><span class="fu"><a href="https://rdrr.io/pkg/AnnotationHub/man/AnnotationHub-class.html" class="external-link">query</a></span><span class="op">(</span><span class="va">ah</span>, <span class="st">"MassBank"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>AnnotationHub with 6 records
-# snapshotDate(): 2024-10-14
+# snapshotDate(): 2024-10-24
 # $dataprovider: MassBank
 # $species: NA
 # $rdataclass: CompDb
@@ -3440,12 +3440,12 @@ other attached packages:
 [11] zoo_1.8-12                   sm_2.2-6.0
 [13] pheatmap_1.0.12              RColorBrewer_1.1-3
 [15] pander_0.6.5                 limma_3.61.12
-[17] MetaboCoreUtils_1.13.0       xcms_4.3.3
-[19] SummarizedExperiment_1.35.4  Biobase_2.65.1
+[17] MetaboCoreUtils_1.13.0       xcms_4.3.4
+[19] SummarizedExperiment_1.35.5  Biobase_2.65.1
 [21] GenomicRanges_1.57.2         GenomeInfoDb_1.41.2
-[23] IRanges_2.39.2               MatrixGenerics_1.17.0
+[23] IRanges_2.39.2               MatrixGenerics_1.17.1
 [25] matrixStats_1.4.1            MsBackendMetaboLights_0.99.1
-[27] Spectra_1.15.12              BiocParallel_1.39.0
+[27] Spectra_1.15.13              BiocParallel_1.39.0
 [29] S4Vectors_0.43.2             BiocGenerics_0.51.3
 [31] MsIO_0.0.7                   MsExperiment_1.7.0
 [33] ProtGenerics_1.37.1          readxl_1.4.3
@@ -3461,7 +3461,7 @@ loaded via a namespace (and not attached):
  [11] lattice_0.22-6              MASS_7.3-61
  [13] alabaster.base_1.5.10       MultiAssayExperiment_1.31.5
  [15] magrittr_2.0.3              rmarkdown_2.28
- [17] yaml_2.3.10                 MsCoreUtils_1.17.2
+ [17] yaml_2.3.10                 MsCoreUtils_1.17.3
  [19] DBI_1.2.3                   abind_1.4-8
  [21] zlibbioc_1.51.2             purrr_1.0.2
  [23] RCurl_1.98-1.16             rappdirs_0.3.3
@@ -3475,7 +3475,7 @@ loaded via a namespace (and not attached):
  [39] tools_4.4.1                 progress_1.2.3
  [41] Rcpp_1.0.13                 glue_1.8.0
  [43] SparseArray_1.5.45          xfun_0.48
- [45] dplyr_1.1.4                 withr_3.0.1
+ [45] dplyr_1.1.4                 withr_3.0.2
  [47] BiocManager_1.30.25         fastmap_1.2.0
  [49] rhdf5filters_1.17.0         fansi_1.0.6
  [51] digest_0.6.37               R6_2.5.1
@@ -3483,14 +3483,14 @@ loaded via a namespace (and not attached):
  [55] rsvg_2.6.1                  RSQLite_2.3.7
  [57] utf8_1.2.4                  tidyr_1.3.1
  [59] generics_0.1.3              prettyunits_1.2.0
- [61] PSMatch_1.9.0               httr_1.4.7
+ [61] PSMatch_1.9.1               httr_1.4.7
  [63] htmlwidgets_1.6.4           S4Arrays_1.5.11
- [65] pkgconfig_2.0.3             gtable_0.3.5
+ [65] pkgconfig_2.0.3             gtable_0.3.6
  [67] blob_1.2.4                  impute_1.79.0
  [69] MassSpecWavelet_1.71.0      XVector_0.45.0
  [71] htmltools_0.5.8.1           MALDIquant_1.22.3
  [73] clue_0.3-65                 scales_1.3.0
- [75] png_0.1-8                   rstudioapi_0.17.0
+ [75] png_0.1-8                   rstudioapi_0.17.1
  [77] reshape2_1.4.4              rjson_0.2.23
  [79] curl_5.2.3                  cachem_1.1.0
  [81] rhdf5_2.49.0                stringr_1.5.1
@@ -3504,7 +3504,7 @@ loaded via a namespace (and not attached):
  [97] compiler_4.4.1              rlang_1.1.4
  [99] crayon_1.5.3                labeling_0.4.3
 [101] QFeatures_1.15.3            ChemmineR_3.57.1
-[103] ps_1.8.0                    affy_1.83.1
+[103] ps_1.8.1                    affy_1.83.1
 [105] plyr_1.8.9                  fs_1.6.4
 [107] stringi_1.8.4               munsell_0.5.1
 [109] Biostrings_2.73.2           lazyeval_0.2.2
