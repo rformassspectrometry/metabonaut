@@ -48,6 +48,7 @@ Our workflow is therefore based on the following dependencies:
 library(readxl)
 library(MsExperiment)
 library(MsIO)
+library(alabaster.se)
 library(MsBackendMetaboLights)
 library(SummarizedExperiment)
 
@@ -181,9 +182,6 @@ sampleData(lcms1)[, c("derived_spectra_data_file",
 There are `r length(sampleData(lcms1))` samples in this data set. Below are
 abbreviations essential for proper interpretation of this metadata information:
 
--   *injection_index*: An index representing the order (position) in which an
-    individual sample was measured (injected) within the LC-MS measurement run
-    of the experiment.
 -   *phenotype*: The sample groups of the experiment:
     -   `"QC"`: Quality control sample (pool of serum samples from an external,
         large cohort).
@@ -191,11 +189,14 @@ abbreviations essential for proper interpretation of this metadata information:
     -   `"CTR"`: Sample from a presumably healthy control.
 -   *sample_name*: An arbitrary name/identifier of the sample.
 -   *age*: The (rounded) age of the individuals.
-
+-   *injection_index*: An index representing the order (position) in which an
+    individual sample was measured (injected) within the LC-MS measurement run
+    of the experiment.
+    
 We will define colors for each of the sample groups based on their sample group
 using the *RColorBrewer* package:
 
-```{r define-colors, include=FALSE}
+```{r define-colors}
 #' Define colors for the different phenotypes
 col_phenotype <- brewer.pal(9, name = "Set1")[c(9, 5, 4)]
 names(col_phenotype) <- c("QC", # grey
@@ -218,46 +219,6 @@ spectra of the data set.
 #' Access Spectra Object
 spectra(lcms1)
 ```
-
-We can also summarize the number of spectra and their respective MS level
-(extracted with the `msLevel()` function). The `fromFile()` function returns for
-each spectrum the index of its sample (data file) and can thus be used to split
-the information (MS level in this case) by sample to further summarize using the
-base R `table()` function and combine the result into a matrix. Note that this
-is the number of spectra acquired at each run, and not the number of spectral
-features in each sample.
-
-```{r}
-#' Count the number of spectra with a specific MS level per file.
-spectra(lcms1) |>
-    msLevel() |>
-    split(fromFile(lcms1)) |>
-    lapply(table) |>
-    do.call(what = cbind)
-```
-
-The present data set thus contains only MS1 data, which is ideal for
-quantification of the signal. A second (LC-MS/MS) data set also with fragment
-(MS2) spectra of the same samples will be used later on in the workflow.
-
-Note that users should not restrict themselves to data evaluation examples shown
-here or in other tutorials. The *Spectra* package enables user-friendly access
-to the full MS data and its functionality should be extensively used to explore,
-visualize and summarize the data.
-
-As another example, we below determine the retention time range for the entire
-data set.
-
-```{r}
-#' Retention time range for entire dataset
-spectra(lcms1) |>
-    rtime() |>
-    range()
-```
-
-Data obtained from LC-MS experiments are typically analyzed along the retention
-time axis, while MS data is organized by spectrum, orthogonal to the retention
-time axis.
 
 # Data visualization and general quality assessment
 
@@ -286,144 +247,7 @@ compounds/ions known to be present in the samples. By providing a reliable
 reference, internal standards help achieve consistent and accurate analytical
 results.
 
-## Spectra Data Visualization: BPS
-
-The BPS collapses data in the retention time dimension and reveals the most
-prevalent ions present in each of the samples, creation of such BPS is however
-not straightforward. Mass peaks, even if representing signals from the same ion,
-will never have identical *m/z* values in consecutive spectra due to the
-measurement error/resolution of the instrument.
-
-Below we use the `combineSpectra` function to combine all spectra from one file
-(defined using parameter `f = fromFile(data)`) into a single spectrum. All mass
-peaks with a difference in *m/z* value smaller than 3 parts-per-million (ppm)
-are combined into one mass peak, with an intensity representing the maximum of
-all such grouped mass peaks. To reduce memory requirement, we in addition first
-*bin* each spectrum combining all mass peaks within a spectrum, aggregating mass
-peaks into bins with 0.01 *m/z* width. In case of large datasets, it is also
-recommended to set the `processingChunkSize()` parameter of the `MsExperiment`
-object to a finite value (default is `Inf`) causing the data to be processed
-(and loaded into memory) in chunks of `processingChunkSize()` spectra. This can
-reduce memory demand and speed up the process.
-
-```{r}
-#' Setting the chunksize
-chunksize <- 1000
-processingChunkSize(spectra(lcms1)) <- chunksize
-```
-
-We can now generate BPS for each sample and `plot()` them.
-
-```{r bps, eval=FALSE}
-#| fig-cap: "Figure 1. BPS of all samples."
-#' Combining all spectra per file into a single spectrum
-bps <- spectra(lcms1) |>
-    bin(binSize = 0.01) |>
-    combineSpectra(f = fromFile(lcms1), intensityFun = max, ppm = 3)
-
-#' Plot the base peak spectra
-par(mar = c(2, 1, 1, 1))
-plotSpectra(bps, main= "")
-```
-
-Here, there is observable overlap in ion content between the files, particularly
-around 300 *m/z* and 700 *m/z*. There are however also differences between sets
-of samples. In particular, BPS 1, 4, 7 and 10 (counting row-wise from left to
-right) seem different than the others. In fact, these four BPS are from QC
-samples, and the remaining six from the study samples. The observed differences
-might be explained by the fact that the QC samples are pools of serum samples
-from a different cohort, while the study samples represent plasma samples, from
-a different sample collection.
-
-Next to the visual inspection above, we can also calculate and express the
-similarity between the BPS with a heatmap. Below we use the `compareSpectra()`
-function to calculate pairwise similarities between all BPS and use then the
-`pheatmap()` function from the *pheatmap* package to cluster and visualize this
-result.
-
-```{r compare-spectra, eval=FALSE}
-#| fig-cap: "Figure 2. Heatmap of MS signals similarities."
-#' Calculate similarities between BPS
-sim_matrix <- compareSpectra(bps)
-
-#' Add sample names as rownames and colnames
-rownames(sim_matrix) <- colnames(sim_matrix) <- sampleData(lcms1)$sample_name
-ann <- data.frame(phenotype = sampleData(lcms1)[, "phenotype"])
-rownames(ann) <- rownames(sim_matrix)
-
-#' Plot the heatmap
-pheatmap(sim_matrix, annotation_col = ann,
-         annotation_colors = list(phenotype = col_phenotype))
-```
-
-We get a first glance at how our different samples distribute in terms of
-similarity. The heatmap confirms the observations made with the BPS, showing
-distinct clusters for the QCs and the study samples, owing to the different
-matrices and sample collections.
-
-It is also strongly recommended to delve deeper into the data by exploring it in
-more detail. This can be accomplished by carefully assessing our data and
-extracting spectra or regions of interest for further examination. In the next
-chunk, we will look at how to extract information for a specific spectrum from
-distinct samples.
-
-```{r}
-#| fig-cap: "Figure 3. Intensity and m/z values of the 125th spectrum of two CTR samples."
-#| out.width: 90%
-#| fig-align: center
-#' Accessing a single spectrum - comparing with QC
-par(mfrow = c(1,2), mar = c(2, 2, 2, 2))
-spec1 <- spectra(lcms1[1])[125]
-spec2 <- spectra(lcms1[3])[125]
-plotSpectra(spec1, main = "QC sample")
-plotSpectra(spec2, main = "CTR sample")
-```
-
-The significant dissimilarities in peak distribution and intensity confirm the
-difference in composition between QCs and study samples. We next compare a full
-MS1 spectrum from a CVD and a CTR sample.
-
-```{r}
-#| fig-cap: "Figure 4. Intensity and m/z values of the 125th spectrum of one CVD and one CTR sample."
-#| out.width: 90%
-#| fig-align: center
-#' Accessing a single spectrum - comparing CVD and CTR
-par(mfrow = c(1,2), mar = c(2, 2, 2, 2))
-spec1 <- spectra(lcms1[2])[125]
-spec2 <- spectra(lcms1[3])[125]
-plotSpectra(spec1, main = "CVD sample")
-plotSpectra(spec2, main = "CTR sample")
-```
-
-Above, we can observe that the spectra between CVD and CTR samples are not
-entirely similar, but they do exhibit similar main peaks between 200 and 600 m/z
-with a general higher intensity in control samples. However the peak
-distribution (or at least intensity) seems to vary the most between an *m/z* of
-10 to 210 and after an *m/z* of 600.
-
-The CTR spectrum above exhibits significant peaks around an *m/z* of 150 - 200
-that have a much lower intensity in the CVD sample. To delve into more details
-about this specific spectrum, a wide range of functions can be employed:
-
-```{r}
-#| tbl-cap: "Table 3. Intensity and m/z  values of the 125th spectrum of one CTR sample."
-#| tbl-style: "border: 1px solid black; width: 50%; border-collapse: collapse;"
-#' Checking its intensity
-intensity(spec2)
-
-#' Checking its rtime
-rtime(spec2)
-
-#' Checking its m/z
-mz(spec2)
-
-#' Filtering for a specific m/z range and viewing in a tabular format
-filt_spec <- filterMzRange(spec2,c(50,200))
-
-data.frame(intensity = unlist(intensity(filt_spec)),
-           mz = unlist(mz(filt_spec))) |>
-  head() |> kable(format = "markdown")
-```
+As LC signal is the most variable because of the  unstable nature of the LC, we will only show the BPC and their similarity. More in depth inspection and discussion of spectra and chromatrograhic data cna be found in the [data exploration vignette](https://rformassspectrometry.github.io/metabonaut/articles/data-investigation.html).
 
 ## Chromatographic Data Visualization: BPC and TIC
 
@@ -515,37 +339,7 @@ The heatmap above reinforces what our exploration of spectra data showed, which
 is a strong separation between the QC and study samples. This is important to
 bear in mind for later analyses.
 
-Additionally, study samples group into two clusters, cluster *I* containing
-samples *C* and *F* and cluster *II* with all other samples. Below we plot the
-TIC of all samples, using a different color for each cluster.
-
-```{r}
-#| fig-cap: "Figure 8. Example of TIC of unusual signal."
-cluster_I_idx <- sampleData(lcms1)$sample_name %in% c("F", "C")
-cluster_II_idx <- sampleData(lcms1)$sample_name %in% c("A", "B", "D", "E")
-
-temp_col <- c("grey", "red")
-names(temp_col) <- c("Cluster II", "Cluster I")
-col <- rep(temp_col[1], length(lcms1))
-col[cluster_I_idx] <- temp_col[2]
-col[sampleData(lcms1)$phenotype == "QC"] <- NA
-
-lcms1 |>
-    chromatogram(aggregationFun = "sum") |>
-    plot( col = col,
-     main = "TIC after filtering retention time", lwd = 1.5)
-grid()
-legend("topright", col = temp_col,
-       legend = names(temp_col), lty = 1, lwd = 2,
-       horiz = TRUE, bty = "n")
-```
-
-While the TIC of all samples look similar, the samples from cluster I show a
-different signal in the retention time range from about 40 to 160 seconds.
-Whether, and how strong this difference will impact the following analysis
-remains to be determined.
-
-### Known compounds
+## Chromatographic Data Visualization: EICs
 
 Throughout the entire process, it is crucial to have reference points within the
 dataset, such as well-known ions. Most experiments nowadays include internal
@@ -619,39 +413,6 @@ We can observe a clear concentration difference between QCs and study samples
 for the isotope labeled cystine ion. Meanwhile, the labeled methionine internal
 standard exhibits a discernible signal amidst some noise and a noticeable
 retention time shift between samples.
-
-While the artificially isotope labeled compounds were spiked to the individual
-samples, there should also be the signal from the endogenous compounds in serum
-(or plasma) samples. Thus, we calculate next the mass and *m/z* of an *\[M+H\]+*
-ion of the endogenous cystine from its chemical formula and extract also the EIC
-from this ion. For calculation of the exact mass and the *m/z* of the selected
-ion adduct we use the `calculateMass()` and `mass2mz()` functions from the
-`r Biocpkg("MetaboCoreUtils")` package.
-
-```{r}
-#| fig-cap: "Figure 10. EIC of endogenous cystine vs spiked."
-#' extract endogenous cystine mass and EIC and plot.
-cysmass <- calculateMass("C6H12N2O4S2")
-cys_endo <- mass2mz(cysmass, adduct = "[M+H]+")[, 1]
-
-#' Plot versus spiked
-par(mfrow = c(1, 2))
-chromatogram(lcms1, mz = cys_endo + c(-0.005, 0.005),
-             rt = unlist(fData(eic_cystine)[, c("rtmin", "rtmax")]),
-             aggregationFun = "max") |>
-    plot(col = paste0(col_sample, 80)) |>
-    grid()
-
-plot(eic_cystine, col = paste0(col_sample, 80))
-grid()
-legend("topright", col = col_phenotype, legend = names(col_phenotype), lty = 1,
-       bty = "n")
-```
-
-The two cystine EICs above look highly similar (the endogenous shown left, the
-isotope labeled right in the plot above), if not for the shift in m/z, which
-arises from the artificial labeling. This shift allows us to discriminate
-between the endogenous and non-endogenous compound.
 
 # Data preprocessing
 
@@ -939,7 +700,7 @@ Before proceeding with the next preprocessing step it is generally suggested to
 evaluate the results of the chromatographic peak detection on EICs of e.g.
 internal standards or other compounds/ions known to be present in the samples.
 
-```{r}
+```{r, message=FALSE}
 eics_is_chrompeaks <- eic_is
 
 eic_is <- chromatogram(lcms1,
@@ -1114,7 +875,7 @@ algorithm are:
 Below we perform the alignment of our data set based on retention times of
 anchor peaks defined in the subset of QC samples.
 
-```{r}
+```{r, message=FALSE}
 #' Define parameters of choice
 subset <- which(sampleData(lcms1)$phenotype == "QC")
 param <- PeakGroupsParam(minFraction = 0.9, extraPeaks = 50, span = 0.5,
@@ -1188,7 +949,7 @@ We next evaluate the impact of the alignment on the EICs of the selected
 internal standards. We thus below first extract the ion chromatograms after
 alignment.
 
-```{r}
+```{r, message=FALSE}
 #' Store the EICs before alignment
 eics_is_refined <- eic_is
 
@@ -1297,7 +1058,6 @@ rt_raw <- chromPeaks(lcms1_raw)[idx, "rt"] |>
 #' Extract the adjusted retention times for these
 rt_adj <- chromPeaks(lcms1)[idx, "rt"] |>
     matrix(ncol = length(lcms1_raw))
-
 ```
 
 We can now evaluate the impact of the alignment on the retention times of
@@ -1308,7 +1068,7 @@ internal standards across the full data set:
 list(all_raw = rowSds(rt_raw, na.rm = TRUE),
      all_adj = rowSds(rt_adj, na.rm = TRUE)
      ) |>
-    vioplot(ylab = "sd(retention time)")
+    vioplot()
 grid()
 ```
 
@@ -1415,7 +1175,7 @@ isotope labeled methionine for a larger retention time range. Importantly, to
 show the actual correspondence results, we set `simulate = FALSE` for the
 `plotChromPeakDensity()` function.
 
-```{r}
+```{r, message=FALSE}
 #| fig-cap: "Figure 25. Correspondence analysis results, Methionine."
 #' Extract chromatogram for an m/z similar to the one of the labeled methionine
 chr_test <- chromatogram(lcms1,
@@ -1446,8 +1206,7 @@ breaks <- seq(0, max(vc, na.rm = TRUE) + 1, length.out = 15) |>
     round(0)
 cuts <- cut(vc, breaks = breaks, include.lowest = TRUE)
 
-table(cuts) |>
-    kable(format = "pipe")
+table(cuts)
 ```
 
 The results from the correspondence analysis are now stored, along with the
@@ -1500,7 +1259,7 @@ Let's therefore delve into the process of *gap-filling*. We first evaluate some
 example features for which a chromatographic peak was only detected in some
 samples:
 
-```{r}
+```{r, message=FALSE}
 #| fig-cap: "Figure 26. Examples of chromatographic peaks with missing values."
 ftidx <- which(is.na(rowSums(featureValues(lcms1))))
 fts <- rownames(featureDefinitions(lcms1))[ftidx]
@@ -1539,7 +1298,7 @@ data set. Note that, even if in a sample no ion would be present, in the worst
 case noise would be integrated, which is expected to be much lower than actual
 chromatographic peak signal. Let's look at our previously missing values again:
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE}
 #| fig-cap: "Figure 27. Examples of chromatographic peaks with missing values after gap-filling."
 #' Extract EICs again and plot them
 chromatogram(lcms1[c(2, 3)],
@@ -1705,11 +1464,14 @@ ensures that our object can be easily read from other languages like Python and
 Javascript as well as loaded easily back into R.
 
 ```{r}
-#' Save the preprocessing results
-#' d <- file.path(tempdir(), "objects/lcms1")
-# saveMsObject(lcms1, AlabasterParam(path = d))
-#' for now let's do R object because the previous method is not implemented yet.
-save(lcms1, file = "preprocessed_lcms1.RData")
+#' XcmsExperiment object: 
+saveMsObject(lcms1,
+             AlabasterParam(path = file.path("objects/preprocessed_lcms1")))
+
+#' Below we remove the processHistory of the res object to allow for export, 
+#' this need to be fixed later.
+metadata(res) <- list()
+saveObject(res, file.path("objects/preprocessed_res"))
 ```
 
 # Data normalization
@@ -1815,8 +1577,8 @@ Before plotting the PCA, we apply a log2 transform, center and scale the data.
 The log2 transformation is applied to stabilize the variance while centering to
 remove dependency on absolute abundances.
 
-```{r unsupervised-checks1}
-#| fig-cap: "Figure 28. PCA of the data."
+```{r unsupervised-checks1, fig.height=8, fig.width=6}
+#| fig-cap: "Figure 28. PCA of the data coloured by phenotypes."
 #' Log2 transform and scale data
 vals <- assay(res, "raw_filled_imputed") |>
     log2() |>
@@ -1833,7 +1595,7 @@ pca_12 <- autoplot(pca_res, data = vals_st , colour = 'phenotype', scale = 0) +
 pca_34 <- autoplot(pca_res, data = vals_st, colour = 'phenotype',
                    x = 3, y = 4, scale = 0) +
     scale_color_manual(values = col_phenotype)
-grid.arrange(pca_12, pca_34, ncol = 2)
+grid.arrange(pca_12, pca_34, ncol = 1)
 ```
 
 The PCA above shows a clear separation of the study samples (plasma) from the QC
@@ -1921,54 +1683,6 @@ indeed centered around 0. Exception are two of the *CVD* samples. Thus, while
 the distribution of signals across samples is comparable, some differences seem
 to be present that require a between sample normalization.
 
-### Internal standards
-
-Depending when IS are added to the sample mixes, they allow evaluation of
-variances introduced by the subsequent processing and analysis steps. For the
-present experiment, IS were added to the original plasma samples before sample
-extraction which included also protein and lipid removal steps. They can
-therefore be used to evaluate variances introduced by sample extraction and any
-subsequent steps, can however not be used to infer conclusions on performance or
-differences on the original sample collection (blood drawing, storage, plasma
-creation).
-
-Here we again use the `matchValues()` function to identify features representing
-signal from the IS. We then filter these matches to only keep IS that match with
-a single feature using the `filterMatches()` function in combination with
-`SingleMatchParam`.
-
-```{r}
-# Do we keep IS in normalisation ? Does not give much info... Would simplify a bit
-#' Creating a column within our IS table
-intern_standard$feature_id <- NA_character_
-
-#' Identify features matching m/z and RT of internal standards.
-fdef <- featureDefinitions(lcms1)
-fdef$feature_id <- rownames(fdef)
-match_intern_standard <- matchValues(
-    query = intern_standard,
-    target = fdef,
-    mzColname = c("mz", "mzmed"),
-    rtColname = c("RT", "rtmed"),
-    param = MzRtParam(ppm = 50, toleranceRt = 10))
-
-#' Keep only matches with a 1:1 mapping standard to feature.
-param <- SingleMatchParam(duplicates = "remove", column = "score_rt",
-                          decreasing = TRUE)
-match_intern_standard <- filterMatches(match_intern_standard, param)
-
-intern_standard$feature_id <- match_intern_standard$target_feature_id
-intern_standard <- intern_standard[!is.na(intern_standard$feature_id), ]
-```
-
-These internal standards play a crucial role in guiding the normalization
-process. Given the assumption that the samples were artificially spiked, we
-possess a known ground truth—that the abundance or intensity of the internal
-standard should be consistent. Any difference is expected to be due to technical
-differences/variance. Consequently, normalization aims to minimize variation
-between samples for the internal standard, reinforcing the reliability of our
-analyses.
-
 ## Between sample normalisation
 
 The previous RLA plot showed that the data had some biases that need to be
@@ -2022,7 +1736,7 @@ behavior between groups.
 
 ### Principal Component Analysis
 
-```{r}
+```{r, fig.height=8, fig.width=6}
 #| fig-cap: "Figure 31. PC1 and PC2 of the data before and after normalization."
 #' Data before normalization
 vals_st <- cbind(vals, phenotype = res$phenotype)
@@ -2041,14 +1755,14 @@ pca_adj <- autoplot(pca_res_norm, data = vals_st_norm,
                     colour = 'phenotype', scale = 0) +
     scale_color_manual(values = col_phenotype)
 
-grid.arrange(pca_raw, pca_adj, ncol = 2)
+grid.arrange(pca_raw, pca_adj, ncol = 1)
 ```
 
 Normalization did not have a large impact on PC1 or PC2, but the separation of
 the study groups on PC3 seems to be better and difference between QC samples
 lower after normalization (see below).
 
-```{r}
+```{r, fig.height=8, fig.width=6}
 #| fig-cap: "Figure 32. PC3 and PC4 of the data before and after normalization."
 pca_raw <- autoplot(pca_res, data = vals_st ,
                     colour = 'phenotype', x = 3, y = 4, scale = 0) +
@@ -2057,7 +1771,7 @@ pca_adj <- autoplot(pca_res_norm, data = vals_st_norm,
                     colour = 'phenotype', x = 3, y = 4, scale = 0) +
     scale_color_manual(values = col_phenotype)
 
-grid.arrange(pca_raw, pca_adj, ncol = 2)
+grid.arrange(pca_raw, pca_adj, ncol = 1)
 ```
 
 The PCA plots above show that the normalization process has not changed the
@@ -2523,7 +2237,7 @@ integration into reproducible R-based analysis workflows.
 Below we load the resource, list all available MassBank data sets/releases and
 load one of them.
 
-```{r}
+```{r, message=FALSE}
 #' load reference data
 ah <- AnnotationHub()
 #' List available MassBank data sets
@@ -2540,7 +2254,7 @@ annotations from the database.
 ```{r}
 #| tbl-cap: "Table 8. MassBank database extract."
 #' Extract compound annotations
-cmps <- compounds(mb, columns = c("compound_id", "name", "formula",
+cmps <- compounds(mb, columns = c("name", "formula",
                                   "exactmass", "inchikey"))
 head(cmps)
 ```
@@ -2686,7 +2400,7 @@ lcms2 <- readMsObject(MsExperiment(),
                      simplify = TRUE)
 ```
 
-```{r}
+```{r, message=FALSE}
 #| tbl-cap: "Table 10. Samples from the LC-MS/MS data set."
 #adjust sampleData
 colnames(sampleData(lcms2)) <- c("sample_name", "derived_spectra_data_file",
@@ -2733,7 +2447,7 @@ might be very low. With this setting, however, most of the recorded MS2 spectra
 will represent only noise. The plot below shows the location of precursor ions
 in the *m/z* - retention time plane for the three files.
 
-```{r echo=TRUE}
+```{r, echo=TRUE, fig.height=8, fig.width=5}
 plotPrecursorIons(lcms2)
 ```
 
@@ -2988,8 +2702,6 @@ the highest scoring MS2 spectra was recorded and create a mirror plot comparing
 this MS2 spectra to the reference fragment spectra for caffeine.
 
 ```{r fig.height=5, fig.width=5}
-par(mfrow = c(1, 2))
-
 col_sample <- col_phenotype[sampleData(lcms1)$phenotype]
 #' Extract and plot EIC for the annotated feature
 eic <- featureChromatograms(lcms1, features = ms2_mtch_res$feature_id[1])
@@ -3090,20 +2802,10 @@ and reliable reference annotation libraries.
 sessionInfo()
 ```
 
-# References
-
-# Appendix
-
-## Aknowledgment
+# Aknowledgment
 
 Thanks to Steffen Neumann for his continuous work to develop and maintain the
-xcms software. ...
-
-## Alignment using manually selected anchor peaks
-
--   align the data set using internal standards.
--   suggested to eventually *enrich* the anchor peaks with signal from other
-    ions in retention time regions not covered by the internal standards.
+xcms software...
 
 # Additional informations
 
@@ -3137,8 +2839,4 @@ plot(eics_is_refined) # show refinement effect
 plot(eic_is) # show alignment effect
 ```
 
-```{r}
-#possible extra info:
-# -
-```
-
+# References

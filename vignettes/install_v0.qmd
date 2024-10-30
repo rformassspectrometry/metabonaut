@@ -26,12 +26,24 @@ code as follow:
 
 ```{r eval=FALSE}
 install.packages("BiocManager")
+BiocManager::install('RforMassSpectrometry/MsIO', ask = FALSE, 
+                     dependencies = TRUE)
 
-BiocManager::install(c('RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)
-
-BiocManager::install("rformassspectrometry/metabonaut",
+BiocManager::install("RforMassSpectrometry/metabonaut",
                      dependencies = TRUE, ask = FALSE, update = TRUE)
 ```
+
+If you get some error message when downloading form GitHub it might be due to
+an expired token. Remove them using this code below and try to install again: 
+
+```{r eval=FALSE}
+#See if any token is there:
+gitcreds::gitcreds_get()
+
+# Delete them:
+gitcreds::gitcreds_delete()
+```
+
 
 # Docker image
 

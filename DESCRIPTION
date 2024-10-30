@@ -1,6 +1,6 @@
 Package: metabonaut
 Title: Exploring and Analyzing LC-MS Data
-Version: 0.0.3
+Version: 0.0.4
 Authors@R:
     c(person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",
@@ -32,6 +32,7 @@ Depends:
     R (>= 4.3),
     BiocParallel (>= 1.8.0)
 Suggests:
+    alabaster.se,
     MsCoreUtils,
     xcms (>= 4.3.4),
     Spectra (>= 1.11.10),

@@ -1,0 +1,11 @@
+{
+    "summarized_experiment": {
+        "version": "1.0",
+        "dimensions": [
+            9068,
+            10
+        ]
+    },
+    "type": "summarized_experiment"
+}
+
