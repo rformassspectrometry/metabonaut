@@ -3,9 +3,12 @@ local_data
 *.o
 *.so
 /.quarto/
+vignettes/.quarto/
 /_site/
 *.html
 *.RData
 *.rmarkdown
 *.js
 *.css
+vignettes/objects/
+man/figures

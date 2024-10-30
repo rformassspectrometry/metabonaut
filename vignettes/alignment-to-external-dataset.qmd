@@ -34,6 +34,7 @@ The following packages are needed:
 
 ```{r, message=FALSE, warning=FALSE}
 library(MsIO)
+library(alabaster.se)
 library(MsBackendMetaboLights)
 library(xcms)
 library(MsExperiment)
@@ -77,7 +78,9 @@ tmp <- readMsObject(MsExperiment(),
 ```
 
 ```{r}
-load("/shared/data/preprocessed_lcms1.RData")
+lcms1 <- readMsObject(XcmsExperiment(), 
+                      AlabasterParam(file.path("..", "inst","extdata", "preprocessed_lcms1")))
+
 ```
 
 ## Load unprocessed LC-MS/MS data
@@ -104,6 +107,8 @@ access:
 
 ```{r}
 #| tbl-cap: "Table 10. Samples from the LC-MS/MS data set."
+#| code-fold: true
+#| code-summary: "Show the code"
 #adjust sampleData
 colnames(sampleData(lcms2)) <- c("sample_name", "derived_spectra_data_file",
                                 "metabolite_asssignment_file",
@@ -328,8 +333,6 @@ abline(v = ref_vs_obs[[1]]$obs, col = "#c4114510")
 To quantitatively assess the quality of the alignment, we compute the distance
 between the chromatographic peaks in our LC-MS data and the anchor peaks (Lamas)
 both before and after the alignment.
-
-library(vioplot)
 
 ```{r}
 # Extract data for sample 3 directly
