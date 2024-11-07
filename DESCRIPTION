@@ -1,6 +1,6 @@
 Package: metabonaut
 Title: Exploring and Analyzing LC-MS Data
-Version: 0.0.4
+Version: 0.0.6
 Authors@R:
     c(person(given = "Philippine", family = "Louail",
             email = "philippine.louail@eurac.edu",

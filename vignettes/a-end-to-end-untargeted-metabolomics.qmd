@@ -19,6 +19,12 @@ library(BiocStyle)
 knitr::opts_knit$set(root.dir = './')
 ```
 
+```{css, echo = FALSE}
+.verysmall .table{
+  font-size: 8px;
+}
+```
+
 # Introduction
 
 The present workflow describes all steps for the analysis of an LC-MS/MS
@@ -120,7 +126,6 @@ if (.Platform$OS.type == "unix") {
 } else {
     register(SnowParam(2))
 }
-
 ```
 
 # Data organisation
@@ -290,11 +295,15 @@ After about 240 seconds no signal seems to be measured. Thus, we filter the data
 removing that part as well as the first 10 seconds measured in the LC run.
 
 ```{r filter-rt}
-#| fig-cap: "Figure 6. BPC after filtering retention time."
 #' Filter the data based on retention time
 lcms1 <- filterRt(lcms1, c(10, 240))
 bpc <- chromatogram(lcms1, aggregationFun = "max")
+```
 
+```{r bpc2, echo=TRUE}
+#| fig-cap: "Figure 6. BPC after filtering retention time."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Plot after filtering
 plot(bpc, col = paste0(col_sample, 80),
      main = "BPC after filtering retention time", lwd = 1.5)
@@ -393,6 +402,8 @@ We below plot the EICs for isotope labeled cystine and methionine.
 ```{r}
 #| fig-cap: "Figure 9. EIC of cystine and methionine."
 #| fig-align: center
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Extract the two IS from the chromatogram object.
 eic_cystine <- eic_is["cystine_13C_15N"]
 eic_met <- eic_is["methionine_13C_15N"]
@@ -554,8 +565,11 @@ With the customized parameters, a chromatographic peak was detected in each
 sample. Below, we use the `plot()` function on the EICs to visualize these
 results.
 
-```{r echo=FALSE}
+```{r}
 #| fig-cap: "Figure 11. Chromatographic peak detection on EICs."
+#| fig-align: center
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Plot test chromatogram
 par(mfrow = c(1, 2))
 plot(cystine_test, main = fData(cystine_test)$name,
@@ -606,6 +620,8 @@ chromatographic peak detection results.
 
 ```{r plot-new-eics, echo=FALSE}
 #| fig-cap: "Figure 12. Chromatographic peak detection on EICs after processing."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Test if we find peaks for Cystine and Methionine again
 eic_cystine <- eic_is["cystine_13C_15N", ]
 eic_met <- eic_is["methionine_13C_15N", ]
@@ -639,8 +655,10 @@ this issue, the `refineChromPeaks()` function is utilized, in conjunction with
 Below we show some examples of *CentWave* peak detection artifacts. These
 examples are pre-selected to illustrate the necessity of the next step:
 
-```{r echo=FALSE}
+```{r}
 #| fig-cap: "Figure 13. Examples of CentWave peak detection artifacts."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Extract m/z-rt regions for selected peaks
 mz_rt <- cbind(rtmin = c(155.2120, 181.71800),
                rtmax = c(201.0710, 228.13500),
@@ -703,6 +721,8 @@ chromPeakData(lcms1)$merged |>
 Before proceeding with the next preprocessing step it is generally suggested to
 evaluate the results of the chromatographic peak detection on EICs of e.g.
 internal standards or other compounds/ions known to be present in the samples.
+Here we update our EICs objects for the internal standards with the results of
+the chromatographic peak detection and refinement.
 
 ```{r, message=FALSE}
 eics_is_chrompeaks <- eic_is
@@ -723,10 +743,13 @@ these numbers in a table.
 
 ```{r}
 #| tbl-cap: "Table 5. Samples and number of identified chromatographic peaks."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Count the number of peaks per sample and summarize them in a table.
 data.frame(sample_name = sampleData(lcms1)$sample_name,
            peak_count = as.integer(table(chromPeaks(lcms1)[, "sample"]))) |>
-    kable(format = "pipe")
+  t() |>
+  kable(format = "pipe")
 ```
 
 A similar number of chromatographic peaks was identified within the various
@@ -750,6 +773,9 @@ QC samples.
 
 ```{r}
 #| fig-cap: "Figure 15. BPC of QC samples."
+#| fig-align: center
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Get QC samples
 QC_samples <- sampleData(lcms1)$phenotype == "QC"
 
@@ -930,6 +956,9 @@ lcms1 <- applyAdjustedRtime(lcms1)
 
 ```{r bpc-before-and-after1}
 #| fig-cap: "Figure 18. BPC before and after alignment."
+#| fig-align: center
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Plot the BPC before and after alignment
 par(mfrow = c(2, 1), mar = c(2, 1, 1, 0.5))
 chromatogram(lcms1_raw, aggregationFun = "max", chromPeaks = "none") |>
@@ -954,14 +983,13 @@ internal standards. We thus below first extract the ion chromatograms after
 alignment.
 
 ```{r, message=FALSE}
-#' Store the EICs before alignment
-eics_is_refined <- eic_is
-
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Update the EICs
 eic_is <- chromatogram(lcms1,
                        rt = as.matrix(intern_standard[, c("rtmin", "rtmax")]),
                        mz = as.matrix(intern_standard[, c("mzmin", "mzmax")]))
-fData(eic_is) <- fData(eics_is_refined)
+fData(eic_is) <- fdata
 
 #' Extract the EICs for the test ions
 eic_cystine <- eic_is["cystine_13C_15N"]
@@ -973,6 +1001,9 @@ before and after alignment for both the isotope labeled cystine and methionine.
 
 ```{r specific-ion-before-and-after1}
 #| fig-cap: "Figure 19. EICs of cystine and methionine before and after alignment."
+#| fig-align: center
+#| code-fold: true
+#| code-summary: "Show the code"
 par(mfrow = c(2, 2), mar = c(4, 4.5, 2, 1))
 
 old_eic_cystine <- eics_is_refined["cystine_13C_15N"]
@@ -1094,12 +1125,16 @@ the apex position of chromatographic peaks in the different samples (y-axis),
 along retention time (x-axis) in the lower panel.
 
 ```{r}
-#| fig-cap: "Figure 21. Initial correspondence analysis, Cystine."
 #' Default parameter for the grouping and apply them to the test ions BPC
 param <- PeakDensityParam(sampleGroups = sampleData(lcms1)$phenotype, bw = 30)
 
 param
+```
 
+```{r}
+#| fig-cap: "Figure 21. Initial correspondence analysis, Cystine."
+#| code-fold: true
+#| code-summary: "Show the code"
 plotChromPeakDensity(
     eic_cystine, param = param,
     col = paste0(col_sample, "80"),
@@ -1110,6 +1145,8 @@ plotChromPeakDensity(
 
 ```{r}
 #| fig-cap: "Figure 22. Initial correspondence analysis, Methionine."
+#| code-fold: true
+#| code-summary: "Show the code"
 plotChromPeakDensity(eic_met, param = param,
     col = paste0(col_sample, "80"),
     peakCol = col_sample[chromPeaks(eic_met)[, "sample"]],
@@ -1126,6 +1163,8 @@ this parameter to 1.8 and evaluate its impact.
 
 ```{r}
 #| fig-cap: "Figure 23. Correspondence analysis with optimized parameters, Cystine."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Updating parameters
 param <- PeakDensityParam(sampleGroups = sampleData(lcms1)$phenotype, bw = 1.8)
 
@@ -1139,6 +1178,8 @@ plotChromPeakDensity(
 
 ```{r}
 #| fig-cap: "Figure 24. Correspondence analysis with optimized parameters, Methionine."
+#| code-fold: true
+#| code-summary: "Show the code"
 plotChromPeakDensity(eic_met, param = param,
     col = paste0(col_sample, "80"),
     peakCol = col_sample[chromPeaks(eic_met)[, "sample"]],
@@ -1181,6 +1222,8 @@ show the actual correspondence results, we set `simulate = FALSE` for the
 
 ```{r, message=FALSE}
 #| fig-cap: "Figure 25. Correspondence analysis results, Methionine."
+#| fig-align: center
+#| code-fold: true
 #' Extract chromatogram for an m/z similar to the one of the labeled methionine
 chr_test <- chromatogram(lcms1,
                          mz = as.matrix(intern_standard["methionine_13C_15N",
@@ -1265,6 +1308,8 @@ samples:
 
 ```{r, message=FALSE}
 #| fig-cap: "Figure 26. Examples of chromatographic peaks with missing values."
+#| code-fold: true
+#| code-summary: "Show the code"
 ftidx <- which(is.na(rowSums(featureValues(lcms1))))
 fts <- rownames(featureDefinitions(lcms1))[ftidx]
 farea <- featureArea(lcms1, features = fts[1:2])
@@ -1304,6 +1349,8 @@ chromatographic peak signal. Let's look at our previously missing values again:
 
 ```{r echo=FALSE, message=FALSE}
 #| fig-cap: "Figure 27. Examples of chromatographic peaks with missing values after gap-filling."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Extract EICs again and plot them
 chromatogram(lcms1[c(2, 3)],
              mz = farea[, c("mzmin", "mzmax")],
@@ -1334,6 +1381,9 @@ Then, we calculate the row averages of both of these matrices and plot them
 against each other.
 
 ```{r Detected-vs-filled-signal1}
+#| fig-cap: "Figure 28. Detected vs. filled-in signal."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Get only detected signal in QC samples
 vals_detect <- featureValues(lcms1, filled = FALSE)[, QC_samples]
 
@@ -1374,6 +1424,40 @@ summary(l)
 The linear regression line has a slope of `r round(coef(l)[2], 2)` and an
 intercept of `r round(coef(l)[1], 2)`. This indicates that the filled-in signal
 is on average `r round(coef(l)[2], 2)` times higher than the detected signal.
+
+## Filtering Features: Missing values
+
+We now restrict the data set to features for which a chromatographic peak was
+detected in at least 2/3 of samples of at least one of the study samples groups.
+This ensures the statistical tests carried out later on the study samples are
+being performed on *reliable* signal. Also, with this filter we remove features
+that were mostly detected in QC samples, but not the study samples. Such filter
+can be performed with `filterFeatures()` function from the `r Biocpkg("xcms")`
+package with the `PercentMissingFilter` setting. The parameters of this filer:
+
+-   `threshold`: defines the maximal acceptable percentage of samples with
+    missing value(s) in at least one of the sample groups defined by parameter
+    `f`.
+-   `f`: a factor defining the sample groups. By replacing the `"QC"` sample
+    group with `NA` in parameter `f` we exclude the QC samples from the
+    evaluation and consider only the study samples. With `threshold = 40` we
+    keep only features for which a peak was detected in 2 out of the 3 samples
+    in one of the sample groups.
+
+To consider detected chromatographic peaks per sample, we apply the filter on
+the`"raw"` assay of our result object, that contains abundance values only for
+detected chromatographic peaks (prior gap-filling).
+
+```{r}
+#' Limit features to those with at least two detected peaks in one study group.
+#' Setting the value for QC samples to NA excludes QC samples from the
+#' calculation.
+f <- res$phenotype
+f[f == "QC"] <- NA
+f <- as.factor(f)
+res <- filterFeatures(res, PercentMissingFilter(f = f, threshold = 40),
+                      assay = "raw")
+```
 
 ## Preprocessing results
 
@@ -1550,10 +1634,6 @@ Below we impute missing values with this approach and add the resulting data
 matrix as a new *assay* to our result object.
 
 ```{r}
-#' Load preprocessing results
-## load("SumExp.RData")
-## loadResults(RDataParam("data.RData"))
-
 #' Impute missing values using an uniform distribution
 na_unidis <- function(z) {
     na <- is.na(z)
@@ -1583,6 +1663,8 @@ remove dependency on absolute abundances.
 
 ```{r unsupervised-checks1, fig.height=8, fig.width=6}
 #| fig-cap: "Figure 28. PCA of the data coloured by phenotypes."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Log2 transform and scale data
 vals <- assay(res, "raw_filled_imputed") |>
     log2() |>
@@ -1620,6 +1702,8 @@ distribution of the log2 transformed feature abundances.
 
 ```{r counts1}
 #| fig-cap: "Figure 29. Number of detected peaks and feature abundances."
+#| code-fold: true
+#| code-summary: "Show the code"
 layout(mat = matrix(1:3, ncol = 1), height = c(0.2, 0.2, 0.8))
 
 par(mar = c(0.2, 4.5, 0.2, 3))
@@ -1666,6 +1750,8 @@ groups.
 
 ```{r rla-plot-raw-and-filled1}
 #| fig-cap: "Figure 30. RLA plot for the raw data and filled data."
+#| code-fold: true
+#| code-summary: "Show the code"
 par(mfrow = c(1, 1), mar = c(3.5, 4.5, 2.5, 1))
 boxplot(MsCoreUtils::rowRla(assay(res, "raw_filled"),
                             f = res$phenotype, transform = "log2"),
@@ -1742,6 +1828,8 @@ behavior between groups.
 
 ```{r, fig.height=8, fig.width=6}
 #| fig-cap: "Figure 31. PC1 and PC2 of the data before and after normalization."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Data before normalization
 vals_st <- cbind(vals, phenotype = res$phenotype)
 pca_raw <- autoplot(pca_res, data = vals_st,
@@ -1768,6 +1856,8 @@ lower after normalization (see below).
 
 ```{r, fig.height=8, fig.width=6}
 #| fig-cap: "Figure 32. PC3 and PC4 of the data before and after normalization."
+#| code-fold: true
+#| code-summary: "Show the code"
 pca_raw <- autoplot(pca_res, data = vals_st ,
                     colour = 'phenotype', x = 3, y = 4, scale = 0) +
     scale_color_manual(values = col_phenotype)
@@ -1788,8 +1878,10 @@ correct for biological variance and only technical.
 We compare the RLA plots before and after between-sample normalization to
 evaluate its impact on the data.
 
-```{r rla-plot-after-norm2}
+```{r rla-plot-after-norm2, fig.height=8, fig.width=6}}
 #| fig-cap: "Figure 33. RLA plot before and after normalization."
+#| code-fold: true
+#| code-summary: "Show the code"
 par(mfrow = c(2, 1), mar = c(3.5, 4.5, 2.5, 1))
 
 boxplot(rowRla(assay(res, "raw_filled"), group = res$phenotype),
@@ -1828,6 +1920,8 @@ deviation instead of the standard deviation.
 
 ```{r include=TRUE, results = "asis"}
 #| tbl-cap: "Table 6. Distribution of CV values across samples for the raw and normalized data."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Calculate the CV values
 index_study <- res$phenotype %in% c("CTR", "CVD")
 index_QC <- res$phenotype == "QC"
@@ -1901,38 +1995,6 @@ collection and using a slightly different sample matrix, their utility for
 filtering is somewhat limited. For a comprehensive description and guidelines
 for data filtering in untargeted metabolomic studies, please refer to
 [@broadhurst_guidelines_2018].
-
-We first restrict the data set to features for which a chromatographic peak was
-detected in at least 2/3 of samples of at least one of the study samples groups.
-This ensures the statistical tests carried out later on the study samples are
-being performed on *reliable* signal. Also, with this filter we remove features
-that were mostly detected in QC samples, but not the study samples. Such filter
-can be performed with `filterFeatures()` function from the `r Biocpkg("xcms")`
-package with the `PercentMissingFilter` setting. The parameters of this filer:
-
--   `threshold`: defines the maximal acceptable percentage of samples with
-    missing value(s) in at least one of the sample groups defined by parameter
-    `f`.
--   `f`: a factor defining the sample groups. By replacing the `"QC"` sample
-    group with `NA` in parameter `f` we exclude the QC samples from the
-    evaluation and consider only the study samples. With `threshold = 40` we
-    keep only features for which a peak was detected in 2 out of the 3 samples
-    in one of the sample groups.
-
-To consider detected chromatographic peaks per sample, we apply the filter on
-the`"raw"` assay of our result object, that contains abundance values only for
-detected chromatographic peaks (prior gap-filling).
-
-```{r}
-#' Limit features to those with at least two detected peaks in one study group.
-#' Setting the value for QC samples to NA excludes QC samples from the
-#' calculation.
-f <- res$phenotype
-f[f == "QC"] <- NA
-f <- as.factor(f)
-res <- filterFeatures(res, PercentMissingFilter(f = f, threshold = 40),
-                      assay = "raw")
-```
 
 Following the guidelines stated above we decided to still use the QC samples for
 pre-filtering, on the basis that they represent similar bio-fluids to our study
@@ -2020,6 +2082,8 @@ a PCA (after excluding the QC samples to avoid them influencing the results).
 
 ```{r}
 #| fig-cap: "Figure 34. PCA of the data after normalization and quality control."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Define the colors for the plot
 col_sample <- col_phenotype[res$phenotype]
 
@@ -2042,6 +2106,8 @@ be explained by the other available variable of our study, i.e., age:
 
 ```{r}
 #| fig-cap: "Figure 35. PCA colored by age of the data after normalization and quality control."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Add age to the PCA plot
 vals_st <- cbind(vals, age = res$age)
 autoplot(pca_res, data = vals_st , colour = 'age', scale = 0)
@@ -2117,6 +2183,8 @@ p-values.
 
 ```{r histogram}
 #| fig-cap: "Figure 36. Distribution of raw (left) and adjusted p-values (right)."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Plot the distribution of p-values
 par(mfrow = c(1, 2))
 hist(rowData(res)$pvalue.CVD, breaks = 64, xlab = "p value",
@@ -2144,6 +2212,8 @@ a blue color in the plot below.
 
 ```{r volcano}
 #| fig-cap: "Figure 37. Volcano plot showing the analysis results."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Plot volcano plot of the statistical results
 par(mfrow = c(1, 1), mar = c(5, 5, 5, 1))
 plot(rowData(res)$coef.CVD, -log10(rowData(res)$adjp.CVD),
@@ -2170,6 +2240,8 @@ in the table below.
 
 ```{r result-table}
 #| tbl-cap: "Table 7. Features with significant differences in abundances."
+#| code-fold: true
+#| code-summary: "Show the code"
 # Table of significant features
 tab <- rowData(res)[rowData(res)$significant.CVD,
                     c("mzmed", "rtmed", "coef.CVD", "adjp.CVD",
@@ -2406,6 +2478,8 @@ lcms2 <- readMsObject(MsExperiment(),
 
 ```{r, message=FALSE}
 #| tbl-cap: "Table 10. Samples from the LC-MS/MS data set."
+#| code-fold: true
+#| code-summary: "Show the code"
 #adjust sampleData
 colnames(sampleData(lcms2)) <- c("sample_name", "derived_spectra_data_file",
                                 "metabolite_asssignment_file",
@@ -2706,13 +2780,21 @@ the highest scoring MS2 spectra was recorded and create a mirror plot comparing
 this MS2 spectra to the reference fragment spectra for caffeine.
 
 ```{r fig.height=5, fig.width=5}
+#| fig-cap: "Figure 39. Extracted ion chromatograms and MS2 spectra for the annotated feature."
+#| code-fold: true
+#| code-summary: "Show the code"
 col_sample <- col_phenotype[sampleData(lcms1)$phenotype]
 #' Extract and plot EIC for the annotated feature
 eic <- featureChromatograms(lcms1, features = ms2_mtch_res$feature_id[1])
 plot(eic, col = col_sample, peakCol = col_sample[chromPeaks(eic)[, "sample"]],
      peakBg = paste0(col_sample[chromPeaks(eic)[, "sample"]], 20))
 legend("topright", col = col_phenotype, legend = names(col_phenotype), lty = 1)
+```
 
+```{r}
+#| fig-cap: "Figure 40. MS2 spectra for the annotated feature."
+#| code-fold: true
+#| code-summary: "Show the code"
 #' Identify the best matching query-target spectra pair
 idx <- which.max(ms2_mtch_res$score)
 
@@ -2810,8 +2892,6 @@ sessionInfo()
 
 Thanks to Steffen Neumann for his continuous work to develop and maintain the
 xcms software...
-
-# Additional informations
 
 ```{r eval=FALSE, include=FALSE}
 plot(eics_is_noprocess)
