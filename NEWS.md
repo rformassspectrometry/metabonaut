@@ -1,5 +1,13 @@
 # metabonaut 0.0
 
+## Changes in 0.0.6
+
+- Moving The PercentMissing filtering at the end of
+  the pre-processing steps as it needs to be done 
+  before normalization.
+- Addition  of collapsing code to improve readability. 
+- Reduction of table size
+
 ## Changes in 0.0.5
 
 - Require *MsIO* version 0.0.8 to allow reading of stored
