@@ -1,4 +1,4 @@
-FROM bioconductor/bioconductor_docker:devel
+FROM bioconductor/bioconductor_docker:RELEASE_3_20
 
 LABEL name="rformassspectrometry/metabonaut" \
       url="https://github.com/rformassspectrometry/metabonaut" \
@@ -15,7 +15,7 @@ RUN curl -LO https://quarto.org/download/latest/quarto-linux-amd64.deb
 RUN gdebi --non-interactive quarto-linux-amd64.deb
 
 ## Install the required packages
-RUN Rscript -e "BiocManager::install(c('RforMassSpectrometry/MsIO', 'RforMassSpectrometry/MsBackendMetaboLights'), ask = FALSE, dependencies = TRUE)"
+RUN Rscript -e "BiocManager::install('RforMassSpectrometry/MsIO', ask = FALSE, dependencies = TRUE)"
 
 ## Install the current package with vignettes
 RUN Rscript -e "devtools::install('.', dependencies = TRUE, type = 'source', build_vignettes = TRUE, repos = BiocManager::repositories())"
