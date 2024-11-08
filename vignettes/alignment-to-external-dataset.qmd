@@ -16,13 +16,11 @@ library(quarto)
 knitr::opts_knit$set(root.dir = './')
 ```
 
-
 ```{css, echo = FALSE}
 .verysmall .table{
   font-size: 8px;
 }
 ```
-
 
 # Introduction
 

@@ -1878,7 +1878,7 @@ correct for biological variance and only technical.
 We compare the RLA plots before and after between-sample normalization to
 evaluate its impact on the data.
 
-```{r rla-plot-after-norm2, fig.height=8, fig.width=6}}
+```{r rla-plot-after-norm2, fig.height=8, fig.width=6}
 #| fig-cap: "Figure 33. RLA plot before and after normalization."
 #| code-fold: true
 #| code-summary: "Show the code"
