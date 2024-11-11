@@ -1,0 +1,10 @@
+{
+    "spectra": {
+        "version": "1.0"
+    },
+    "type": "xcms_experiment",
+    "xcms_experiment": {
+        "version": "1.0"
+    }
+}
+
