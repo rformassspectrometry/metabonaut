@@ -1,12 +1,11 @@
-pandoc: '3.4'
+pandoc: '3.5'
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   a-end-to-end-untargeted-metabolomics: a-end-to-end-untargeted-metabolomics.html
   alignment-to-external-dataset: alignment-to-external-dataset.html
-  dataset-investigation: dataset-investigation.html
   install_v0: install_v0.html
-last_built: 2024-10-30T16:07Z
+last_built: 2024-12-04T10:37Z
 urls:
   reference: https://rformassspectrometry.github.io/metabonaut/reference
   article: https://rformassspectrometry.github.io/metabonaut/articles
