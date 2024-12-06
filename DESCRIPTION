@@ -1,4 +1,4 @@
-Package: metabonaut
+Package: Metabonaut
 Title: Exploring and Analyzing LC-MS Data
 Version: 0.0.6
 Authors@R:
@@ -39,6 +39,8 @@ Suggests:
     MsExperiment,
     MsIO (>= 0.0.8),
     MsBackendMetaboLights,
+    ggVennDiagram,
+    UpSetR,
     readxl,
     limma,
     matrixStats,

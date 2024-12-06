@@ -12,22 +12,22 @@ how to adapt various algorithms to specific datasets and how to seamlessly
 integrate R packages to ensure efficient, reproducible processing.
 
 The primary workflow is the 
-["Complete End-to-End LC-MS/MS Metabolomic Data Analysis"](https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html).
+["Complete End-to-End LC-MS/MS Metabolomic Data Analysis"](https://rformassspectrometry.github.io/Metabonaut/articles/end-to-end-untargeted-metabolomics.html).
 
 The full R code for all examples, along with detailed descriptions, is available 
 in the 
-[end-to-end-untargeted-metabolomics.qmd](https://rformassspectrometry.github.io/metabonaut/vignettes/a-end-to-end-untargeted-metabolomics.qmd) 
+[end-to-end-untargeted-metabolomics.qmd](https://rformassspectrometry.github.io/Metabonaut/vignettes/a-end-to-end-untargeted-metabolomics.qmd) 
 file. This file can be opened in RStudio, allowing you to execute each individual 
 R command.
 
 Other vignettes on this website are interlinked, and you can find a detailed 
 description of the dataset used throughout 
-[here](https://rformassspectrometry.github.io/metabonaut/articles/dataset-investigation.html).
+[here](https://rformassspectrometry.github.io/Metabonaut/articles/dataset-investigation.html).
 
 We strive for reproducibility. These workflows are designed to remain stable 
 over time, allowing you to run all the vignettes together as one comprehensive 
 "super-vignette". Any **major** change will be document here and for smaller updates 
-check the [News](https://rformassspectrometry.github.io/metabonaut/news/index.html)
+check the [News](https://rformassspectrometry.github.io/Metabonaut/news/index.html)
 
 ## For R beginners
 
@@ -52,7 +52,7 @@ problem, we'll list it below.
 Currently, there are no known issues with the code. If you encounter any, please 
 ensure you have the latest versions of all required packages (as detailed above). 
 If the issue persists, please report it with a reproducible example on GitHub 
-[here](https://github.com/rformassspectrometry/metabonaut/issues).
+[here](https://github.com/rformassspectrometry/Metabonaut/issues).
 
 If you encounter any other issues, don't hesitate to let us know!
 

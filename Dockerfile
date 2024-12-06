@@ -1,7 +1,7 @@
 FROM bioconductor/bioconductor_docker:RELEASE_3_20
 
-LABEL name="rformassspectrometry/metabonaut" \
-      url="https://github.com/rformassspectrometry/metabonaut" \
+LABEL name="rformassspectrometry/Metabonaut" \
+      url="https://github.com/rformassspectrometry/Metabonaut" \
       maintainer="philippine.louail@eurac.edu" \
       description="Docker container to run the different tutorials hosted on metabonaut. This version bases on the Bioconductor devel docker image." \
       license="Artistic-2.0"

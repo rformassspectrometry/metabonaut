@@ -2070,26 +2070,50 @@ biology.
 
 # Overlapping features
 
-a possible evalaution is to which features are overlapping between the different
-sample groups.
+Before performing complex statistical analysis we can evaluate the data
 
-Fisrt we can plot the overlapping between the CVD and CTR group.
+A possible evaluation is to which features are overlapping between the different
+samples.
 
-Before performing complex satistical analysis we can evaluate the data
+```{r eval=FALSE, include=FALSE}
+#age group
+low <- res$age < 40
+middle <- res$age > 40 & res$age < 60
+high <- res$age > 60
 
-```{r}
-res_df <- cbind(CVD = rowSums(is.na(assay(res, "raw_filled"))) < 10,
-                 CTR = rowSums(is.na(assay(res, "raw_filled"))) < 10)
+df_logical <- !is.na(assay(res, "raw_filled"))
 
-mat <- data.frame()
+low 
+middle 
+high
+
+df_logical
+
+              
 ```
 
-In case of a large number of groups a venn diagram can be replace by an upset
+```{r}
+df_logical <- !is.na(assay(res, "raw_filled"))
+
+# Create a Venn diagram
+library(ggVennDiagram)
+l_logical <- apply(df_logical, MARGIN = 2,function(i) which(i))
+ggVennDiagram(l_logical, label = "count",
+                            category.names = res$sample_name,
+              color = 1, lwd = 0.7) + 
+ scale_fill_gradient(low = "lightblue", high = "#4981BF") +
+ theme(legend.position = "none")
+
+```
+
+In case of a large number of groups a Venn diagram can be replace by an upset
 plot which can handle a larger number of groups, while being still readable.
-below we compare the overlap between samples.
 
 ```{r}
 #make upsetplot
+library(UpSetR)
+binary_data <-apply(df_logical, MARGIN = 2, as.integer)
+upset(as.data.frame(binary_data), nset = 6, sets = colnames(df_logical), keep.order = TRUE)
 
 ```
 
