@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Complete end-to-end LC-MS/MS Metabolomic Data analysis • metabonaut</title>
+<title>Complete end-to-end LC-MS/MS Metabolomic Data analysis • Metabonaut</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -27,7 +27,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">metabonaut</a>
+    <a class="navbar-brand me-2" href="../index.html">Metabonaut</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
 
@@ -65,7 +65,7 @@
       <img src="../logo.png" class="logo" alt=""><h1></h1>
 
 
-      <p class="date">2024-12-04</p>
+      <p class="date">2024-12-09</p>
 
       <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/main/vignettes/a-end-to-end-untargeted-metabolomics.qmd" class="external-link"><code>vignettes/a-end-to-end-untargeted-metabolomics.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -92,7 +92,7 @@
 </div>
 </section><section class="section level2"><h2 id="data-description">Data description<a class="anchor" aria-label="anchor" href="#data-description"></a>
 </h2>
-<p>See the <a href="https://rformassspectrometry.github.io/metabonaut/articles/dataset-investigation.html">data description</a> vignette for detailed explanation of the dataset we go through in this workflow and general tips on what should be done when you first get your data.</p>
+<p>See the <a href="https://rformassspectrometry.github.io/Metabonaut/articles/dataset-investigation.html" class="external-link">data description</a> vignette for detailed explanation of the dataset we go through in this workflow and general tips on what should be done when you first get your data.</p>
 </section><section class="section level2"><h2 id="packages-needed">Packages needed<a class="anchor" aria-label="anchor" href="#packages-needed"></a>
 </h2>
 <p>Our workflow is therefore based on the following dependencies:</p>
@@ -456,7 +456,7 @@ MS_B_POS.mzML
 <li>Compare the BPC of all samples in an experiment to identify samples with similar or dissimilar chromatographic signal.</li>
 </ul>
 <p>In addition to such general data evaluation and visualization, it is also crucial to investigate specific signal of e.g. internal standards or compounds/ions known to be present in the samples. By providing a reliable reference, internal standards help achieve consistent and accurate analytical results.</p>
-<p>As LC signal is the most variable because of the unstable nature of the LC, we will only show the BPC and their similarity. More in depth inspection and discussion of spectra and chromatrograhic data cna be found in the <a href="https://rformassspectrometry.github.io/metabonaut/articles/data-investigation.html">data exploration vignette</a>.</p>
+<p>As LC signal is the most variable because of the unstable nature of the LC, we will only show the BPC and their similarity. More in depth inspection and discussion of spectra and chromatrograhic data cna be found in the <a href="https://rformassspectrometry.github.io/Metabonaut/articles/data-investigation.html" class="external-link">data exploration vignette</a>.</p>
 <section class="level2"><h3 id="chromatographic-data-visualization-bpc-and-tic">Chromatographic Data Visualization: BPC and TIC<a class="anchor" aria-label="anchor" href="#chromatographic-data-visualization-bpc-and-tic"></a>
 </h3>
 <p>The <code><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">chromatogram()</a></code> function facilitates the extraction of intensities along the retention time. However, access to chromatographic information is currently not as efficient and seamless as it is for spectral information. Work is underway to develop/improve the infrastructure for chromatographic data through a new <code>Chromatograms</code> object aimed to be as flexible and user-friendly as the <code>Spectra</code> object.</p>
@@ -1644,7 +1644,7 @@ F-statistic:  7877 on 1 and 2846 DF,  p-value: &lt; 2.2e-16</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Object of class "XProcessHistory"
  type: Peak detection
- date: Wed Dec  4 10:43:03 2024
+ date: Mon Dec  9 09:13:32 2024
  info:
  fileIndex: 1,2,3,4,5,6,7,8,9,10
  Parameter class: CentWaveParam
@@ -2076,7 +2076,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span>                              mad <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/filterFeatures.html" class="external-link">filterFeatures</a></span><span class="op">(</span><span class="va">res</span>, filter <span class="op">=</span> <span class="va">filter_dratio</span>, assay <span class="op">=</span> <span class="st">"norm_imputed"</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>4205 features were removed</code></pre>
+<pre><code>4214 features were removed</code></pre>
 </div>
 </div>
 <p>The Dratio filter is a powerful tool to identify features that exhibit high variability in the data, relating the variance observed in QC samples with that in study samples. By setting a threshold of 0.4, we remove features that have a high degree of variability between the QC and study samples. In this example, any feature in which the deviation at the QC is higher than 40% (<code>threshold = 0.4</code>)of the deviation on the study samples is removed. This filtering step ensures that only features are retained that have considerably lower technical than biological variance.</p>
@@ -2087,16 +2087,16 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <code class="sourceCode R"><span><span class="co">#' Number of features after analysis</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4519</code></pre>
+<pre><code>[1] 4510</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Percentage left: end/beginning</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">res_unfilt</span><span class="op">)</span> <span class="op">*</span> <span class="fl">100</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 51.79963</code></pre>
+<pre><code>[1] 51.69647</code></pre>
 </div>
 </div>
-<p>The dataset has been reduced from 8724 to 4519 features. We did remove a considerable amount of features but this is expected as we want to focus on the most reliable features for our analysis. For the rest of our analysis we need to separate the QC samples from the study samples. We will store the QC samples in a separate object for later use.</p>
+<p>The dataset has been reduced from 8724 to 4510 features. We did remove a considerable amount of features but this is expected as we want to focus on the most reliable features for our analysis. For the rest of our analysis we need to separate the QC samples from the study samples. We will store the QC samples in a separate object for later use.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res_qc</span> <span class="op">&lt;-</span> <span class="va">res</span><span class="op">[</span>, <span class="va">res</span><span class="op">$</span><span class="va">phenotype</span> <span class="op">==</span> <span class="st">"QC"</span><span class="op">]</span></span>
@@ -2112,20 +2112,40 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <p>Now that our data set has been preprocessed, normalized and filtered, we can start to evaluate the distribution of the data and estimate the variation due to biology.</p>
 </section><section class="section level2"><h2 id="overlapping-features">Overlapping features<a class="anchor" aria-label="anchor" href="#overlapping-features"></a>
 </h2>
-<p>a possible evalaution is to which features are overlapping between the different sample groups.</p>
-<p>Fisrt we can plot the overlapping between the CVD and CTR group.</p>
-<p>Before performing complex satistical analysis we can evaluate the data</p>
+<p>Before performing complex statistical analysis we can evaluate the data</p>
+<p>A possible evaluation is to which features are overlapping between the different samples.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb113"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">res_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/cbind.html" class="external-link">cbind</a></span><span class="op">(</span>CVD <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">res</span>, <span class="st">"raw_filled"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span>,</span>
-<span>                 CTR <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/MatrixGenerics/man/rowSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">res</span>, <span class="st">"raw_filled"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">df_logical</span> <span class="op">&lt;-</span> <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay</a></span><span class="op">(</span><span class="va">res</span>, <span class="st">"raw_filled"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co"># Create a Venn diagram</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/gaospecial/ggVennDiagram" class="external-link">ggVennDiagram</a></span><span class="op">)</span></span>
+<span><span class="va">l_logical</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">df_logical</span>, MARGIN <span class="op">=</span> <span class="fl">2</span>,<span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://gaospecial.github.io/ggVennDiagram/reference/ggVennDiagram.html" class="external-link">ggVennDiagram</a></span><span class="op">(</span><span class="va">l_logical</span>, label <span class="op">=</span> <span class="st">"count"</span>,</span>
+<span>                            category.names <span class="op">=</span> <span class="va">res</span><span class="op">$</span><span class="va">sample_name</span>,</span>
+<span>              color <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span> </span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"lightblue"</span>, high <span class="op">=</span> <span class="st">"#4981BF"</span><span class="op">)</span> <span class="op">+</span></span>
+<span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-52-1.png" width="672"></p>
+</figure>
 </div>
-<p>In case of a large number of groups a venn diagram can be replace by an upset plot which can handle a larger number of groups, while being still readable. below we compare the overlap between samples.</p>
+</div>
+</div>
+<p>In case of a large number of groups a Venn diagram can be replace by an upset plot which can handle a larger number of groups, while being still readable.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb114"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">#make upsetplot</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#make upsetplot</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://github.com/hms-dbmi/UpSetR" class="external-link">UpSetR</a></span><span class="op">)</span></span>
+<span><span class="va">binary_data</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">df_logical</span>, MARGIN <span class="op">=</span> <span class="fl">2</span>, <span class="va">as.integer</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/UpSetR/man/upset.html" class="external-link">upset</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">binary_data</span><span class="op">)</span>, nset <span class="op">=</span> <span class="fl">6</span>, sets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">df_logical</span><span class="op">)</span>, keep.order <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<div class="cell-output-display">
+<div>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-53-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section><section class="section level2"><h2 id="differential-abundance-analysis">Differential abundance analysis<a class="anchor" aria-label="anchor" href="#differential-abundance-analysis"></a>
 </h2>
@@ -2148,7 +2168,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="va">col_phenotype</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-53-1.png" width="672"></p>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-54-1.png" width="672"></p>
 <figcaption>Figure 34. PCA of the data after normalization and quality control.</figcaption></figure>
 </div>
 </div>
@@ -2161,7 +2181,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/autoplot.html" class="external-link">autoplot</a></span><span class="op">(</span><span class="va">pca_res</span>, data <span class="op">=</span> <span class="va">vals_st</span> , colour <span class="op">=</span> <span class="st">'age'</span>, scale <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-54-1.png" width="672"></p>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-55-1.png" width="672"></p>
 <figcaption>Figure 35. PCA colored by age of the data after normalization and quality control.</figcaption></figure>
 </div>
 </div>
@@ -2281,10 +2301,10 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: left;">FT0732</td>
 <td style="text-align: right;">182.0749</td>
 <td style="text-align: right;">34.83789</td>
-<td style="text-align: right;">-8.459808</td>
-<td style="text-align: right;">0.0099281</td>
+<td style="text-align: right;">-8.606580</td>
+<td style="text-align: right;">0.0069346</td>
 <td style="text-align: right;">12.229286</td>
-<td style="text-align: right;">3.859797</td>
+<td style="text-align: right;">3.740037</td>
 <td style="text-align: right;">0.2116471</td>
 </tr>
 <tr class="even">
@@ -2292,40 +2312,60 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <td style="text-align: right;">195.0877</td>
 <td style="text-align: right;">32.65668</td>
 <td style="text-align: right;">-6.330400</td>
-<td style="text-align: right;">0.0424736</td>
+<td style="text-align: right;">0.0420851</td>
 <td style="text-align: right;">16.905340</td>
 <td style="text-align: right;">10.454994</td>
 <td style="text-align: right;">0.0304712</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">FT0676</td>
+<td style="text-align: right;">176.0106</td>
+<td style="text-align: right;">147.55872</td>
+<td style="text-align: right;">-6.117308</td>
+<td style="text-align: right;">0.0461954</td>
+<td style="text-align: right;">8.788476</td>
+<td style="text-align: right;">2.587564</td>
+<td style="text-align: right;">0.7734774</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">FT0565</td>
 <td style="text-align: right;">161.0400</td>
 <td style="text-align: right;">162.13668</td>
-<td style="text-align: right;">-5.512507</td>
-<td style="text-align: right;">0.0368547</td>
+<td style="text-align: right;">-5.642740</td>
+<td style="text-align: right;">0.0446145</td>
 <td style="text-align: right;">10.287074</td>
-<td style="text-align: right;">4.578369</td>
+<td style="text-align: right;">4.450325</td>
 <td style="text-align: right;">0.0360903</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">FT1171</td>
-<td style="text-align: right;">229.1299</td>
-<td style="text-align: right;">181.08828</td>
-<td style="text-align: right;">-5.411058</td>
-<td style="text-align: right;">0.0179212</td>
-<td style="text-align: right;">10.721195</td>
-<td style="text-align: right;">5.500685</td>
-<td style="text-align: right;">0.0706276</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">FT0371</td>
 <td style="text-align: right;">138.0547</td>
 <td style="text-align: right;">148.39599</td>
-<td style="text-align: right;">-5.194885</td>
-<td style="text-align: right;">0.0179212</td>
+<td style="text-align: right;">-5.387570</td>
+<td style="text-align: right;">0.0388819</td>
 <td style="text-align: right;">9.914862</td>
-<td style="text-align: right;">4.405343</td>
+<td style="text-align: right;">4.151948</td>
 <td style="text-align: right;">0.5564435</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FT1171</td>
+<td style="text-align: right;">229.1299</td>
+<td style="text-align: right;">181.08828</td>
+<td style="text-align: right;">-5.287131</td>
+<td style="text-align: right;">0.0168328</td>
+<td style="text-align: right;">10.721195</td>
+<td style="text-align: right;">5.599892</td>
+<td style="text-align: right;">0.0706276</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">FT5606</td>
+<td style="text-align: right;">560.3603</td>
+<td style="text-align: right;">33.54917</td>
+<td style="text-align: right;">-3.795633</td>
+<td style="text-align: right;">0.0420851</td>
+<td style="text-align: right;">8.885918</td>
+<td style="text-align: right;">4.861594</td>
+<td style="text-align: right;">1.2139903</td>
 </tr>
 </tbody>
 </table>
@@ -2352,7 +2392,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">"topright"</span>, col <span class="op">=</span> <span class="va">col_phenotype</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">col_phenotype</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-57-1.png" width="672"></p>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-58-1.png" width="672"></p>
 <figcaption>Figure 38. Extracted ion chromatograms of the significant features.</figcaption></figure>
 </div>
 </div>
@@ -2428,7 +2468,7 @@ colData names(11): sample_name derived_spectra_data_file ... phenotype
 <div class="cell-output cell-output-stdout">
 <pre><code>Object of class Matched
 Total number of matches: 43
-Number of query objects: 5 (4 matched)
+Number of query objects: 7 (4 matched)
 Number of target objects: 25685 (43 matched)</code></pre>
 </div>
 </div>
@@ -2442,7 +2482,7 @@ Number of target objects: 25685 (43 matched)</code></pre>
 <span>                                <span class="st">"target_inchikey"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">mtch_res</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>DataFrame with 44 rows and 8 columns
+<pre><code>DataFrame with 46 rows and 8 columns
         feature_id     mzmed     rtmed      adduct ppm_error target_formula
        &lt;character&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;character&gt; &lt;numeric&gt;    &lt;character&gt;
 FT0371      FT0371   138.055   148.396      [M+H]+   2.08055        C7H7NO2
@@ -2451,11 +2491,11 @@ FT0371      FT0371   138.055   148.396      [M+H]+   2.08055        C7H7NO2
 FT0371      FT0371   138.055   148.396      [M+H]+   1.93568        C7H7NO2
 FT0371      FT0371   138.055   148.396      [M+H]+   1.93568        C7H7NO2
 ...            ...       ...       ...         ...       ...            ...
-FT0845      FT0845   195.088   32.6567      [M+H]+ 0.1639884      C8H10N4O2
 FT0845      FT0845   195.088   32.6567      [M+H]+ 0.1867474      C8H10N4O2
 FT0845      FT0845   195.088   32.6567      [M+H]+ 0.0614704      C8H10N4O2
 FT0845      FT0845   195.088   32.6567      [M+H]+ 0.1639884      C8H10N4O2
 FT1171      FT1171   229.130  181.0883     [M+Na]+ 3.0770838      C12H18N2O
+FT5606      FT5606   560.360   33.5492          NA        NA             NA
          target_name target_inchikey
          &lt;character&gt;     &lt;character&gt;
 FT0371 Benzohydro...   VDEUYMSGMP...
@@ -2464,11 +2504,11 @@ FT0371 Salicylami...   SKZKKFZAGN...
 FT0371 4-Aminoben...   ALYNCZNDIQ...
 FT0371 Anthranili...   RWZYAGGXGH...
 ...              ...             ...
-FT0845      CAFFEINE   RYYVLZVUVI...
 FT0845      Caffeine   RYYVLZVUVI...
 FT0845      caffeine   RYYVLZVUVI...
 FT0845 1,3,7-TRIM...   RYYVLZVUVI...
-FT1171 Isoproturo...   PUIYMUZLKQ...</code></pre>
+FT1171 Isoproturo...   PUIYMUZLKQ...
+FT5606            NA              NA</code></pre>
 </div>
 </div>
 <p>Thus, in total 43 ions of compounds in MassBank were matched to our significant features based on the specified tolerance settings. Many compounds, while having a different structure and thus function/chemical property, have an identical chemical formula and thus mass. Matching exclusively on the <em>m/z</em> of features will hence result in many potentially false positive hits and is thus considered to provide only low confidence annotation. An additional complication is that some annotation resources, like MassBank, being community maintained, contain a large amount of redundant information. To reduce redundancy in the result table we below iterate over the hits of a feature and keep only matches to unique compounds (identified by their INCHIKEY). The INCHI or INCHIKEY combine information from compound’s chemical formula and structure, so while different compounds can share the same chemical formula, they should have a different structure and thus INCHI.</p>
@@ -2827,7 +2867,7 @@ FT1171 Isoproturo...   PUIYMUZLKQ...</code></pre>
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/xcms/man/plotPrecursorIons.html" class="external-link">plotPrecursorIons</a></span><span class="op">(</span><span class="va">lcms2</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output-display">
 <div>
-<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-66-1.png" width="480"></p>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-67-1.png" width="480"></p>
 </figure>
 </div>
 </div>
@@ -2891,9 +2931,11 @@ FT1171 Isoproturo...   PUIYMUZLKQ...</code></pre>
 <pre><code>          mzmin    mzmax     rtmin     rtmax
 FT0371 138.0544 138.0552 146.32270 152.86115
 FT0565 161.0391 161.0407 159.00234 164.30799
+FT0676 176.0105 176.0117 146.32270 148.95415
 FT0732 182.0726 182.0756  32.71242  42.28755
 FT0845 195.0799 195.0887  30.73235  35.67337
-FT1171 229.1282 229.1335 178.01450 183.35303</code></pre>
+FT1171 229.1282 229.1335 178.01450 183.35303
+FT5606 560.3539 560.3656  32.06570  35.33456</code></pre>
 </div>
 </div>
 <p>We next identify the fragment spectra with their precursor <em>m/z</em> and retention times within these ranges. We use the <code><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">filterRanges()</a></code> function that allows to filter a <code>Spectra</code> object using multiple ranges simultaneously. We apply this function separately to each feature (row in the above matrix) to extract the MS2 spectra representing fragmentation information of the presumed feature’s ions.</p>
@@ -2906,8 +2948,8 @@ FT1171 229.1282 229.1335 178.01450 183.35303</code></pre>
 <span>                     spectraVariables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"rtime"</span>, <span class="st">"precursorMz"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/lengths.html" class="external-link">lengths</a></span><span class="op">(</span><span class="va">ms2_ctr_fts</span><span class="op">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>FT0371 FT0565 FT0732 FT0845 FT1171
-    38     36    135     68     38 </code></pre>
+<pre><code>FT0371 FT0565 FT0676 FT0732 FT0845 FT1171 FT5606
+    38     36      0    135     68     38      0 </code></pre>
 </div>
 </div>
 <p>The result from this <code><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply()</a></code> call is a <code>list</code> of <code>Spectra</code>, each element representing the result for one feature. With the exception of the last feature, multiple MS2 spectra could be identified. We next combine the <code>list</code> of <code>Spectra</code> into a single <code>Spectra</code> object using the <code><a href="https://rdrr.io/pkg/Spectra/man/combineSpectra.html" class="external-link">concatenateSpectra()</a></code> function and add an additional spectra variable containing the respective feature identifier.</p>
@@ -3038,7 +3080,7 @@ Number of target objects: 69561 (21 matched)</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Thus, from the 5 significant features, only one could be annotated to a compound based on the MS2-based approach. There could be many reasons for the failure to find matches for the other features. Although MS2 spectra were selected for each feature, most appear to only represent noise, as for most features, in the LC-MS/MS run, no or only very low MS1 signal was recorded, indicating that in that selected sample the original compound might not (or no longer) be present. Also, most reference databases contain predominantly fragment spectra for protonated (<em>[M+H]+</em>) ions of compounds, while some of the features might represent signal from other types of ions which would result in a different fragmentation pattern. Finally, fragment spectra of compounds of interest might also simply not be present in the used reference database.</p>
+<p>Thus, from the 7 significant features, only one could be annotated to a compound based on the MS2-based approach. There could be many reasons for the failure to find matches for the other features. Although MS2 spectra were selected for each feature, most appear to only represent noise, as for most features, in the LC-MS/MS run, no or only very low MS1 signal was recorded, indicating that in that selected sample the original compound might not (or no longer) be present. Also, most reference databases contain predominantly fragment spectra for protonated (<em>[M+H]+</em>) ions of compounds, while some of the features might represent signal from other types of ions which would result in a different fragmentation pattern. Finally, fragment spectra of compounds of interest might also simply not be present in the used reference database.</p>
 <p>Thus, combining the information from the MS1- and MS2 based annotation we can only annotate one feature with a considerable confidence. The feature with the <em>m/z</em> of 195.0879 and a retention time of 32 seconds seems to be an ion of caffeine. While the result is somewhat disappointing it also clearly shows the importance of proper experimental planning and the need to control for all potential confounding factors. For the present experiment, no disease-specific biomarker could be identified, but a life-style property of individuals suffering from this disease: coffee consumption was probably contraindicated to patients of the CVD group to reduce the risk of heart arrhythmia.</p>
 <p>We below plot the EIC for this feature highlighting the retention time at which the highest scoring MS2 spectra was recorded and create a mirror plot comparing this MS2 spectra to the reference fragment spectra for caffeine.</p>
 <div class="cell">
@@ -3057,7 +3099,7 @@ Number of target objects: 69561 (21 matched)</code></pre>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/abline.html" class="external-link">abline</a></span><span class="op">(</span>v <span class="op">=</span> <span class="va">ms2_mtch_res</span><span class="op">$</span><span class="va">rtime</span><span class="op">[</span><span class="va">idx</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-77-1.png" width="480"></p>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-78-1.png" width="480"></p>
 <figcaption>Figure 39. Extracted ion chromatograms and MS2 spectra for the annotated feature.</figcaption></figure>
 </div>
 </div>
@@ -3079,7 +3121,7 @@ Number of target objects: 69561 (21 matched)</code></pre>
 <span>       legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"precursor m/z: "</span>, <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/format.html" class="external-link">format</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ProtGenerics/man/protgenerics.html" class="external-link">precursorMz</a></span><span class="op">(</span><span class="va">query_ms2</span><span class="op">)</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </details><div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-78-1.png" width="672"></p>
+<figure><p><img src="a-end-to-end-untargeted-metabolomics_files/figure-html/unnamed-chunk-79-1.png" width="672"></p>
 <figcaption>Figure 40. MS2 spectra for the annotated feature.</figcaption></figure>
 </div>
 </div>
@@ -3137,26 +3179,27 @@ attached base packages:
 [8] base
 
 other attached packages:
- [1] MetaboAnnotation_1.10.1     CompoundDb_1.10.0
- [3] AnnotationFilter_1.30.0     AnnotationHub_3.14.0
- [5] BiocFileCache_2.14.0        dbplyr_2.5.0
- [7] gridExtra_2.3               ggfortify_0.4.17
- [9] ggplot2_3.5.1               vioplot_0.5.0
-[11] zoo_1.8-12                  sm_2.2-6.0
-[13] pheatmap_1.0.12             RColorBrewer_1.1-3
-[15] pander_0.6.5                limma_3.62.1
-[17] MetaboCoreUtils_1.14.0      xcms_4.5.1
-[19] MsBackendMetaboLights_1.0.0 Spectra_1.16.0
-[21] BiocParallel_1.40.0         alabaster.se_1.6.0
-[23] alabaster.base_1.6.1        SummarizedExperiment_1.36.0
-[25] Biobase_2.66.0              GenomicRanges_1.58.0
-[27] GenomeInfoDb_1.42.1         IRanges_2.40.0
-[29] S4Vectors_0.44.0            BiocGenerics_0.52.0
-[31] MatrixGenerics_1.18.0       matrixStats_1.4.1
-[33] MsIO_0.0.8                  MsExperiment_1.8.0
-[35] ProtGenerics_1.38.0         readxl_1.4.3
-[37] BiocStyle_2.34.0            quarto_1.4.4
-[39] knitr_1.49
+ [1] UpSetR_1.4.0                ggVennDiagram_1.5.2
+ [3] MetaboAnnotation_1.10.1     CompoundDb_1.10.0
+ [5] AnnotationFilter_1.30.0     AnnotationHub_3.14.0
+ [7] BiocFileCache_2.14.0        dbplyr_2.5.0
+ [9] gridExtra_2.3               ggfortify_0.4.17
+[11] ggplot2_3.5.1               vioplot_0.5.0
+[13] zoo_1.8-12                  sm_2.2-6.0
+[15] pheatmap_1.0.12             RColorBrewer_1.1-3
+[17] pander_0.6.5                limma_3.62.1
+[19] MetaboCoreUtils_1.14.0      xcms_4.5.1
+[21] MsBackendMetaboLights_1.0.0 Spectra_1.16.0
+[23] BiocParallel_1.40.0         alabaster.se_1.6.0
+[25] alabaster.base_1.6.1        SummarizedExperiment_1.36.0
+[27] Biobase_2.66.0              GenomicRanges_1.58.0
+[29] GenomeInfoDb_1.42.1         IRanges_2.40.0
+[31] S4Vectors_0.44.0            BiocGenerics_0.52.0
+[33] MatrixGenerics_1.18.0       matrixStats_1.4.1
+[35] MsIO_0.0.8                  MsExperiment_1.8.0
+[37] ProtGenerics_1.38.0         readxl_1.4.3
+[39] BiocStyle_2.34.0            quarto_1.4.4
+[41] knitr_1.49
 
 loaded via a namespace (and not attached):
   [1] later_1.4.1                 bitops_1.0-9
@@ -3186,7 +3229,7 @@ loaded via a namespace (and not attached):
  [49] rhdf5filters_1.18.0         fansi_1.0.6
  [51] digest_0.6.37               mime_0.12
  [53] R6_2.5.1                    colorspace_2.1-1
- [55] rsvg_2.6.1                  RSQLite_2.3.8
+ [55] rsvg_2.6.1                  RSQLite_2.3.9
  [57] utf8_1.2.4                  tidyr_1.3.1
  [59] generics_0.1.3              prettyunits_1.2.0
  [61] PSMatch_1.10.0              httr_1.4.7
@@ -3220,7 +3263,7 @@ loaded via a namespace (and not attached):
 [117] statmod_1.5.0               alabaster.ranges_1.6.0
 [119] mzR_2.40.0                  igraph_2.1.1
 [121] memoise_2.0.1               affyio_1.76.0
-[123] bit_4.5.0                  </code></pre>
+[123] bit_4.5.0.1                </code></pre>
 </div>
 </div>
 </section><section class="section level2"><h2 id="aknowledgment">Aknowledgment<a class="anchor" aria-label="anchor" href="#aknowledgment"></a>

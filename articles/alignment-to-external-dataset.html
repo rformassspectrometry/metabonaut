@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Seamless Alignment: Merging New Data with and Existing Preprocessed Dataset • metabonaut</title>
+<title>Seamless Alignment: Merging New Data with and Existing Preprocessed Dataset • Metabonaut</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -27,7 +27,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="../index.html">metabonaut</a>
+    <a class="navbar-brand me-2" href="../index.html">Metabonaut</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
 
@@ -65,7 +65,7 @@
       <img src="../logo.png" class="logo" alt=""><h1></h1>
 
 
-      <p class="date">2024-12-04</p>
+      <p class="date">2024-12-09</p>
 
       <small class="dont-index">Source: <a href="https://github.com/rformassspectrometry/metabonaut/blob/main/vignettes/alignment-to-external-dataset.qmd" class="external-link"><code>vignettes/alignment-to-external-dataset.qmd</code></a></small>
       <div class="d-none name"><code></code></div>
@@ -110,13 +110,13 @@
 </div>
 <section class="level2"><h3 id="load-preprocessed-lc-ms-object">Load preprocessed LC-MS object<a class="anchor" aria-label="anchor" href="#load-preprocessed-lc-ms-object"></a>
 </h3>
-<p>First, let’s load our pre-processed LC-MS object. This <em>xcms</em> result object was created during the <a href="https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html">End-to-end worflow</a> vignette and is also available in the <em>metabonaut</em> R package. The result object (an <code>XcmsExperiment</code> object) was stored using Bioconductor’s <em>alabaster</em> framework and we below load the object using the <code><a href="https://rdrr.io/pkg/MsIO/man/saveMsObject.html" class="external-link">readMsObject()</a></code> function providing the path to the stored data. The import function also takes care of eventually retrieving missing MS data files from the MetaboLights repository.</p>
+<p>First, let’s load our pre-processed LC-MS object. This <em>xcms</em> result object was created during the <a href="https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html">End-to-end worflow</a> vignette and is also available in the <em>Metabonaut</em> R package. The result object (an <code>XcmsExperiment</code> object) was stored using Bioconductor’s <em>alabaster</em> framework and we below load the object using the <code><a href="https://rdrr.io/pkg/MsIO/man/saveMsObject.html" class="external-link">readMsObject()</a></code> function providing the path to the stored data. The import function also takes care of eventually retrieving missing MS data files from the MetaboLights repository.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lcms1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/MsIO/man/saveMsObject.html" class="external-link">readMsObject</a></span><span class="op">(</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/xcms/man/XcmsExperiment.html" class="external-link">XcmsExperiment</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/MsIO/man/AlabasterParam.html" class="external-link">AlabasterParam</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"preprocessed_lcms1"</span>,</span>
-<span>                               package <span class="op">=</span> <span class="st">"metabonaut"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span>                               package <span class="op">=</span> <span class="st">"Metabonaut"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </section><section class="level2"><h3 id="load-unprocessed-lc-msms-data">Load unprocessed LC-MS/MS data<a class="anchor" aria-label="anchor" href="#load-unprocessed-lc-msms-data"></a>
 </h3>
