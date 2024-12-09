@@ -64,7 +64,7 @@ if (.Platform$OS.type == "unix") {
 First, let's load our pre-processed LC-MS object. This *xcms* result object was
 created during the [End-to-end
 worflow](https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html)
-vignette and is also available in the *metabonaut* R package. The result object
+vignette and is also available in the *Metabonaut* R package. The result object
 (an `XcmsExperiment` object) was stored using Bioconductor's *alabaster*
 framework and we below load the object using the `readMsObject()` function
 providing the path to the stored data. The import function also takes care of
@@ -74,7 +74,7 @@ eventually retrieving missing MS data files from the MetaboLights repository.
 lcms1 <- readMsObject(
     XcmsExperiment(),
     AlabasterParam(system.file("extdata", "preprocessed_lcms1",
-                               package = "metabonaut")))
+                               package = "Metabonaut")))
 ```
 
 ## Load unprocessed LC-MS/MS data
@@ -154,7 +154,6 @@ bpc1 <-chromatogram(lcms1[c(idx_A,idx_E)], aggregationFun = "max",
 bpc2 <- chromatogram(lcms2, aggregationFun = "max", msLevel = 1)
 ```
 
-
 Compare run1 sample A with run2 sample A
 
 ```{r ini-bpc1}
@@ -195,6 +194,7 @@ mnpp <- MergeNeighboringPeaksParam(expandRt = 2.5, expandMz = 0.0015,
                                     minProp = 0.75)
 lcms2 <- refineChromPeaks(lcms2, param = mnpp, chunkSize = 2)
 ```
+
 ## Alignment
 
 Now, we will attempt to align these two samples with the previous dataset. The

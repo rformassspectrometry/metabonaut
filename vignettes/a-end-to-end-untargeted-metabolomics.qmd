@@ -41,7 +41,7 @@ alternatives](images/workflow.png)
 # Data description
 
 See the [data
-description](https://rformassspectrometry.github.io/metabonaut/articles/dataset-investigation.html)
+description](https://rformassspectrometry.github.io/Metabonaut/articles/dataset-investigation.html)
 vignette for detailed explanation of the dataset we go through in this workflow
 and general tips on what should be done when you first get your data.
 
@@ -256,7 +256,7 @@ As LC signal is the most variable because of the unstable nature of the LC, we
 will only show the BPC and their similarity. More in depth inspection and
 discussion of spectra and chromatrograhic data cna be found in the [data
 exploration
-vignette](https://rformassspectrometry.github.io/metabonaut/articles/data-investigation.html).
+vignette](https://rformassspectrometry.github.io/Metabonaut/articles/data-investigation.html).
 
 ## Chromatographic Data Visualization: BPC and TIC
 
