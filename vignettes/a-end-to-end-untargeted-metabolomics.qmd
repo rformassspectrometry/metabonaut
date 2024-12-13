@@ -41,7 +41,7 @@ alternatives](images/workflow.png)
 # Data description
 
 See the [data
-description](https://rformassspectrometry.github.io/metabonaut/articles/dataset-investigation.html)
+description](https://rformassspectrometry.github.io/Metabonaut/articles/dataset-investigation.html)
 vignette for detailed explanation of the dataset we go through in this workflow
 and general tips on what should be done when you first get your data.
 
@@ -256,7 +256,7 @@ As LC signal is the most variable because of the unstable nature of the LC, we
 will only show the BPC and their similarity. More in depth inspection and
 discussion of spectra and chromatrograhic data cna be found in the [data
 exploration
-vignette](https://rformassspectrometry.github.io/metabonaut/articles/data-investigation.html).
+vignette](https://rformassspectrometry.github.io/Metabonaut/articles/data-investigation.html).
 
 ## Chromatographic Data Visualization: BPC and TIC
 
@@ -391,6 +391,8 @@ fData(eic_is)$rt <- intern_standard$RT
 fData(eic_is)$name <- intern_standard$name
 fData(eic_is)$abbreviation <- intern_standard$abbreviation
 rownames(fData(eic_is)) <- intern_standard$abbreviation
+
+fdata <- fData(eic_is)
 
 #' Summary of IS information
 fData(eic_is)[, c("name", "mz", "rt")] |>
@@ -1006,13 +1008,13 @@ before and after alignment for both the isotope labeled cystine and methionine.
 #| code-summary: "Show the code"
 par(mfrow = c(2, 2), mar = c(4, 4.5, 2, 1))
 
-old_eic_cystine <- eics_is_refined["cystine_13C_15N"]
+old_eic_cystine <- eic_is["cystine_13C_15N"]
 plot(old_eic_cystine, main = "Cystine before alignment", peakType = "none",
      col = paste0(col_sample, 80))
 grid()
 abline(v = intern_standard["cystine_13C_15N", "RT"], col = "red", lty = 3)
 
-old_eic_met <- eics_is_refined["methionine_13C_15N"]
+old_eic_met <- eic_is["methionine_13C_15N"]
 plot(old_eic_met, main = "Methionine before alignment",
      peakType = "none", col = paste0(col_sample, 80))
 grid()
@@ -1452,11 +1454,10 @@ detected chromatographic peaks (prior gap-filling).
 #' Limit features to those with at least two detected peaks in one study group.
 #' Setting the value for QC samples to NA excludes QC samples from the
 #' calculation.
-f <- res$phenotype
+f <- sampleData(lcms1)$phenotype
 f[f == "QC"] <- NA
 f <- as.factor(f)
-res <- filterFeatures(res, PercentMissingFilter(f = f, threshold = 40),
-                      assay = "raw")
+lcms1 <- filterFeatures(lcms1, PercentMissingFilter(f = f, threshold = 40))
 ```
 
 ## Preprocessing results
@@ -2067,6 +2068,55 @@ Now that our data set has been preprocessed, normalized and filtered, we can
 start to evaluate the distribution of the data and estimate the variation due to
 biology.
 
+# Overlapping features
+
+Before performing complex statistical analysis we can evaluate the data
+
+A possible evaluation is to which features are overlapping between the different
+samples.
+
+```{r eval=FALSE, include=FALSE}
+#age group
+low <- res$age < 40
+middle <- res$age > 40 & res$age < 60
+high <- res$age > 60
+
+df_logical <- !is.na(assay(res, "raw_filled"))
+
+low 
+middle 
+high
+
+df_logical
+
+              
+```
+
+```{r}
+df_logical <- !is.na(assay(res, "raw_filled"))
+
+# Create a Venn diagram
+library(ggVennDiagram)
+l_logical <- apply(df_logical, MARGIN = 2,function(i) which(i))
+ggVennDiagram(l_logical, label = "count",
+                            category.names = res$sample_name,
+              color = 1, lwd = 0.7) + 
+ scale_fill_gradient(low = "lightblue", high = "#4981BF") +
+ theme(legend.position = "none")
+
+```
+
+In case of a large number of groups a Venn diagram can be replace by an upset
+plot which can handle a larger number of groups, while being still readable.
+
+```{r}
+#make upsetplot
+library(UpSetR)
+binary_data <-apply(df_logical, MARGIN = 2, as.integer)
+upset(as.data.frame(binary_data), nset = 6, sets = colnames(df_logical), keep.order = TRUE)
+
+```
+
 # Differential abundance analysis
 
 After normalization and quality control, the next step is to identify features
@@ -2255,7 +2305,7 @@ Below we visualize the EICs of the significant features to evaluate their (raw)
 signal. We restrict the MS data set to study samples. Parameters
 
 -   `keepFeatures = TRUE`: ensures that identified features are retained in the
-    \`subset object.
+    subset object.
 -   `peakBg`: defines the (background) color for each individual chromatographic
     peak in the EIC object.
 
@@ -2789,18 +2839,18 @@ eic <- featureChromatograms(lcms1, features = ms2_mtch_res$feature_id[1])
 plot(eic, col = col_sample, peakCol = col_sample[chromPeaks(eic)[, "sample"]],
      peakBg = paste0(col_sample[chromPeaks(eic)[, "sample"]], 20))
 legend("topright", col = col_phenotype, legend = names(col_phenotype), lty = 1)
+
+#' Identify the best matching query-target spectra pair
+idx <- which.max(ms2_mtch_res$score)
+
+#' Indicate the retention time of the MS2 spectrum in the EIC plot
+abline(v = ms2_mtch_res$rtime[idx])
 ```
 
 ```{r}
 #| fig-cap: "Figure 40. MS2 spectra for the annotated feature."
 #| code-fold: true
 #| code-summary: "Show the code"
-#' Identify the best matching query-target spectra pair
-idx <- which.max(ms2_mtch_res$score)
-
-#' Indicate the retention time of the MS2 spectrum in the EIC plot
-abline(v = ms2_mtch_res$rtime[idx])
-
 #' Get the index of the MS2 spectrum in the query object
 query_idx <- which(query(ms2_mtch)$.original_query_index ==
                                   ms2_mtch_res$.original_query_index[idx])

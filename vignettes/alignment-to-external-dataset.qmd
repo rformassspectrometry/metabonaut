@@ -64,7 +64,7 @@ if (.Platform$OS.type == "unix") {
 First, let's load our pre-processed LC-MS object. This *xcms* result object was
 created during the [End-to-end
 worflow](https://rformassspectrometry.github.io/metabonaut/articles/end-to-end-untargeted-metabolomics.html)
-vignette and is also available in the *metabonaut* R package. The result object
+vignette and is also available in the *Metabonaut* R package. The result object
 (an `XcmsExperiment` object) was stored using Bioconductor's *alabaster*
 framework and we below load the object using the `readMsObject()` function
 providing the path to the stored data. The import function also takes care of
@@ -74,7 +74,7 @@ eventually retrieving missing MS data files from the MetaboLights repository.
 lcms1 <- readMsObject(
     XcmsExperiment(),
     AlabasterParam(system.file("extdata", "preprocessed_lcms1",
-                               package = "metabonaut")))
+                               package = "Metabonaut")))
 ```
 
 ## Load unprocessed LC-MS/MS data
